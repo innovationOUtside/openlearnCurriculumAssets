@@ -133,7 +133,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  The OU-XML Curriculum Asset Bank
+  Towards An OU-XML Curriculum Asset Bank
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -309,6 +309,11 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#getting-a-list-of-openlearn-units">
+   Getting a List of OpenLearn Units
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#scraping-the-list-of-free-openlearn-units">
    Scraping the List of Free OpenLearn Units
   </a>
@@ -355,6 +360,11 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#getting-a-list-of-openlearn-units">
+   Getting a List of OpenLearn Units
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#scraping-the-list-of-free-openlearn-units">
    Scraping the List of Free OpenLearn Units
   </a>
@@ -393,6 +403,9 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="scraping-openlearn">
 <h1>Scraping OpenLearn<a class="headerlink" href="#scraping-openlearn" title="Permalink to this headline">#</a></h1>
+<p>This section describes how we can obtain a list of free OpenLearn units and construct a database that provides a free text search over the unit names and originating course codes for those units. It also demonstrates how we can populate the database with copies of the OU-XML documents associated with those units and trivially query those documents as parsed XML documents using XPATH expressions. Examples are also given of how we can download and inspect zipped HTML bundles associated with free OpenLearn units, extract “contentful” image files into a database, and then retrieve and preview those images.</p>
+<section id="getting-a-list-of-openlearn-units">
+<h2>Getting a List of OpenLearn Units<a class="headerlink" href="#getting-a-list-of-openlearn-units" title="Permalink to this headline">#</a></h2>
 <p>In previous years, OpenLearn used to publish an OPML feed that list all the units available on OpenLearn. The feed included the unit name, the module code for the original OU module from which the OpenLearn unit was derived, and a link to unit homepage on OpenLearn.</p>
 <p>That feed is no longer available, but a single HTML page listing all the free units is still available at <a class="reference external" href="https://www.open.edu/openlearn/free-courses/full-catalogue">https://www.open.edu/openlearn/free-courses/full-catalogue</a></p>
 <p><img alt="Screenshot of OpenLearn full unit catalogue" src="_images/openlearn_units.png" /></p>
@@ -424,7 +437,8 @@ title="Print to PDF"
 </div>
 <!--
 ![Raw HTML for a single unit listing on OpenLearn full catalogue](images/openlearn_unit_html.png)
---><section id="scraping-the-list-of-free-openlearn-units">
+--></section>
+<section id="scraping-the-list-of-free-openlearn-units">
 <h2>Scraping the List of Free OpenLearn Units<a class="headerlink" href="#scraping-the-list-of-free-openlearn-units" title="Permalink to this headline">#</a></h2>
 <p>From the HTML table that lists all the free units available on OpenLearn, we can grab a list of the unit names, duration, level, original OU module and the OpenLearn unit URL.</p>
 <p>We can also generate candidate URLs for the OU-XML and HTML zip downloads. These URLs are conventionally defined, but the resources are not necessarily published there. Having generated the URL, we can make a simple HTTP/HEAD request to see whether a resource is actually available at the URL (if the resource is available, we get a 200/OK message; if the resource is not available, we get a 404/Page not found).</p>
@@ -1142,7 +1156,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_48_0.png" src="_images/scraping_openlearn_48_0.png" />
+<img alt="_images/scraping_openlearn_49_0.png" src="_images/scraping_openlearn_49_0.png" />
 </div>
 </div>
 <p>### Adding Images to a Database</p>
@@ -1247,7 +1261,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_56_0.png" src="_images/scraping_openlearn_56_0.png" />
+<img alt="_images/scraping_openlearn_57_0.png" src="_images/scraping_openlearn_57_0.png" />
 </div>
 </div>
 <p>We can also render the image data directly using the IPython.display.Image` machinery:</p>
@@ -1260,7 +1274,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_58_0.jpg" src="_images/scraping_openlearn_58_0.jpg" />
+<img alt="_images/scraping_openlearn_59_0.jpg" src="_images/scraping_openlearn_59_0.jpg" />
 </div>
 </div>
 </section>
