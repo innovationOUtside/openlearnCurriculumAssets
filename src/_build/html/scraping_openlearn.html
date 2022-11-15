@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Scraping OpenLearn &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -20,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -36,7 +37,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -285,12 +286,58 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping-the-list-of-free-openlearn-units">
+   Scraping the List of Free OpenLearn Units
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-database-of-ou-xml-documents">
+   Building a Database of OU-XML Documents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retrieving-and-working-with-ou-xml-stored-in-the-database">
+     Retrieving and Working With OU-XML Stored in the Database
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping-and-storing-html-media-assets">
+   Scraping and Storing HTML Media Assets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -302,6 +349,41 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping-the-list-of-free-openlearn-units">
+   Scraping the List of Free OpenLearn Units
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-a-database-of-ou-xml-documents">
+   Building a Database of OU-XML Documents
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#retrieving-and-working-with-ou-xml-stored-in-the-database">
+     Retrieving and Working With OU-XML Stored in the Database
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scraping-and-storing-html-media-assets">
+   Scraping and Storing HTML Media Assets
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -309,9 +391,886 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="scraping-openlearn">
+  <section class="tex2jax_ignore mathjax_ignore" id="scraping-openlearn">
 <h1>Scraping OpenLearn<a class="headerlink" href="#scraping-openlearn" title="Permalink to this headline">#</a></h1>
+<p>In previous years, OpenLearn used to publish an OPML feed that list all the units available on OpenLearn. The feed included the unit name, the module code for the original OU module from which the OpenLearn unit was derived, and a link to unit homepage on OpenLearn.</p>
+<p>That feed is no longer available, but a single HTML page listing all the free units is still available at <a class="reference external" href="https://www.open.edu/openlearn/free-courses/full-catalogue">https://www.open.edu/openlearn/free-courses/full-catalogue</a></p>
+<p><img alt="Screenshot of OpenLearn full unit catalogue" src="_images/openlearn_units.png" /></p>
+<p>The units are listed within an HTML table, one unit per row, with the following structure:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+    ...
+    <span class="p">&lt;</span><span class="nt">tr</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;even&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;views-field views-field-title active views-align-left title&quot;</span>
+            <span class="na">data-sort-value</span><span class="o">=</span><span class="s">&quot;visions of protest: graffiti&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://www.open.edu/openlearn/history-the-arts/visions-protest-graffiti/content-section-0&quot;</span><span class="p">&gt;</span>Visions of protest: graffiti<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span><span class="p">&gt;</span> Y031<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;views-field views-field-field-ou-course views-align-center</span>
+<span class="s">                   field_ou-course&quot;</span> <span class="na">data-sort-value</span><span class="o">=</span><span class="s">&quot;Y031&quot;</span><span class="p">&gt;</span>
+            Y031
+        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;views-field views-field-field-duration views-align-center field_duration&quot;</span>
+            <span class="na">data-sort-value</span><span class="o">=</span><span class="s">&quot;8&quot;</span><span class="p">&gt;</span>
+            8
+        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;views-field views-field-field-educational-level views-align-left field_educational_level&quot;</span>
+            <span class="na">data-sort-value</span><span class="o">=</span><span class="s">&quot;Introductory&quot;</span><span class="p">&gt;</span>
+            Introductory
+        <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    ...
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</pre></div>
 </div>
+<!--
+![Raw HTML for a single unit listing on OpenLearn full catalogue](images/openlearn_unit_html.png)
+--><section id="scraping-the-list-of-free-openlearn-units">
+<h2>Scraping the List of Free OpenLearn Units<a class="headerlink" href="#scraping-the-list-of-free-openlearn-units" title="Permalink to this headline">#</a></h2>
+<p>From the HTML table that lists all the free units available on OpenLearn, we can grab a list of the unit names, duration, level, original OU module and the OpenLearn unit URL.</p>
+<p>We can also generate candidate URLs for the OU-XML and HTML zip downloads. These URLs are conventionally defined, but the resources are not necessarily published there. Having generated the URL, we can make a simple HTTP/HEAD request to see whether a resource is actually available at the URL (if the resource is available, we get a 200/OK message; if the resource is not available, we get a 404/Page not found).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The requests package provides a range of utilities for</span>
+<span class="c1"># making http calls, retrieving html pages etc</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># If appropriate, we can cache http requests made using the requests package</span>
+<span class="kn">import</span> <span class="nn">requests_cache</span>
+<span class="n">requests_cache</span><span class="o">.</span><span class="n">install_cache</span><span class="p">(</span><span class="s1">&#39;openlearn_cache&#39;</span><span class="p">)</span>
+<span class="c1"># Suspend with with requests_cache.disabled():</span>
+
+<span class="c1"># The BeuatifulSoup package provides a range of tools for parsing</span>
+<span class="c1"># HTML documents and scraping elements from them</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="c1"># We can use the tqdm package to provide progress bar indicators</span>
+<span class="c1"># that allow us to keep track of the state of progress of a scrape</span>
+<span class="c1"># of multiple pages</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our scrape begins by grabbing the HTML page for the free unit catalogue and extracting the table that contains the unit listings:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL for the OpenLearn full catalogue of free units</span>
+<span class="n">srcUrl</span><span class="o">=</span><span class="s1">&#39;https://www.open.edu/openlearn/free-courses/full-catalogue&#39;</span>
+
+<span class="c1"># Grab the HTML page</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">srcUrl</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+  
+<span class="c1"># Creating a soup object (a navigable tree element)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+
+<span class="c1"># The table containing the listing is found within a div element</span>
+<span class="c1"># with a particular, unique id</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;expander_content_11&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each row in the table, except from the header row, we can extract the OpenLearn unit name and homepage URL, and the level, anticipated duration, and parent OU module code, if available. We can also derive conventional URLs for the OU-XML and HTML zip downloads, and make HTTP/HEAD requests to poll to see whether those assets actually exist at the conventional location.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;re going to build up a list of dicts, one dict per unit</span>
+<span class="n">units</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># The first row of the table is a header row</span>
+<span class="c1"># so we can skip it</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;tr&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]):</span>
+    
+    <span class="c1"># Get the url for each OpenLearn unit homepage</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">xmlurl</span> <span class="o">=</span> <span class="n">htmlurl</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Get the unit name, parent OU module code, level and time allocation</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;hidden&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;tx&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;field_educational_level&quot;</span><span class="p">})</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;td&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span><span class="s2">&quot;field_duration&quot;</span><span class="p">})</span>
+
+    <span class="c1"># Simple cleaning</span>
+    <span class="n">level</span> <span class="o">=</span> <span class="n">level</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">level</span> <span class="k">else</span> <span class="n">level</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">duration</span> <span class="k">else</span> <span class="n">duration</span>
+    
+    <span class="c1"># Do a simple header check to see if the ou-xml and html downloads</span>
+    <span class="c1"># are available at the conventional location</span>
+    <span class="c1"># We could look at the full homepage for download element links</span>
+    <span class="c1"># but that means actually loading each unit page, rather than just</span>
+    <span class="c1"># performing a header check</span>
+    <span class="k">for</span> <span class="n">stub</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;content-section-overview&quot;</span><span class="p">,</span> <span class="s2">&quot;content-section-0&quot;</span> <span class="p">]:</span>
+        <span class="n">xmlurl</span> <span class="o">=</span> <span class="n">xmlurl</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">stub</span><span class="p">,</span> <span class="s2">&quot;altformat-ouxml&quot;</span><span class="p">)</span>
+        <span class="n">htmlurl</span> <span class="o">=</span> <span class="n">htmlurl</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">stub</span><span class="p">,</span> <span class="s2">&quot;altformat-html&quot;</span><span class="p">)</span>
+
+    <span class="n">xmlurl</span> <span class="o">=</span> <span class="n">xmlurl</span> <span class="k">if</span> <span class="s2">&quot;altformat-ouxml&quot;</span> <span class="ow">in</span> <span class="n">xmlurl</span> <span class="ow">and</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">xmlurl</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="n">htmlurl</span> <span class="o">=</span> <span class="n">htmlurl</span> <span class="k">if</span> <span class="s2">&quot;altformat-html&quot;</span> <span class="ow">in</span> <span class="n">htmlurl</span> <span class="ow">and</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">htmlurl</span><span class="p">)</span><span class="o">.</span><span class="n">status_code</span><span class="o">==</span><span class="mi">200</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="c1"># Build up a list of dicts, one dict per unit on OpenLearn</span>
+    <span class="n">units</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> 
+                  <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span>
+                  <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">code</span><span class="p">,</span>
+                  <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+                  <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration</span><span class="p">),</span>
+                  <span class="s2">&quot;xmlurl&quot;</span><span class="p">:</span> <span class="n">xmlurl</span><span class="p">,</span>
+                  <span class="s2">&quot;htmlurl&quot;</span><span class="p">:</span> <span class="n">htmlurl</span>
+                 <span class="p">}</span>
+                <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8175c35ac3b349f1812c51ffb57478cb", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>Preview the results of the scrape:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;name&#39;: &#39;A brief history of communication: hieroglyphics to emojis&#39;,
+  &#39;url&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/content-section-0&#39;,
+  &#39;code&#39;: &#39;L101&#39;,
+  &#39;level&#39;: None,
+  &#39;duration&#39;: 5,
+  &#39;xmlurl&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/altformat-ouxml&#39;,
+  &#39;htmlurl&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/altformat-html&#39;},
+ {&#39;name&#39;: &#39;Academi Arian MSE&#39;,
+  &#39;url&#39;: &#39;https://www.open.edu/openlearn/money-business/academi-arian-mse/content-section-overview&#39;,
+  &#39;code&#39;: &#39;&#39;,
+  &#39;level&#39;: None,
+  &#39;duration&#39;: 12,
+  &#39;xmlurl&#39;: None,
+  &#39;htmlurl&#39;: None},
+ {&#39;name&#39;: &#39;Accessibility of eLearning&#39;,
+  &#39;url&#39;: &#39;https://www.open.edu/openlearn/education-development/education-careers/accessibility-elearning/content-section-0&#39;,
+  &#39;code&#39;: &#39;H807&#39;,
+  &#39;level&#39;: None,
+  &#39;duration&#39;: 15,
+  &#39;xmlurl&#39;: &#39;https://www.open.edu/openlearn/education-development/education-careers/accessibility-elearning/altformat-ouxml&#39;,
+  &#39;htmlurl&#39;: &#39;https://www.open.edu/openlearn/education-development/education-careers/accessibility-elearning/altformat-html&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can add the list of units to a simple database table using the file based SQLite database.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The sqlite_utils package provides a wide range of tools</span>
+<span class="c1"># that support working with SQLite databases</span>
+<span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+
+<span class="c1"># The database will be saved to a file</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+
+<span class="c1"># If necessary, provide a clean start</span>
+<span class="c1">#!rm -f $dbname</span>
+
+<span class="c1"># Create a database connection</span>
+<span class="c1"># This creates the database file if it does not already exist</span>
+<span class="c1"># otherwise we connect to a pre-existing database file</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can create a database table structure on the fly simply by inserting documents into it, or we can create a database table schema in advance. We can also create a secondary table that supports free text search and that will be dynamically updated whenever we add a record to the table we want to provide free text search over.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new table reference (units)</span>
+<span class="n">all_units</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
+
+<span class="c1"># Clear the table to give us a fresh start</span>
+<span class="c1"># Setting ignore=True prevents an error if the table does not exist</span>
+<span class="n">all_units</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Define the table structure</span>
+<span class="n">all_units</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;xmlurl&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;htmlurl&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>
+<span class="c1"># The name of the OpenLearn unit and the parent OU module code</span>
+<span class="c1"># should be a unique combination, which means we can use them</span>
+<span class="c1"># as a primary key for the table</span>
+
+<span class="c1"># We can improve search over the table by supporting free text search.</span>
+<span class="c1"># This involves the creation of a secondary table with a free text search </span>
+<span class="c1"># index provided over one or more specified columns.</span>
+<span class="c1"># The free text search table is automatically updated whenever one or more</span>
+<span class="c1"># items are added to the table with which the search index is associated.</span>
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_units</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_units</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table units (code, name, level, duration, url, xmlurl, htmlurl)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now add our list of units to the <code class="docutils literal notranslate"><span class="pre">units</span></code> table in the database (the free text search table will be automatically updated):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_units</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table units (code, name, level, duration, url, xmlurl, htmlurl)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s try a test query, pulling the results back into a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> dataframe for convenience:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM units LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>level</th>
+      <th>duration</th>
+      <th>url</th>
+      <th>xmlurl</th>
+      <th>htmlurl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>None</td>
+      <td>5</td>
+      <td>https://www.open.edu/openlearn/languages/a-bri...</td>
+      <td>https://www.open.edu/openlearn/languages/a-bri...</td>
+      <td>https://www.open.edu/openlearn/languages/a-bri...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>Academi Arian MSE</td>
+      <td>None</td>
+      <td>12</td>
+      <td>https://www.open.edu/openlearn/money-business/...</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>H807</td>
+      <td>Accessibility of eLearning</td>
+      <td>None</td>
+      <td>15</td>
+      <td>https://www.open.edu/openlearn/education-devel...</td>
+      <td>https://www.open.edu/openlearn/education-devel...</td>
+      <td>https://www.open.edu/openlearn/education-devel...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also try a free text search:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># free text search term(s)</span>
+<span class="c1"># This may include boolean search operators</span>
+<span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;history communication OR H807&quot;</span>
+
+
+<span class="c1"># Construct a query onto the free text search index</span>
+<span class="n">_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">SELECT * FROM units_fts WHERE units_fts MATCH </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2"> ;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>L101</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Accessibility of eLearning</td>
+      <td>H807</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="building-a-database-of-ou-xml-documents">
+<h2>Building a Database of OU-XML Documents<a class="headerlink" href="#building-a-database-of-ou-xml-documents" title="Permalink to this headline">#</a></h2>
+<p>From the list of free units on OpenLearn, we constructed the URL for the OU-XML download associated with the unit and polled the OpenLearn website to check whether the resource exisited. Only OU-XML URLs that refer to an actually downloadable resource were then added to our units list, and to the database.</p>
+<p>We can now create a futher table into which we will insert the OU-XML document (where available) associated with each OpenLearn unit.</p>
+<p>*If the <code class="docutils literal notranslate"><span class="pre">units</span></code> list is not available, we could query the <code class="docutils literal notranslate"><span class="pre">units</span></code> database table for units where the OU-XML URL exists, and then use that list to download the referenced OU-XML resources and add them to our database.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_xml_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+<span class="n">all_xml_tbl</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">all_xml_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;xml&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">),</span> <span class="n">if_not_exists</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table xml (code, name, xml)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s grab all the files, again using a <code class="docutils literal notranslate"><span class="pre">tqdm</span></code> progress bar to help us keep track of how much progress we have made.</p>
+<p><em>To optimise things a little, only try to grab units where we know there is an OU-XML resource available.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following construction is know as a list comprehension</span>
+<span class="c1"># We construct a new list from the units list containing only</span>
+<span class="c1"># units where the OU-XML url (u[&quot;xmlurl&quot;]) exists</span>
+<span class="n">_units</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">units</span> <span class="k">if</span> <span class="n">u</span><span class="p">[</span><span class="s2">&quot;xmlurl&quot;</span><span class="p">]]</span>
+
+<span class="c1"># For each unit with an ouxml URL, get the OU-XML resource</span>
+<span class="c1"># and add it to the database</span>
+<span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span> <span class="n">_units</span> <span class="p">):</span>
+    <span class="n">all_xml_tbl</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">u</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">u</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                        <span class="s2">&quot;xml&quot;</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="s2">&quot;xmlurl&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">content</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "c0867aeef3d84dfe824e0503b84d6780", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>Let’s preview what we’ve got:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM xml LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>xml</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>H807</td>
+      <td>Accessibility of eLearning</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td></td>
+      <td>Addysg gynhwysol: deall yr hyn a olygwn (Cymru)</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;Ite...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="retrieving-and-working-with-ou-xml-stored-in-the-database">
+<h3>Retrieving and Working With OU-XML Stored in the Database<a class="headerlink" href="#retrieving-and-working-with-ou-xml-stored-in-the-database" title="Permalink to this headline">#</a></h3>
+<p>We can now grab an OU-XML document from our database, parse it into an XML object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="c1"># Grab the XML from the atabase for a particular module</span>
+<span class="c1"># (If there are several units derived from the module,</span>
+<span class="c1"># use the first in the results list)</span>
+<span class="n">h807_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE code=&#39;H807&#39;&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+
+<span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">h807_xml_raw</span><span class="p">)</span>
+
+<span class="n">root</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Element Item at 0x7fc64eb09680&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now run a simple XPATH query directly over the parsed XML object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use xpath expressions to navigate to particular elements</span>
+<span class="c1"># in the XML document object</span>
+<span class="c1"># Select the first ItemTitle element and render its text content</span>
+<span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;ItemTitle&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Accessibility of eLearning&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also query deeper into the document, and render the structure of a particular element. The following convenience function will return the raw XML in binary or string form associated with a particular XML document node element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">unpack</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function to look at the structure of an XML object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">as_str</span> <span class="k">else</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see what we get if we view the <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutomes&gt;</span></code> element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="n">unpack</span><span class="p">(</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//LearningOutcomes&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;LearningOutcomes xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                                                  &lt;Paragraph&gt;After studying this course, you should be able to:&lt;/Paragraph&gt;
+                                                  &lt;LearningOutcome&gt;discuss the main challenges facing disabled students with respect to eLearning.&lt;/LearningOutcome&gt;
+                                                  &lt;LearningOutcome&gt;have an understanding of the types of technology used by disabled students.&lt;/LearningOutcome&gt;
+                                                  &lt;LearningOutcome&gt;consider what adjustments you might make in creating eLearning materials to ensure they are accessible and usable.&lt;/LearningOutcome&gt;
+                                                  &lt;LearningOutcome&gt;consider appropriate ways to evaluate the accessibility and usability of your eLearning materials. &lt;/LearningOutcome&gt;
+                                        &lt;/LearningOutcomes&gt;
+                                        
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="scraping-and-storing-html-media-assets">
+<h2>Scraping and Storing HTML Media Assets<a class="headerlink" href="#scraping-and-storing-html-media-assets" title="Permalink to this headline">#</a></h2>
+<p>The easiest way to grab the media assets associated with each unit is probably to download the HTML bundle.</p>
+<p>To be most useful, this means we need to be able to reconcile the downloaded assets with the media assets referenced in the corresponding OU-XML document.</p>
+<p>Rather than download all the media assets for all the free OpenLearn units, we will limit ourselves to a simple proof of concept that just downloads the assets associated with a single OpenLearn model.</p>
+<p>We will leave the question of how to reconcile the assets with the assets referenced in the corresponding OU-XML document till another time. However, we will show how we can work with downloaded media assets that have been saved into our database.</p>
+<p>To start with, let’s find a unit for which we have an</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the list of units where there&#39;s an html URL and take the first</span>
+<span class="c1"># We could of course also query our database to fin one...</span>
+<span class="n">example_unit</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">units</span> <span class="k">if</span> <span class="n">u</span><span class="p">[</span><span class="s2">&quot;htmlurl&quot;</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">example_unit</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;name&#39;: &#39;A brief history of communication: hieroglyphics to emojis&#39;,
+ &#39;url&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/content-section-0&#39;,
+ &#39;code&#39;: &#39;L101&#39;,
+ &#39;level&#39;: None,
+ &#39;duration&#39;: 5,
+ &#39;xmlurl&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/altformat-ouxml&#39;,
+ &#39;htmlurl&#39;: &#39;https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/altformat-html&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s get the HTML bundle URL, an also extract the unit path name; we can use the latter to name our download file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the HTML bundle download URL</span>
+<span class="n">hurl</span> <span class="o">=</span> <span class="n">example_unit</span><span class="p">[</span><span class="s2">&quot;htmlurl&quot;</span><span class="p">]</span>
+
+<span class="c1">#Get the pathname for the unit</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">hurl</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1">#Preview these variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- hurl: </span><span class="si">{</span><span class="n">hurl</span><span class="si">}</span><span class="se">\n</span><span class="s2">- fname: </span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- hurl: https://www.open.edu/openlearn/languages/a-brief-history-communication-hieroglyphics-emojis/altformat-html
+- fname: a-brief-history-communication-hieroglyphics-emojis
+</pre></div>
+</div>
+</div>
+</div>
+<p>The HTML is is actually a zip file. We can use the <code class="docutils literal notranslate"><span class="pre">urllib.request</span></code> to download this package to our computer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="c1"># Create a helper to download the resource for us</span>
+<span class="n">getter</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">URLopener</span><span class="p">()</span>
+
+<span class="c1"># Specify a name for the downloaded file</span>
+<span class="n">download_file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.zip&quot;</span>
+
+<span class="n">getter</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">hurl</span><span class="p">,</span> <span class="n">download_file</span><span class="p">)</span>
+
+<span class="c1"># This is the file we saved the resource as</span>
+<span class="n">download_file</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a-brief-history-communication-hieroglyphics-emojis.zip&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can peek inside the zip archive file using the <code class="docutils literal notranslate"><span class="pre">zipfile</span></code> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="c1"># zip file handler  </span>
+<span class="n">zip_</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span> <span class="n">download_file</span> <span class="p">)</span>
+
+<span class="c1"># list available files in the container</span>
+<span class="n">zip_</span><span class="o">.</span><span class="n">namelist</span><span class="p">()[</span><span class="mi">30</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Items/x_7_l101_1_4.html&#39;,
+ &#39;Items/x_8_l101_1_4_1.html&#39;,
+ &#39;Items/x_9_l101_1_4_2.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e321.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e373.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e400.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e425.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e618.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e689.html&#39;,
+ &#39;Items/x_l101_1__descriptiond0e868.html&#39;,
+ &#39;Items/x_l101_1__transcriptd0e281.html&#39;,
+ &#39;Items/x_l101_1__transcriptd0e713.html&#39;,
+ &#39;Items/_31fc26135690af3deb1715277799629474e0d87f_l101_2018j_aug037.mp3&#39;,
+ &#39;Items/_36eab0b10aa000c0eb95f4e1477d160bc385d5ce_l101_ol_twitter_emoji.mp4&#39;,
+ &#39;Items/_7230df23b5f8f3060b83c6e99739622f8735350b_l101_ol_218698sumeriancuneiformtabletfig4.tif&#39;,
+ &#39;Items/_81f1f0e2202e38db69792d8252d6dc827058f631_l101_ol186633_fig1emoji_decorative.tif&#39;,
+ &#39;Items/_8a6712fa3ab54067a8165ef97c01bebf9d504e1d_l101_ol_figure9.jpg&#39;,
+ &#39;Items/_9869fc8aa3ffbb0c5ceeceaaeeac7a7a1acf6877_l101_blk1_u4_pt3.eps.jpg&#39;,
+ &#39;Items/_b735beaea648bb1268b74b8b7987f20ae3c0054d_l101_ol_fig3_218696_lascaux_cave_paintings.jpg&#39;,
+ &#39;Items/_cc58a9b2a70b53241285f4ec062c24982e18f253_video1_poster.jpg&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The zip file is organised like a directory: it contains files and subdirectories within it.</p>
+<p>The OU-XML content has been rendered into separate HTML files for the different XML sections (for example, <code class="docutils literal notranslate"><span class="pre">Items/x_7_l101_1_4.html</span></code>). There also seem to be lots of images in the zipfile, not all of which may be “content” images (for example, some images may be logos or navigation icons).</p>
+<p>One way of finding out which images are content related is to look through the content HTML documents and extract the image references from them.</p>
+<p>The following function takes the path to a downloaded zip file, looks inside it for “contentful” HTML pages, and then attempts to find references to “contentful” figure images.</p>
+<p><em>Note that the HTML bundles for different units may have been generated at different times and may have different internal HTML structure.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_imgs_from_html</span><span class="p">(</span><span class="n">zip_</span><span class="p">,</span> <span class="n">zip_fpath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get a list of image paths and alt text from an HTML file.&quot;&quot;&quot;</span>
+    
+    <span class="c1"># Open zip file</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">zip_</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">zip_fpath</span><span class="p">)</span>
+    
+    <span class="c1"># Create a reference to an HTML parser</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Depending on when the HTML bundle was generated,</span>
+    <span class="c1"># we often find image references in a particularly classed</span>
+    <span class="c1"># div element</span>
+    <span class="n">figures</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;oucontent-figure&quot;</span><span class="p">})</span>
+    
+    <span class="n">fig_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># For each figure reference</span>
+    <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figures</span><span class="p">:</span>
+        <span class="c1"># Get the local image path</span>
+        <span class="c1"># This path is locally valid in the zipfile context</span>
+        <span class="n">img_path</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;img&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;src&#39;</span><span class="p">)</span>
+        <span class="n">fig_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we iterate through what we assume to be the contentful HTML files, we can get a list of references to what we assume are contentful images:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list of what we assume to be &quot;contentful images&quot;</span>
+<span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Get a reference to the zip file</span>
+<span class="n">zip_</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span> <span class="n">download_file</span> <span class="p">)</span>
+
+<span class="c1"># Iterate through the directories and files in the zip file</span>
+<span class="c1"># Note that we consume the list as we iterate it,</span>
+<span class="c1"># so if we want to view the list again we need to recreate</span>
+<span class="c1"># the zip_ reference</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">zip_</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
+    <span class="c1"># Assume a &quot;contentful&quot; html file is one on the Items/ path</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Items/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">):</span>
+        <span class="c1"># Grab the image references from the file on that path</span>
+        <span class="n">_images</span> <span class="o">=</span> <span class="n">get_imgs_from_html</span><span class="p">(</span><span class="n">zip_</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="c1"># Add the list of images from that file to our overall</span>
+        <span class="c1"># list of contentful images</span>
+        <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_images</span><span class="p">)</span>
+
+<span class="n">images</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;_8a6712fa3ab54067a8165ef97c01bebf9d504e1d_l101_ol_figure9.jpg&#39;,
+ &#39;_ddd79f44c1411de8c1f9689825f45189df1c11f3_l101_fig1_186141gedoenmaheux.jpg&#39;,
+ &#39;_9869fc8aa3ffbb0c5ceeceaaeeac7a7a1acf6877_l101_blk1_u4_pt3.eps.jpg&#39;,
+ &#39;_81f1f0e2202e38db69792d8252d6dc827058f631_l101_ol186633_fig1emoji_decorative.tif&#39;,
+ &#39;_d7b7906d25a1744b217da0673439d17c601eb728_l101_fig2_218416hieroglyphics.tif&#39;,
+ &#39;_b735beaea648bb1268b74b8b7987f20ae3c0054d_l101_ol_fig3_218696_lascaux_cave_paintings.jpg&#39;,
+ &#39;_7230df23b5f8f3060b83c6e99739622f8735350b_l101_ol_218698sumeriancuneiformtabletfig4.tif&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If required, we can open and preview the image files directly from the zip file:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract a specific file from the zip container</span>
+<span class="c1"># Let&#39;s grab one of the images</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="n">zip_</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Items/</span><span class="si">{</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">image_file</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;zipfile.ZipExtFile name=&#39;Items/_8a6712fa3ab54067a8165ef97c01bebf9d504e1d_l101_ol_figure9.jpg&#39; mode=&#39;r&#39; compress_type=deflate&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>As this is actually an image file, we can preview it using the <code class="docutils literal notranslate"><span class="pre">Pillow</span></code> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%pip install Pillow</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scraping_openlearn_48_0.png" src="_images/scraping_openlearn_48_0.png" />
+</div>
+</div>
+<p>### Adding Images to a Database</p>
+<p>As a proof of concept, let’s see how we might add some images to out database, and then retrieve them again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a test database</span>
+<span class="c1"># Give ourselves a clean slate to work with</span>
+<span class="n">test_db_name</span> <span class="o">=</span> <span class="s2">&quot;image_test.db&quot;</span>
+<span class="o">!</span>rm -f <span class="nv">$test_db_name</span>
+<span class="n">db_test</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">test_db_name</span><span class="p">)</span>
+
+<span class="c1"># Create a test table in that database</span>
+<span class="n">db_test_table</span> <span class="o">=</span> <span class="n">db_test</span><span class="p">[</span><span class="s2">&quot;test_table&quot;</span><span class="p">]</span>
+
+<span class="c1"># Add an image directly to that table</span>
+<span class="c1"># An appropriate table schema will be created automatically</span>
+<span class="c1"># Get a reference to an image file</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="n">zip_</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Items/</span><span class="si">{</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Read the contents of the file</span>
+<span class="n">image_data</span> <span class="o">=</span> <span class="n">image_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># and add inage data to the database</span>
+<span class="n">db_test_table</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;item&quot;</span><span class="p">:</span> <span class="n">image_data</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table test_table (item)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can preview the schema created for the table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">db_test_table</span><span class="o">.</span><span class="n">schema</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;CREATE TABLE [test_table] (\n   [item] BLOB\n)&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>If we were to create our own table definition, we would set the column type to <code class="docutils literal notranslate"><span class="pre">&quot;BLOB&quot;</span></code>.</em></p>
+<p>We can see the image data is now in our database:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM test_table&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db_test</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>item</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also read the data out and re-display the image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+
+<span class="c1">#Get the image data</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM test_table&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db_test</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">]</span>
+
+<span class="c1"># To &quot;open&quot; the image using Image.open()</span>
+<span class="c1"># we need to make an appropriate virtual file object</span>
+<span class="n">img_data_s</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+
+<span class="c1"># &quot;Open&quot; the virtual image file</span>
+<span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_data_s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scraping_openlearn_56_0.png" src="_images/scraping_openlearn_56_0.png" />
+</div>
+</div>
+<p>We can also render the image data directly using the IPython.display.Image` machinery:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">Image2</span>
+
+<span class="n">Image2</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scraping_openlearn_58_0.jpg" src="_images/scraping_openlearn_58_0.jpg" />
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
+<p>In this section, we have seen how we can scrape a list of free OpenLearn units from a catalogue web page on the OpenLearn website and add this data to a simple, file-based database that supported free text search over the OpenLearn unit name and OU module code.</p>
+<p>We also saw how we could generate conventional URL paths that allowed us to download the OU-XML files associated with free OpenLearn units and add those to a database table. The XML can then be retrieved from the database and represented as an XML object that can be queried using XPATH expressions.</p>
+<p>Finally, we demonstrated how we can download an HTML bundle associated with an OpenLearn unit as a zip archive file and programmatically inspect its contents. From the assumed “contentful” HTML files in the archive we could identify assumed “contentful” images, extract them from the archive file, preview them, store them in a simple file based database, retrieve them from the database and preview them again.</p>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
