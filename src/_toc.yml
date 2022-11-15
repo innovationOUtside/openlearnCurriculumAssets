@@ -1,0 +1,12 @@
+format: jb-book
+root: intro
+parts:
+- caption: Foundations
+  chapters:
+  - file: scraping_openlearn
+  - file: ouxml-intro
+  - file: working-with-ouxml
+- caption: The OU-XML Curriculum Asset Bank
+  chapters:
+  - file: learning_outcomes
+  - file: glossary
