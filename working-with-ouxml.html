@@ -147,6 +147,38 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Glossary Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activity Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="saq.html">
+   Working With SAQ Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="itq.html">
+   Working With ITQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Media Items
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -286,12 +318,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#treating-ou-xml-documents-as-databases">
+   Treating OU-XML Documents As Databases
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viewing-and-rendering-xml-elements-using-xslt">
+   Viewing and Rendering XML Elements Using XSLT
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-fully-rendered-output-documents-from-ou-xml-documents">
+   Generating Fully Rendered Output Documents from OU-XML Documents
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -303,6 +369,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#treating-ou-xml-documents-as-databases">
+   Treating OU-XML Documents As Databases
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#viewing-and-rendering-xml-elements-using-xslt">
+   Viewing and Rendering XML Elements Using XSLT
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-fully-rendered-output-documents-from-ou-xml-documents">
+   Generating Fully Rendered Output Documents from OU-XML Documents
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -312,6 +401,158 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="working-with-ou-xml">
 <h1>Working With OU-XML<a class="headerlink" href="#working-with-ou-xml" title="Permalink to this headline">#</a></h1>
+<p>In this section we will briefly review different ways of working with an OU-XML document, including treating a document as a simple, structured and searchable database, as well as ways of displaying or rendering the XML content.</p>
+<section id="treating-ou-xml-documents-as-databases">
+<h2>Treating OU-XML Documents As Databases<a class="headerlink" href="#treating-ou-xml-documents-as-databases" title="Permalink to this headline">#</a></h2>
+<p><em>TO DO</em></p>
+<ul class="simple">
+<li><p>include simple examples of xpath searching, extracting elements</p></li>
+</ul>
+</section>
+<section id="viewing-and-rendering-xml-elements-using-xslt">
+<h2>Viewing and Rendering XML Elements Using XSLT<a class="headerlink" href="#viewing-and-rendering-xml-elements-using-xslt" title="Permalink to this headline">#</a></h2>
+<p>One way of generating rendered views of XML content is to use XSLT, a transfomration process in which an XSLT document describes how to transform each node in an XML document, such as an OU-XML document to another form. For example, I have <a class="reference external" href="https://blog.ouseful.info/2019/11/06/text-publishing-workflows-rooted-on-openlearn-ou-xml-via-github-circleci-and-github-pages/">previously</a> used XSLT to transform an OU-XML document into a set of simple markdown documents that can then be rendered as an interactive HTML textbook using a publishing workflow such as the <a class="reference external" href="https://quarto.org/">Quarto</a> or <a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">Jupyter Book</a> publisng workflows.</p>
+<p>Whilst the XSLT stylesheet I have previously used expects to find a <code class="docutils literal notranslate"><span class="pre">&lt;Session&gt;</span></code> element as the root element, we can also co-opt the stysleheet to render any collection of elements by definging a dummy root element and then applying stylesheets within that context:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;xsl:template</span> <span class="na">match=</span><span class="s">&quot;DummyRoot&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;md&gt;</span>
+        <span class="nt">&lt;xsl:apply-templates</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/md&gt;</span>
+<span class="nt">&lt;/xsl:template&gt;</span>
+</pre></div>
+</div>
+<p>As my style sheet was desgined to generate markdown (<code class="docutils literal notranslate"><span class="pre">.md</span></code>) structured content (which can also legitimately include HTML structured content), I nominally use the above transformation to dump the text into an XML <code class="docutils literal notranslate"><span class="pre">&lt;md&gt;</span></code> tag.</p>
+<p>Let’s import an XML processing package and create a simple utility function to convert a XML object to a text format:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+
+<span class="k">def</span> <span class="nf">unpack</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">as_str</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function to look at the structure of an XML object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">as_str</span> <span class="k">else</span> <span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Define a handle for our XSLT-powered transformations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xslt_transformer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;xslt/ouxml2md.xslt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create some example XML to demonstrate the process:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_xml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;&lt;Activity&gt;&lt;Question xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;</span><span class="se">\n\t\t\t\t\t\t\t\t</span><span class="s2">&lt;Paragraph&gt;&lt;language xml:lang=&quot;FR&quot;&gt;Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, &lt;/language&gt;&lt;?oxy_delete author=&quot;js34827&quot; timestamp=&quot;20200630T134829+0100&quot; content=&quot;&amp;lt;a href=&amp;quot;http://routes.open.ac.uk/ixbin/hixclient.exe?_IXDB_=routes&amp;amp;amp;_IXSPFX_=g&amp;amp;amp;submit-button=summary&amp;amp;amp;%24+with+res_id+is+res23034=.&amp;quot;&amp;gt;&amp;lt;b&amp;gt;&amp;lt;language xml:lang=&amp;quot;FR&amp;quot;&amp;gt;Paul Fort&amp;#160;: po&amp;#232;me&amp;lt;/language&amp;gt;&amp;lt;/b&amp;gt;&amp;lt;/a&amp;gt;&quot;?&gt;&lt;?oxy_insert_start author=&quot;js34827&quot; timestamp=&quot;20200630T134832+0100&quot;?&gt;&lt;a href=&quot;https://wheatoncollege.edu/vive-voix/par-auteur/fort/&quot;&gt;&lt;b&gt;&lt;language xml:lang=&quot;FR&quot;&gt;Paul Fort&amp;#160;: po&amp;#232;me&lt;/language&gt;&lt;/b&gt;&lt;/a&gt;&lt;?oxy_insert_end?&gt;&lt;b&gt;&lt;language xml:lang=&quot;FR&quot;&gt;.&lt;/language&gt;&lt;/b&gt;&lt;/Paragraph&gt;</span><span class="se">\n\t\t\t\t\t\t\t</span><span class="s2">&lt;/Question&gt;&lt;/Activity&gt;&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to wrap the text XML in a “shim” to which we can apply the transformation process using our previously created XSLT stylesheet:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wrapped_xml</span><span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="s2">&quot;&lt;DummyRoot&gt;&lt;/DummyRoot&gt;&quot;</span><span class="p">)</span>
+<span class="n">wrapped_xml</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_xml</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Apply the transformation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply the XSLT stylesheet</span>
+<span class="n">transformed_xml</span> <span class="o">=</span> <span class="n">xslt_transformer</span><span class="p">(</span><span class="n">wrapped_xml</span><span class="p">)</span>
+
+<span class="c1"># Convert the genereated XML object to text</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">transformed_xml</span><span class="o">.</span><span class="n">getroot</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;
+&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;
+
+#### Question
+
+Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, [__Paul Fort&amp;#160;: po&amp;#232;me__](https://wheatoncollege.edu/vive-voix/par-auteur/fort/)__.__
+
+&lt;!-- #endregion --&gt;
+&lt;/md&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now get rid of the <code class="docutils literal notranslate"><span class="pre">&lt;md&gt;</span></code> wrapper tags, convert the markdown to HTML and render the markdown using IPython display machinery:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span>
+
+<span class="c1"># Strip the &lt;md&gt; tags from the text string</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;/md&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">Markdown</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<!-- #region tags=["style-activity"] -->
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/working-with-ouxml.ipynb</span>, line 4)</p>
+<p>Non-consecutive header level increase; 0 to 4 [myst.header]</p>
+</div>
+</div>
+</div>
+<p>We can now also convert the markdown to HTML:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">markdown</span> <span class="kn">import</span> <span class="n">markdown</span>
+
+<span class="c1"># Convert the markdown to HTML</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">markdown</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;
+
+&lt;h4&gt;Question&lt;/h4&gt;
+&lt;p&gt;Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, &lt;a href=&quot;https://wheatoncollege.edu/vive-voix/par-auteur/fort/&quot;&gt;&lt;strong&gt;Paul Fort&amp;#160;: po&amp;#232;me&lt;/strong&gt;&lt;/a&gt;&lt;strong&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;!-- #endregion --&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>And preview that, agin using the IPython display machinery:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="c1"># Render the HTML</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><!-- #region tags=["style-activity"] -->
+
+<h4>Question</h4>
+<p>Lisez maintenant le po&#232;me &#224; haute voix et allez ensuite &#233;couter l&#8217;auteur lire son po&#232;me sur Internet, <a href="https://wheatoncollege.edu/vive-voix/par-auteur/fort/"><strong>Paul Fort&#160;: po&#232;me</strong></a><strong>.</strong></p>
+<!-- #endregion --></div></div>
+</div>
+<p>What this means is that we can search for and extract elements from our OU-XML documents and then preview those elements as HTML, assuming the stylesheet has appropriate rules defined for the corresponding OU-XML elements.</p>
+</section>
+<section id="generating-fully-rendered-output-documents-from-ou-xml-documents">
+<h2>Generating Fully Rendered Output Documents from OU-XML Documents<a class="headerlink" href="#generating-fully-rendered-output-documents-from-ou-xml-documents" title="Permalink to this headline">#</a></h2>
+<p><em>TO DO</em></p>
+<ul class="simple">
+<li><p>prior examples include: <a class="reference external" href="https://blog.ouseful.info/2019/11/06/text-publishing-workflows-rooted-on-openlearn-ou-xml-via-github-circleci-and-github-pages/"><em>OER Text Publishing Workflows Rooted on OpenLearn OU-XML Via Github, CircleCI and Github Pages Using Jupytext and nbSphinx</em></a></p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

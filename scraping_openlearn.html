@@ -147,6 +147,38 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Glossary Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activity Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="saq.html">
+   Working With SAQ Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="itq.html">
+   Working With ITQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Media Items
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -334,6 +366,13 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#scraping-and-storing-html-media-assets">
    Scraping and Storing HTML Media Assets
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-images-to-a-database">
+     Adding Images to a Database
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#summary">
@@ -385,6 +424,13 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#scraping-and-storing-html-media-assets">
    Scraping and Storing HTML Media Assets
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adding-images-to-a-database">
+     Adding Images to a Database
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#summary">
@@ -403,7 +449,7 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="scraping-openlearn">
 <h1>Scraping OpenLearn<a class="headerlink" href="#scraping-openlearn" title="Permalink to this headline">#</a></h1>
-<p>This section describes how we can obtain a list of free OpenLearn units and construct a database that provides a free text search over the unit names and originating course codes for those units. It also demonstrates how we can populate the database with copies of the OU-XML documents associated with those units and trivially query those documents as parsed XML documents using XPATH expressions. Examples are also given of how we can download and inspect zipped HTML bundles associated with free OpenLearn units, extract “contentful” image files into a database, and then retrieve and preview those images.</p>
+<p>This section describes how we can obtain a list of free OpenLearn units and construct a database that provides a full-text search over the unit names and originating course codes for those units. It also demonstrates how we can populate the database with copies of the OU-XML documents associated with those units and trivially query those documents as parsed XML documents using XPATH expressions. Examples are also given of how we can download and inspect zipped HTML bundles associated with free OpenLearn units, extract “contentful” image files into a database, and then retrieve and preview those images.</p>
 <section id="getting-a-list-of-openlearn-units">
 <h2>Getting a List of OpenLearn Units<a class="headerlink" href="#getting-a-list-of-openlearn-units" title="Permalink to this headline">#</a></h2>
 <p>In previous years, OpenLearn used to publish an OPML feed that list all the units available on OpenLearn. The feed included the unit name, the module code for the original OU module from which the OpenLearn unit was derived, and a link to unit homepage on OpenLearn.</p>
@@ -534,7 +580,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8175c35ac3b349f1812c51ffb57478cb", "version_major": 2, "version_minor": 0}
+{"model_id": "cb8d2399babf4c9eb08e1eceb39587f5", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <p>Preview the results of the scrape:</p>
@@ -591,7 +637,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>We can create a database table structure on the fly simply by inserting documents into it, or we can create a database table schema in advance. We can also create a secondary table that supports free text search and that will be dynamically updated whenever we add a record to the table we want to provide free text search over.</p>
+<p>We can create a database table structure on the fly simply by inserting documents into it, or we can create a database table schema in advance. We can also create a secondary table that supports full-text search and that will be dynamically updated whenever we add a record to the table we want to provide full-text search over.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new table reference (units)</span>
@@ -615,10 +661,10 @@ title="Print to PDF"
 <span class="c1"># should be a unique combination, which means we can use them</span>
 <span class="c1"># as a primary key for the table</span>
 
-<span class="c1"># We can improve search over the table by supporting free text search.</span>
-<span class="c1"># This involves the creation of a secondary table with a free text search </span>
+<span class="c1"># We can improve search over the table by supporting full-text search.</span>
+<span class="c1"># This involves the creation of a secondary table with a full-text search </span>
 <span class="c1"># index provided over one or more specified columns.</span>
-<span class="c1"># The free text search table is automatically updated whenever one or more</span>
+<span class="c1"># The full-text search table is automatically updated whenever one or more</span>
 <span class="c1"># items are added to the table with which the search index is associated.</span>
 <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_units</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">all_units</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -631,7 +677,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>We can now add our list of units to the <code class="docutils literal notranslate"><span class="pre">units</span></code> table in the database (the free text search table will be automatically updated):</p>
+<p>We can now add our list of units to the <code class="docutils literal notranslate"><span class="pre">units</span></code> table in the database (the full-text search table will be automatically updated):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_units</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">units</span><span class="p">)</span>
@@ -716,15 +762,15 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-<p>We can also try a free text search:</p>
+<p>We can also try a full-text search:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># free text search term(s)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># full-text search term(s)</span>
 <span class="c1"># This may include boolean search operators</span>
 <span class="n">q</span> <span class="o">=</span> <span class="s2">&quot;history communication OR H807&quot;</span>
 
 
-<span class="c1"># Construct a query onto the free text search index</span>
+<span class="c1"># Construct a query onto the full-text search index</span>
 <span class="n">_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">SELECT * FROM units_fts WHERE units_fts MATCH </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2"> ;</span>
 <span class="s2">&quot;&quot;&quot;</span>
@@ -776,7 +822,8 @@ title="Print to PDF"
 <h2>Building a Database of OU-XML Documents<a class="headerlink" href="#building-a-database-of-ou-xml-documents" title="Permalink to this headline">#</a></h2>
 <p>From the list of free units on OpenLearn, we constructed the URL for the OU-XML download associated with the unit and polled the OpenLearn website to check whether the resource exisited. Only OU-XML URLs that refer to an actually downloadable resource were then added to our units list, and to the database.</p>
 <p>We can now create a futher table into which we will insert the OU-XML document (where available) associated with each OpenLearn unit.</p>
-<p>*If the <code class="docutils literal notranslate"><span class="pre">units</span></code> list is not available, we could query the <code class="docutils literal notranslate"><span class="pre">units</span></code> database table for units where the OU-XML URL exists, and then use that list to download the referenced OU-XML resources and add them to our database.</p>
+<p><em>If the <code class="docutils literal notranslate"><span class="pre">units</span></code> list is not available, we could query the <code class="docutils literal notranslate"><span class="pre">units</span></code> database table for units where the OU-XML URL exists, and then use that list to download the referenced OU-XML resources and add them to our database.</em></p>
+<p>To support discovery, we can also make the XML document full-text searchable. Whilst this means the index will be cluttered with XML tags and tags conjoined with words they abut, most of the content will be indexed appropriately.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_xml_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">]</span>
@@ -787,6 +834,9 @@ title="Print to PDF"
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;xml&quot;</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">),</span> <span class="n">if_not_exists</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_xml_tbl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_xml_tbl</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;xml&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -816,7 +866,7 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c0867aeef3d84dfe824e0503b84d6780", "version_major": 2, "version_minor": 0}
+{"model_id": "fa9e783b98e2441d88b289507cffe207", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <p>Let’s preview what we’ve got:</p>
@@ -873,13 +923,197 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
+<p>We can also search across the unit name, or search into the XML document, albeit in an unstructured way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM xml WHERE xml LIKE &#39;</span><span class="si">%E</span><span class="s2">gyptian%&#39; LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>xml</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>GA060</td>
+      <td>Art and life in ancient Egypt</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AA315</td>
+      <td>Art in Renaissance Venice</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Free text search over the associated full-text search table is also avaiable.</p>
+<p>Let’s create a simple function to help with that:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">base_tbl</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run a simple full-text search query </span>
+<span class="sd">       over a table with an FTS virtual table.&quot;&quot;&quot;</span>
+    <span class="n">_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;SELECT * FROM </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts </span>
+<span class="s2">             WHERE </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts MATCH </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2"> ;&quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now run a full-text search without having to rememeber the query syntax:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">,</span> <span class="s2">&quot;quantum light physics&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>xml</th>
+      <th>name</th>
+      <th>code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Describing language</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Discovering Ancient Greek and Latin</td>
+      <td>A275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Discovering chemistry</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Introduction to active galaxies</td>
+      <td>S282</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Introduction to cyber security: stay safe online</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Mathematics for science and technology</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;Ite...</td>
+      <td>Metals in medicine</td>
+      <td>s315</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Multidisciplinary study: the value and benefits</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Particle physics</td>
+      <td>SM123</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Primary science: supporting children’s learning</td>
+      <td>E209</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>Returning to STEM</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;?sc...</td>
+      <td>Scales in space and time</td>
+      <td>S112</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>The restless Universe</td>
+      <td>S207</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <section id="retrieving-and-working-with-ou-xml-stored-in-the-database">
 <h3>Retrieving and Working With OU-XML Stored in the Database<a class="headerlink" href="#retrieving-and-working-with-ou-xml-stored-in-the-database" title="Permalink to this headline">#</a></h3>
 <p>We can now grab an OU-XML document from our database, parse it into an XML object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
-<span class="c1"># Grab the XML from the atabase for a particular module</span>
+
+<span class="c1"># Grab the XML from the database for a particular module</span>
 <span class="c1"># (If there are several units derived from the module,</span>
 <span class="c1"># use the first in the results list)</span>
 <span class="n">h807_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE code=&#39;H807&#39;&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
@@ -892,7 +1126,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Element Item at 0x7fc64eb09680&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Element Item at 0x7fc373be4080&gt;
 </pre></div>
 </div>
 </div>
@@ -1145,21 +1379,46 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>As this is actually an image file, we can preview it using the <code class="docutils literal notranslate"><span class="pre">Pillow</span></code> package:</p>
+<p>We can use the IPython display machinery to render the image file if we read its contents:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%pip install Pillow</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+<span class="c1"># Read the open file (a once only operation on the file pointer)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="n">image_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Display the image</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_49_0.png" src="_images/scraping_openlearn_49_0.png" />
+<img alt="_images/scraping_openlearn_55_0.jpg" src="_images/scraping_openlearn_55_0.jpg" />
 </div>
 </div>
-<p>### Adding Images to a Database</p>
+<p>We can also preview the image using packages such as <code class="docutils literal notranslate"><span class="pre">Pillow</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">Image2</span>
+
+<span class="c1"># If we haven&#39;t yet read the file, we can open it directly</span>
+<span class="c1"># PIL.Image.open(image_file)</span>
+
+<span class="c1"># From the raw data, create a file like object</span>
+<span class="n">img_fo</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
+
+<span class="c1"># Open and render the image</span>
+<span class="n">Image2</span><span class="o">.</span><span class="n">open</span><span class="p">(</span> <span class="n">img_fo</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/scraping_openlearn_57_0.png" src="_images/scraping_openlearn_57_0.png" />
+</div>
+</div>
+<section id="adding-images-to-a-database">
+<h3>Adding Images to a Database<a class="headerlink" href="#adding-images-to-a-database" title="Permalink to this headline">#</a></h3>
 <p>As a proof of concept, let’s see how we might add some images to out database, and then retrieve them again.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1246,41 +1505,23 @@ title="Print to PDF"
 <p>We can also read the data out and re-display the image:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
-
-<span class="c1">#Get the image data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Get the image data</span>
 <span class="n">img_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM test_table&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db_test</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;item&quot;</span><span class="p">]</span>
 
-<span class="c1"># To &quot;open&quot; the image using Image.open()</span>
-<span class="c1"># we need to make an appropriate virtual file object</span>
-<span class="n">img_data_s</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
-
-<span class="c1"># &quot;Open&quot; the virtual image file</span>
-<span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img_data_s</span><span class="p">)</span>
+<span class="c1"># Render the image using IPython display machinery</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_57_0.png" src="_images/scraping_openlearn_57_0.png" />
-</div>
-</div>
-<p>We can also render the image data directly using the IPython.display.Image` machinery:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">Image2</span>
-
-<span class="n">Image2</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_59_0.jpg" src="_images/scraping_openlearn_59_0.jpg" />
+<img alt="_images/scraping_openlearn_65_0.jpg" src="_images/scraping_openlearn_65_0.jpg" />
 </div>
 </div>
 </section>
+</section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
-<p>In this section, we have seen how we can scrape a list of free OpenLearn units from a catalogue web page on the OpenLearn website and add this data to a simple, file-based database that supported free text search over the OpenLearn unit name and OU module code.</p>
+<p>In this section, we have seen how we can scrape a list of free OpenLearn units from a catalogue web page on the OpenLearn website and add this data to a simple, file-based database that supported full-text search over the OpenLearn unit name and OU module code.</p>
 <p>We also saw how we could generate conventional URL paths that allowed us to download the OU-XML files associated with free OpenLearn units and add those to a database table. The XML can then be retrieved from the database and represented as an XML object that can be queried using XPATH expressions.</p>
 <p>Finally, we demonstrated how we can download an HTML bundle associated with an OpenLearn unit as a zip archive file and programmatically inspect its contents. From the assumed “contentful” HTML files in the archive we could identify assumed “contentful” images, extract them from the archive file, preview them, store them in a simple file based database, retrieve them from the database and preview them again.</p>
 </section>
