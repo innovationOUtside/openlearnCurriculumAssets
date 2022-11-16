@@ -15,4 +15,5 @@ parts:
   - file: itq
   - file: media_items
 - caption: Unit Mapping
+  chapters:
   - file: index_maps
