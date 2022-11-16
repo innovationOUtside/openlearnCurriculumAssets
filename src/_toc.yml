@@ -11,5 +11,6 @@ parts:
   - file: learning_outcomes
   - file: glossary
   - file: activity
+  - file: saq
 - caption: Unit Mapping
   - file: index_maps
