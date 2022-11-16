@@ -10,5 +10,6 @@ parts:
   chapters:
   - file: learning_outcomes
   - file: glossary
+  - file: activity
 - caption: Unit Mapping
   - file: index_maps
