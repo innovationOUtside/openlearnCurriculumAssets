@@ -147,6 +147,38 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Glossary Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activity Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="saq.html">
+   Working With SAQ Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="itq.html">
+   Working With ITQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Media Items
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -286,12 +318,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-learning-outcomes">
+   Extracting Learning Outcomes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-learning-outcome-items-to-the-database">
+   Adding Learning Outcome Items to the Database
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -303,6 +369,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-learning-outcomes">
+   Extracting Learning Outcomes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-learning-outcome-items-to-the-database">
+   Adding Learning Outcome Items to the Database
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -312,6 +401,217 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="working-with-learning-outcomes">
 <h1>Working With Learning Outcomes<a class="headerlink" href="#working-with-learning-outcomes" title="Permalink to this headline">#</a></h1>
+<p>Learnign outcomes can be created at various levels of abstraction: for example, at the unit level, at the block level, at the module level and at the qualification level.</p>
+<p>Learning outcomes are distinguished elements in OU-XML documents, although not all materials make use of them.</p>
+<p>In this section, we will see how to extract learning outcomes from the OU-XML asscoiated with a single OpenLearn unit, and then create a simple database table that allows us to search over the learning outcomes for all the OpenLearn units that represent them in a structured way.</p>
+<section id="preparing-the-ground">
+<h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
+<p>As ever, we need to set up a database connection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And get a sample XML file, selecting one that we know contains structurally marked up learning outcome elements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Grab an OU-XML file that is known to contain glossary items</span>
+<span class="n">a210_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE name=&#39;An introduction to interaction design&#39;&quot;</span><span class="p">,</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+
+<span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">a210_xml_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="extracting-learning-outcomes">
+<h2>Extracting Learning Outcomes<a class="headerlink" href="#extracting-learning-outcomes" title="Permalink to this headline">#</a></h2>
+<p>Individual learning outcomes are defined as simple text <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcome&gt;</span></code> elements in a <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcomes&gt;</span></code> block wrapper:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;LearningOutcomes</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Paragraph&gt;</span>After studying this course, you should be able to:<span class="nt">&lt;/Paragraph&gt;</span>
+    <span class="nt">&lt;LearningOutcome&gt;</span>understand what interaction design is, the importance of user-centred design and methods of user information gathering<span class="nt">&lt;/LearningOutcome&gt;</span>
+    <span class="nt">&lt;LearningOutcome&gt;</span>understand how the sensory, cognitive and physical capabilities of users inform the design of interactive products<span class="nt">&lt;/LearningOutcome&gt;</span>
+    ...
+<span class="nt">&lt;/LearningOutcomes&gt;</span>
+</pre></div>
+</div>
+<p>The individual learning outcomes can be extracted simply as the text associated with a <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcome&gt;</span></code> element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_lo_items</span><span class="p">(</span><span class="n">rro</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract learning outcomes from an OU-XML XML object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">lo</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">lo</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//LearningOutcome&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see what that returns from our test document:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_lo_items</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;understand what interaction design is, the importance of user-centred design and methods of user information gathering&#39;,
+ &#39;understand how the sensory, cognitive and physical capabilities of users inform the design of interactive products&#39;,
+ &#39;understand the process of interaction design, including requirements elicitation, prototyping, evaluation and the need for iteration&#39;,
+ &#39;analyse and critique the design of interactive products&#39;,
+ &#39;select, adapt and apply suitable interaction design approaches and techniques towards the design of an interactive product.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-learning-outcome-items-to-the-database">
+<h2>Adding Learning Outcome Items to the Database<a class="headerlink" href="#adding-learning-outcome-items-to-the-database" title="Permalink to this headline">#</a></h2>
+<p>It’s trivial to add learning outcomes for all our units to the database, along with support for full text search over all the items.</p>
+<p>First, create appropriate tables to store the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_lo_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;lo&quot;</span><span class="p">]</span>
+<span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">})</span>
+
+<span class="c1"># Prepare the full-text search table</span>
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;lo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;lo&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table lo (code, name, lo)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now iterate throughall the OU-XML documents in out databases and create a comprehensive OpenElarn learning outcome database:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
+    <span class="n">lo_items</span> <span class="o">=</span> <span class="n">get_lo_items</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="c1"># From the list of learning outcome items,</span>
+    <span class="c1"># create a list of dict items we can add to the database</span>
+    <span class="n">lo_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="n">lo</span><span class="p">,</span>
+                         <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">lo</span> <span class="ow">in</span> <span class="n">lo_items</span> <span class="k">if</span> <span class="n">lo</span> <span class="p">]</span>
+    
+    <span class="c1"># Add items to the database</span>
+    <span class="n">db</span><span class="p">[</span><span class="s2">&quot;lo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">lo_item_dicts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can test a query:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM lo LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>lo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>understand how different writing systems have ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>understand how technology influences what we c...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>H807</td>
+      <td>Accessibility of eLearning</td>
+      <td>discuss the main challenges facing disabled st...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Or a full-text search:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">base_tbl</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run a simple full-text search query </span>
+<span class="sd">       over a table with an FTS virtual table.&quot;&quot;&quot;</span>
+    <span class="n">_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;SELECT * FROM </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts </span>
+<span class="s2">             WHERE </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts MATCH </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2"> ;&quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="s2">&quot;lo&quot;</span><span class="p">,</span> <span class="s2">&quot;describe problems&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;lo&#39;: &#39;describe some of the characteristics of a range of mental health problems&#39;,
+  &#39;code&#39;: &#39;&#39;,
+  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
+ {&#39;lo&#39;: &#39;describe how a support network can benefit a young person experiencing mental health problems&#39;,
+  &#39;code&#39;: &#39;&#39;,
+  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
+ {&#39;lo&#39;: &#39;describe the referral processes for a young person experiencing mental health problems to access professional support&#39;,
+  &#39;code&#39;: &#39;&#39;,
+  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
+ {&#39;lo&#39;: &#39;describe key theories and concepts that have informed debates about mental health diagnosis&#39;,
+  &#39;code&#39;: &#39;K314&#39;,
+  &#39;name&#39;: &#39;Making sense of mental health problems&#39;},
+ {&#39;lo&#39;: &#39;describe the particular problems in digesting plant material&#39;,
+  &#39;code&#39;: &#39;S182&#39;,
+  &#39;name&#39;: &#39;Studying mammals: Plant predators&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

@@ -53,6 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Working With Activity Items" href="activity.html" />
     <link rel="prev" title="Working With Learning Outcomes" href="learning_outcomes.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -144,6 +145,38 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Working With Glossary Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activity Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="saq.html">
+   Working With SAQ Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="itq.html">
+   Working With ITQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Media Items
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
   </a>
  </li>
 </ul>
@@ -285,12 +318,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-glossary-items">
+   Extracting Glossary Items
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-glossary-items-to-the-database">
+   Adding Glossary Items to the Database
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -302,6 +369,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-glossary-items">
+   Extracting Glossary Items
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-glossary-items-to-the-database">
+   Adding Glossary Items to the Database
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -311,6 +401,224 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="working-with-glossary-items">
 <h1>Working With Glossary Items<a class="headerlink" href="#working-with-glossary-items" title="Permalink to this headline">#</a></h1>
+<p>One of the fiddly but necessary tasks associated with course production is the creation of glossary items. Glossary items are explicitly defined in OU-XML materials, which means we can trivially extract them and easily build up meta-glossaries with varying scopes: for example, a meta-glossary of all <code class="docutils literal notranslate"><span class="pre">MXXX</span></code> units, or a meta-glossary from all beginner level science courses. At an indidivual student level, we could construct a met-aglossary of all the glossed terms that have appeared in units the student has studied to dat (along with a reference to which unit they appeared in). And so on.</p>
+<section id="preparing-the-ground">
+<h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
+<p>As ever, we need to set up a database connection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And get a sample XML file, selecting one that we know contains struturally marked up glossary items:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Grab an OU-XML file that is known to contain glossary items</span>
+<span class="n">a210_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE name=&#39;Approaching plays&#39;&quot;</span><span class="p">,</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+
+<span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">a210_xml_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="extracting-glossary-items">
+<h2>Extracting Glossary Items<a class="headerlink" href="#extracting-glossary-items" title="Permalink to this headline">#</a></h2>
+<p>Glossary items are defined using the following stucture in an OU-XML document:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;GlossaryItem</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Term&gt;</span>Amphitheatre<span class="nt">&lt;/Term&gt;</span>
+    <span class="nt">&lt;Definition&gt;</span> a circular structure with seats rising behind and above each other around a central open space or arena; originating in classical Greece, they are the first known specifically designated theatre spaces
+    <span class="nt">&lt;/Definition&gt;</span>
+<span class="nt">&lt;/GlossaryItem&gt;</span>
+</pre></div>
+</div>
+<p>It is trivial enough to extract all the terms from a single unit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_gloss_items</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract glossary items from an OU-XML XML object.&quot;&quot;&quot;</span>
+    <span class="n">gloss</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//GlossaryItem&#39;</span><span class="p">)</span>
+
+    <span class="n">glossary</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gloss</span><span class="p">:</span>
+        <span class="n">g_term</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Term&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+        <span class="n">g_definition</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Definition&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">g_term</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">g_definition</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">glossary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">g_term</span><span class="p">,</span> <span class="n">g_definition</span><span class="p">)</span> <span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">glossary</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how that works for our test unit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preview the first few items</span>
+<span class="n">get_gloss_items</span><span class="p">(</span><span class="n">root</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Amphitheatre&#39;,
+  &#39; a circular structure with seats rising behind and above each other around a central open space or arena; originating in classical Greece, they are the first known specifically designated theatre spaces.&#39;),
+ (&#39;Apostrophe&#39;,
+  &quot; a rhetorical convention in which the speaker either addresses a dead or absent person, or an inanimate object or abstraction. An apostrophe can also refer to a speaker&#39;s address to a particular member or section of the audience.&quot;),
+ (&#39;Anagnorisis&#39;, &#39; a scene of recognition or discovery.&#39;),
+ (&#39;Aside&#39;, &#39; a short speech spoken &#39;),
+ (&#39;Blank verse&#39;, &#39; unrhymed iambic pentameters.&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-glossary-items-to-the-database">
+<h2>Adding Glossary Items to the Database<a class="headerlink" href="#adding-glossary-items-to-the-database" title="Permalink to this headline">#</a></h2>
+<p>It’s trivial to add the glossary terms and definitions for all our units to the database, along with support for full text search over all the items.</p>
+<p>First, create appropriate tables to store the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_gloss_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;glossary&quot;</span><span class="p">]</span>
+<span class="n">all_gloss_tbl</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_gloss_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;term&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;definition&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">})</span> <span class="c1"># Is there a sensible primary key?</span>
+
+<span class="c1"># Enable full text search</span>
+<span class="c1"># This creates an extra virtual table (glossary_fts) to support the full text search</span>
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_gloss_tbl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="s2">&quot;glossary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;definition&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table glossary (code, name, term, definition)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can iterate over all the OU-XML documents, extract any glossary items contained therein, and add them to our database table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
+    <span class="n">gloss_items</span> <span class="o">=</span> <span class="n">get_gloss_items</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="c1"># From the list of glossary items,</span>
+    <span class="c1"># create a list of dict items we can add to the database</span>
+    <span class="n">gloss_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;term&quot;</span><span class="p">:</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;definition&quot;</span><span class="p">:</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                         <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">gloss_items</span> <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
+    
+    <span class="c1"># Add items to the database</span>
+    <span class="n">db</span><span class="p">[</span><span class="s2">&quot;glossary&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">gloss_item_dicts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can test a query:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM glossary LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>term</th>
+      <th>definition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>L314</td>
+      <td>Advanced Spanish: Protest song</td>
+      <td>desalambrar</td>
+      <td>Quitar las vallas de alambre que cercan un rec...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>L314</td>
+      <td>Advanced Spanish: Protest song</td>
+      <td>el encasillamiento</td>
+      <td>clasificación, generalmente simplista</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>L314</td>
+      <td>Advanced Spanish: Protest song</td>
+      <td>busca amplitud en su propuesta</td>
+      <td>quiere realizar un trabajo que comprende difer...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Or a full text search:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">base_tbl</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run a simple full-text search query </span>
+<span class="sd">       over a table with an FTS virtual table.&quot;&quot;&quot;</span>
+    <span class="n">_q</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;SELECT * FROM </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts </span>
+<span class="s2">             WHERE </span><span class="si">{</span><span class="n">base_tbl</span><span class="si">}</span><span class="s2">_fts MATCH </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="si">}</span><span class="s2"> ;&quot;&quot;&quot;</span>
+    
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">_q</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="s2">&quot;glossary&quot;</span><span class="p">,</span> <span class="s2">&quot;member audience&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;term&#39;: &#39;Apostrophe&#39;,
+  &#39;definition&#39;: &quot; a rhetorical convention in which the speaker either addresses a dead or absent person, or an inanimate object or abstraction. An apostrophe can also refer to a speaker&#39;s address to a particular member or section of the audience.&quot;,
+  &#39;code&#39;: &#39;A210&#39;,
+  &#39;name&#39;: &#39;Approaching plays&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -346,6 +654,13 @@ title="Print to PDF"
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Working With Learning Outcomes</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="activity.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Working With Activity Items</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
