@@ -13,5 +13,6 @@ parts:
   - file: activity
   - file: saq
   - file: itq
+  - file: media_items
 - caption: Unit Mapping
   - file: index_maps
