@@ -491,6 +491,162 @@ title="Print to PDF"
 <p>A <em>Source reference</em> attribute is available that may be useful for rights tracking purposes etc.</p>
 <section id="checking-figure-asset-definitions">
 <h3>Checking Figure Asset Definitions<a class="headerlink" href="#checking-figure-asset-definitions" title="Permalink to this headline">#</a></h3>
+<p>When image assets are used, there is often a requirement to provide a written description of it that can be used by a screen-reader to provide an alternative way of experiencing the asset to visually impaired readers.</p>
+<p>By scraping individual figure items into a database table, we can trivially generate reports on the extent to which alternative descriptions are provided, and identify units where they may be missing.</p>
+<p>For example, we can query <em>all</em> the figure assets referenced across all OpenLearn units to identify figures where there is no caption, description or alternative text given:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT xpath, code, name, type, caption, alt, description</span>
+<span class="s2">            FROM figures</span>
+<span class="s2">            WHERE caption IS NULL AND alt IS NULL AND description IS NULL;&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>xpath</th>
+      <th>code</th>
+      <th>name</th>
+      <th>type</th>
+      <th>caption</th>
+      <th>alt</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/MediaContent/Figure</td>
+      <td>L101</td>
+      <td>A brief history of communication: hieroglyphic...</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/Figure</td>
+      <td>H807</td>
+      <td>Accessibility of eLearning</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/Figure</td>
+      <td></td>
+      <td>Addysg gynhwysol: deall yr hyn a olygwn (Cymru)</td>
+      <td>tif</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/Figure</td>
+      <td></td>
+      <td>Addysg gynhwysol: deall yr hyn a olygwn (Cymru)</td>
+      <td>tif</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/Figure</td>
+      <td></td>
+      <td>Addysg gynhwysol: deall yr hyn a olygwn (Cymru)</td>
+      <td>tif</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>/Introduction/MediaContent/Figure</td>
+      <td></td>
+      <td>Розуміння вашої галузі</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>/Introduction/MediaContent/Figure</td>
+      <td></td>
+      <td>Розуміння вашої галузі</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>/MediaContent/Figure</td>
+      <td></td>
+      <td>Розуміння вашої галузі</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>/Activity/Question/MediaContent/Figure</td>
+      <td>K314</td>
+      <td>Розуміння проблем психічного здоров'я</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>/Activity/Multipart/Part/Question/MediaContent...</td>
+      <td>K314</td>
+      <td>Розуміння проблем психічного здоров'я</td>
+      <td>jpg</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>2010 rows × 7 columns</p>
+</div></div></div>
+</div>
 </section>
 <section id="checking-audio-asset-definitions">
 <h3>Checking Audio Asset Definitions<a class="headerlink" href="#checking-audio-asset-definitions" title="Permalink to this headline">#</a></h3>
@@ -653,6 +809,8 @@ title="Print to PDF"
 </section>
 <section id="checking-video-asset-definitions">
 <h3>Checking Video Asset Definitions<a class="headerlink" href="#checking-video-asset-definitions" title="Permalink to this headline">#</a></h3>
+<p>In the same way that we checked audio asset descriptions for the presence of transcripts, etc., we can also check for the presence of video transcripts.</p>
+<p>Once again, reporting the <code class="docutils literal notranslate"><span class="pre">xpath</span></code> context reference for the asset might provide a clue as to why a transcript is missing in any particular case.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT xpath, code, name, type, caption, transcript, description</span>
