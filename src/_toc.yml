@@ -12,8 +12,6 @@ parts:
   - file: learning_outcomes
   - file: glossary
   - file: activity
-  - file: saq
-  - file: itq
   - file: media_items
 - caption: Unit Mapping
   chapters:
