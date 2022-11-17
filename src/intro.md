@@ -43,7 +43,7 @@ As often as not, the identification of learning designs, module or unit structur
 
 The approach taken in this review is to explore the extent to which we can disaggregate materials published on OpenLearn to support discovery of, the drawing of inspiration from, and the potential re-use of materials at a day-to-day level.
 
-Items are identified at an appropriate level of granularity through the mining of OU-XML structured content documents. From the metadata associated with free materials published on OpenLearn, discovery can be supported across various contexts: within a particular unit, for eample, in the context of a particular parent module, or at a particular level (beginner, intermediate, advanced, etc.). "Curriculum-wide" discovery is also supported across *all* the available materials.
+Items are identified at an appropriate level of granularity through the mining of OU-XML structured content documents. From the metadata associated with free materials published on OpenLearn, discovery can be supported across various contexts: within a particular unit, for example, in the context of a particular parent module, or at a particular level (beginner, intermediate, advanced, etc.). "Curriculum-wide" discovery is also supported across *all* the available materials.
 
 The approaches demonstrated here use freely available, openly licensed (in the most part) OpenLearn materials and as such can be freely and openly discussed. However, the same techniques can be applied internally to OU-XML structured content associated with currently presented courses as well as historical courses created within the last twenty years or so.
 
