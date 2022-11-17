@@ -13,6 +13,7 @@ parts:
   - file: glossary
   - file: activity
   - file: media_items
+  - file: equations
 - caption: Unit Mapping
   chapters:
   - file: index_maps

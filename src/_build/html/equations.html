@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Working With Equations &#8212; Working With OpenLearn Curriculum Assets</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unit Mapping" href="index_maps.html" />
+    <link rel="prev" title="Working With Figures and Media Items" href="media_items.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Working With OpenLearn Curriculum Assets</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="scraping_openlearn.html">
+   Scraping OpenLearn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ouxml-intro.html">
+   A Quick Overview of OU-XML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="working-with-ouxml.html">
+   Working With OU-XML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="datasette-ui.html">
+   Querying the Database With
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Towards An OU-XML Curriculum Asset Bank
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="learning_outcomes.html">
+   Working With Learning Outcomes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="glossary.html">
+   Working With Glossary Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activities, Exercises, ITQs and SAQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Figures and Media Items
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Working With Equations
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ouxml-quality-audit.html">
+   OU-XML Health Checks and Quality Audits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/equations.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Working With Equations</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="working-with-equations">
+<h1>Working With Equations<a class="headerlink" href="#working-with-equations" title="Permalink to this headline">#</a></h1>
+<p><em>TO DO</em></p>
+<section id="preparing-the-ground">
+<h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
+<p>As ever, we need to set up a database connection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And get a sample XML file, selecting one that we know contains struturally marked up glossary items:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM xml WHERE xml LIKE &#39;%&lt;Equation&gt;%&#39;&quot;</span><span class="p">,</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+      <th>xml</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>T212</td>
+      <td>An introduction to electronics</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>e70841f12a908401ab9e6a69923bdb684928c888</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>An introduction to geology</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>4c8058285a4de53528f646ee2742dc8394fd4e38</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>S276</td>
+      <td>An introduction to minerals and rocks under th...</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>T193</td>
+      <td>Assessing risk in engineering, work and life</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>11e5486d113eebd6c01126c9c65b91591c211b9b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SK299</td>
+      <td>Blood and the respiratory system</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;?dc...</td>
+      <td>904a100e4d41cf1a696b547eec1b2f625fc5bd78</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td></td>
+      <td>Discovering chemistry</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td></td>
+      <td>Mathematics for science and technology</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>84fea7b4cf86cdd4e31e3272572372972fb81fe2</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>s315</td>
+      <td>Metals in medicine</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;Ite...</td>
+      <td>c2c90459369d82e28e768dfd9072047eab95be4d</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>SM123</td>
+      <td>Particle physics</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>4095122554b7cc3cff824f31c3cf531087e63b2c</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>S112</td>
+      <td>Scales in space and time</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;?sc...</td>
+      <td>75a013ae7e703481e8f0e05bde38d6d71fa732b6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td></td>
+      <td>Succeed with maths: part 2</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;!--...</td>
+      <td>0ab4176f55d221bdc8bd68fbcd2e9c575d2a5e4e</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td></td>
+      <td>Taking your first steps into higher education</td>
+      <td>b'&lt;?xml version="1.0" encoding="UTF-8"?&gt;\n&lt;?sc...</td>
+      <td>0c0fb0a9800e8b37c269fd12cb8b600a44c1d189</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td></td>
+      <td>Teaching mathematics</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>7995427cc08b1874750af6c79cb45f7556addf4b</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>T271</td>
+      <td>Toys and engineering materials</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>c86d9d40259a5889e62488029ce5454a8ddb6a00</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>S215</td>
+      <td>What chemical compounds might be present in dr...</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>2adf47ad5e2f97c2983da6e3f08a0e7066e67e8a</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>S111</td>
+      <td>What is a metal?</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>0961a26cafb1aa6132dfc455251d123bf390bf70</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>DB123</td>
+      <td>You and your money</td>
+      <td>b'&lt;?xml version="1.0" encoding="utf-8"?&gt;\n&lt;?sc...</td>
+      <td>b2235d2d9c032379eb891b42b46c41ed96a495c0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Grab an OU-XML file that is known to contain equation items</span>
+<span class="c1"># Maybe also: Teaching mathematics</span>
+<span class="n">equation_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE name=&#39;Discovering chemistry&#39;&quot;</span><span class="p">,</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+
+<span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">equation_xml_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">unpack</span>
+
+<span class="k">def</span> <span class="nf">get_equation_items</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract equations from an OU-XML XML object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">unpack</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//Equation&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What do we get?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_equation_items</span><span class="p">(</span><span class="n">root</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[b&#39;&lt;Equation xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;MathML&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;mmultiscripts&gt;&lt;mrow&gt;&lt;mi&gt;X&lt;/mi&gt;&lt;/mrow&gt;&lt;mprescripts/&gt;&lt;mrow&gt;&lt;mi&gt;Z&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;/mrow&gt;&lt;/mmultiscripts&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/MathML&gt;&lt;/Equation&gt;&#39;,
+ b&#39;&lt;Equation xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;Image&gt;K&lt;sup&gt;+&lt;/sup&gt;, Ca&lt;sup&gt;2+&lt;/sup&gt;, Al&lt;sup&gt;3+&lt;/sup&gt;, S&lt;sup&gt;2-&lt;/sup&gt;, F&lt;sup&gt;-&lt;/sup&gt; and Br&lt;sup&gt;-&lt;/sup&gt;&lt;/Image&gt;&lt;/Equation&gt;&#39;,
+ b&#39;&lt;Equation xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;MathML&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mrow&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;H&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mrow&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mi&gt;C&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;q&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mrow&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mstyle mathvariant=&quot;normal&quot;&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;H&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mstyle&gt;&lt;/math&gt;&lt;/MathML&gt;&lt;Label&gt;(5.1)&lt;/Label&gt;&lt;/Equation&gt;&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">get_equation_items</span><span class="p">(</span><span class="n">root</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;Equation xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;MathML&gt;&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;/math&gt;&lt;/MathML&gt;&lt;Label&gt;(5.1)&lt;/Label&gt;&lt;/Equation&gt;&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">x</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="c1"># This works in firefox at least</span>
+<span class="n">HTML</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;math class=&quot;chem&quot;&gt;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&lt;/math&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><math class="chem"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle mathvariant="normal"><mrow><mstyle mathvariant="normal"><mrow><mi>C</mi><mi>u</mi><mo>(</mo><mi>s</mi><mo>)</mo><mo>+</mo><msub><mrow><mn>4</mn><mi>H</mi><mi>N</mi><mi>O</mi></mrow><mrow><mn>3</mn></mrow></msub><mo>(</mo><mi>a</mi><mi>q</mi><mo>)</mo></mrow></mstyle><mo>=</mo><msub><mrow><msub><mrow><mstyle mathvariant="normal"><mrow><mi>C</mi><mi>u</mi></mrow></mstyle><mo>(</mo><mstyle mathvariant="normal"><mrow><mi>N</mi><mi>O</mi></mrow></mstyle></mrow><mrow><mn>3</mn></mrow></msub><mo>)</mo></mrow><mrow><mn>2</mn></mrow></msub><mstyle mathvariant="normal"><mrow><mo>(</mo><mi>a</mi><mi>q</mi><mo>)</mo></mrow></mstyle><mo>+</mo><msub><mrow><mstyle mathvariant="normal"><mrow><mn>2</mn><mi>N</mi><mi>O</mi></mrow></mstyle></mrow><mrow><mn>2</mn></mrow></msub><mstyle mathvariant="normal"><mrow><mo>(</mo><mi>g</mi><mo>)</mo></mrow></mstyle><mo>+</mo><msub><mrow><mn>2</mn><mi>H</mi></mrow><mrow><mn>2</mn></mrow></msub><mi>O</mi><mo>(</mo><mi>l</mi><mo>)</mo></mrow></mstyle></math></div></div>
+</div>
+<p>So… MathML.</p>
+<p>Maybe use s/thing like <a class="reference external" href="https://github.com/bowang/mathml2latex">https://github.com/bowang/mathml2latex</a> ?
+Or is there a way with something like <code class="docutils literal notranslate"><span class="pre">sympy</span></code>? Or an IPython route?
+<a class="reference external" href="https://www.geeksforgeeks.org/html5-mathml-display-attribute/">https://www.geeksforgeeks.org/html5-mathml-display-attribute/</a> ?</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="media_items.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Working With Figures and Media Items</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="index_maps.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Unit Mapping</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tony Hirst<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
