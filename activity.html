@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Working With Activity Items &#8212; Working With OpenLearn Curriculum Assets</title>
+    <title>Working With Activities, Exercises, ITQs and SAQs &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Working With SAQ Items" href="saq.html" />
+    <link rel="next" title="Working With Figures and Media Items" href="media_items.html" />
     <link rel="prev" title="Working With Glossary Items" href="glossary.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -130,6 +130,16 @@ const thebe_selector_output = ".output, .cell_output"
    Working With OU-XML
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="datasette-ui.html">
+   Querying the Database With
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -149,17 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Working With Activity Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="saq.html">
-   Working With SAQ Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="itq.html">
-   Working With ITQs
+   Working With Activities, Exercises, ITQs and SAQs
   </a>
  </li>
  <li class="toctree-l1">
@@ -323,23 +323,70 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-other-activity-types">
+   Parsing Other Activity Types
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Working With Activity Items</h1>
+                <h1>Working With Activities, Exercises, ITQs and SAQs</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preparing-the-ground">
+   Preparing the Ground
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parsing-other-activity-types">
+   Parsing Other Activity Types
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -347,9 +394,741 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="working-with-activity-items">
-<h1>Working With Activity Items<a class="headerlink" href="#working-with-activity-items" title="Permalink to this headline">#</a></h1>
-<p><em>TO DO</em></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="working-with-activities-exercises-itqs-and-saqs">
+<h1>Working With Activities, Exercises, ITQs and SAQs<a class="headerlink" href="#working-with-activities-exercises-itqs-and-saqs" title="Permalink to this headline">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;Activity&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Exercise&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;ITQ&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;SAQ&gt;</span></code> elements all have a similar internal structure and only differ in the parent tag [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.1.1">example docs</a>].</p>
+<p>Each element <strong>must</strong> include a <code class="docutils literal notranslate"><span class="pre">&lt;Question&gt;</span></code> and may include a <code class="docutils literal notranslate"><span class="pre">&lt;Heading&gt;</span></code> and a <code class="docutils literal notranslate"><span class="pre">&lt;Timing&gt;</span></code> element; various different response elements may be provided (one or more of <code class="docutils literal notranslate"><span class="pre">&lt;MediaContent&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Interaction&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Answer&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Discussion&gt;</span></code>) either as a single response, or within a <code class="docutils literal notranslate"><span class="pre">&lt;Part&gt;</span></code> tag inside a <code class="docutils literal notranslate"><span class="pre">&lt;Multipart&gt;</span></code> response element..</p>
+<p>For example, at its simplest, an ITQ might take the following form:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;ITQ</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Question&gt;</span>
+        <span class="nt">&lt;Paragraph&gt;</span>In session 1, you met charged versions of atoms; what are they called? <span class="nt">&lt;/Paragraph&gt;</span>
+    <span class="nt">&lt;/Question&gt;</span>
+    <span class="nt">&lt;Answer&gt;</span>
+        <span class="nt">&lt;Paragraph&gt;</span>These are ions (positively charged ions are called cations and negatively charged ions are called anions). <span class="nt">&lt;/Paragraph&gt;</span>
+    <span class="nt">&lt;/Answer&gt;</span>
+<span class="nt">&lt;/ITQ&gt;</span>
+</pre></div>
+</div>
+<p>ITQs may also be defined as multipart questions.</p>
+<p><em>Work in Progress; he <MediaElement> enclosure is not currently handled. This should probably done as a foreign key submitted item to a <code class="docutils literal notranslate"><span class="pre">media</span></code> table.</em></p>
+<section id="preparing-the-ground">
+<h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
+<p>As ever, we need to set up a database connection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And get a sample XML file, selecting one that we know contains structurally marked up glossary items:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">unpack</span><span class="p">,</span> <span class="n">flatten</span>
+
+<span class="c1"># Grab an OU-XML file that is known to contain activity items</span>
+<span class="n">activity_example_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE name=&#39;Accessibility of eLearning&#39;&quot;</span><span class="p">,</span>
+                                   <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+
+<span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">activity_example_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">create_id</span>
+<span class="kn">import</span> <span class="nn">secrets</span>
+        
+<span class="k">def</span> <span class="nf">parse_activity_item</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse activity element.</span>
+<span class="sd">       The key is a unit id that lets us create a unique interaction table FK.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_delist</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="k">else</span> <span class="n">x</span>
+    <span class="k">def</span> <span class="nf">_tidy</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">unpack</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+    
+    <span class="k">if</span> <span class="n">_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+        <span class="n">_path</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getpath</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+
+    <span class="n">key</span> <span class="o">=</span> <span class="n">key</span> <span class="k">if</span> <span class="n">key</span> <span class="k">else</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+        
+    <span class="c1"># Need to consider Multipart</span>
+    <span class="n">_flat</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">_flat</span><span class="p">:</span>
+        <span class="n">a_multipart</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">a_heading</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Heading&quot;</span><span class="p">)</span>
+        <span class="n">a_heading</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">a_heading</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">a_heading</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">a_timing</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Timing&quot;</span><span class="p">)</span>
+        <span class="n">a_timing</span> <span class="o">=</span> <span class="n">flatten</span><span class="p">(</span><span class="n">a_timing</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">a_timing</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="c1"># Should we perhaps parse the question to markdown?</span>
+        <span class="n">a_question</span> <span class="o">=</span> <span class="n">_tidy</span><span class="p">(</span><span class="n">_delist</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Question&quot;</span><span class="p">)))</span>
+        <span class="n">a_answer</span> <span class="o">=</span> <span class="n">_tidy</span><span class="p">(</span><span class="n">_delist</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Answer&quot;</span><span class="p">)))</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        # The interaction type is a complex element that should be included</span>
+<span class="sd">        # in an interaction table with a shared reference id generated from</span>
+<span class="sd">        # the unit id and the path to the element</span>
+<span class="sd">        _interaction = _tidy(_delist(activity.xpath(&quot;Interaction&quot;)))</span>
+<span class="sd">        if _interaction:</span>
+<span class="sd">            interaction_id = create_id( (key, _path) )</span>
+<span class="sd">            a_interaction = interaction_id</span>
+<span class="sd">        else:</span>
+<span class="sd">            a_interaction = None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TO DO - for now, explicitly capture the interaction</span>
+        <span class="n">a_interaction</span> <span class="o">=</span> <span class="n">_tidy</span><span class="p">(</span><span class="n">_delist</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Interaction&quot;</span><span class="p">)))</span>
+        <span class="n">a_discussion</span> <span class="o">=</span> <span class="n">_tidy</span><span class="p">(</span><span class="n">_delist</span><span class="p">(</span><span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Discussion&quot;</span><span class="p">)))</span>
+        <span class="c1"># TO DO: activity.xpath(&quot;MediaElement&quot;) as a FK relation?</span>
+        
+        <span class="k">if</span> <span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Multipart&quot;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">activity</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;Multipart/Part&quot;</span><span class="p">):</span>
+                <span class="n">a_multipart</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parse_activity_item</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">a_multipart</span><span class="p">:</span>
+            <span class="c1"># Also return the multipart status and the multipart name and timing</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">a_heading</span><span class="p">,</span> <span class="n">a_timing</span><span class="p">,</span> <span class="n">a_question</span><span class="p">,</span> <span class="n">a_interaction</span><span class="p">,</span> <span class="n">a_answer</span><span class="p">,</span>
+                     <span class="n">a_discussion</span><span class="p">,</span> <span class="n">_path</span><span class="p">,</span>
+                    <span class="kc">True</span> <span class="k">if</span> <span class="n">a_multipart</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span> <span class="n">_path</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">m</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+                    <span class="kc">True</span> <span class="k">if</span> <span class="n">a_multipart</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span> <span class="n">_path</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">a_multipart</span> <span class="k">if</span> <span class="n">m</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="p">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how that works:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parse_activity_item</span><span class="p">(</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//Activity&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Activity 1&#39;,
+  None,
+  &#39;&lt;Question xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;NumberedList&gt;&lt;ListItem&gt;Identify some eLearning materials you are familiar with. You may have written them, taught them, or even studied them (you can think about this course if you have no examples of your own).&lt;/ListItem&gt;&lt;ListItem&gt;Identify the different elements of the materials &amp;#8211; there will almost certainly be text, but are there images, videos, forms or boxes to enter text, drag-and-drop exercises, quizzes etc.? List all of the different types of element.&lt;/ListItem&gt;&lt;ListItem&gt;For each item on the list try to identify where students with particular disabilities might experience difficulties, and try to suggest possible ways (if you can think of any) that these barriers may be removed. It does not matter if your list is incomplete, or if you cannot think of solutions to some of your identified issues. We will revisit this task later, after you have worked through more of the course materials.&lt;/ListItem&gt;&lt;/NumberedList&gt;&lt;Paragraph&gt;Use the box below to record your thoughts.&lt;/Paragraph&gt;&lt;/Question&gt;&#39;,
+  &#39;&lt;Interaction xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;FreeResponse size=&quot;paragraph&quot; id=&quot;fr_3&quot;/&gt;&lt;/Interaction&gt;&#39;,
+  None,
+  None,
+  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;,
+  False,
+  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;)]
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>TO DO</em> - the <code class="docutils literal notranslate"><span class="pre">&lt;Interaction&gt;</span></code> element takes several forms: <code class="docutils literal notranslate"><span class="pre">&lt;SingleChoice&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Matching&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;FreeResponse&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;VoiceRecorder&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MultipleChoice&gt;</span></code>.</p>
+<p>As such, it makes sense to record interaction components in a table of their own, referenced to the parent activity element etc. TO DO</p>
+<p>To begin with, let’s have a table that just has the complete activity records:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_activities_raw</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;activities_raw&quot;</span><span class="p">]</span>
+<span class="n">all_activities_raw</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_activities_raw</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;activity&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="c1"># id of unit</span>
+    <span class="s2">&quot;_path&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">})</span>
+<span class="c1"># Enable full text search</span>
+<span class="c1"># This creates an extra virtual table (media_fts) to support the full text search</span>
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_activities_raw</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="n">all_activities_raw</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;activity&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table activities_raw (type, activity, id, _path)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also create a table that splits the activity elements out into component parts:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_activities_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;activities&quot;</span><span class="p">]</span>
+<span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;heading&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;timing&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;discussion&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;interaction&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;multipart&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="c1"># id of unit</span>
+    <span class="s2">&quot;_path&quot;</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">})</span>
+<span class="c1"># For the pk, we need to be able to account for multipart elements</span>
+<span class="c1"># Currently, each part in multipart element is an entry in this table</span>
+
+<span class="c1"># Enable full text search</span>
+<span class="c1"># This creates an extra virtual table (media_fts) to support the full text search</span>
+<span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;heading&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">,</span> <span class="s2">&quot;interaction&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="s2">&quot;discussion&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;id&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table activities (type, heading, timing, question, answer, discussion, interaction, multipart, id, _path)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a simple function to grab all the activities associated with a particular unit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_activity_items</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;Activity&quot;</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract activity items from an OU-XML XML object.&quot;&quot;&quot;</span>
+    <span class="n">activities</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;//</span><span class="si">{</span><span class="n">typ</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="n">activity_list_raw</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">activity_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">activities</span><span class="p">:</span>
+            
+        <span class="c1"># Get path to activity within unit</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+        <span class="n">_path</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getpath</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+    
+        <span class="n">activity_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">parse_activity_item</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">_path</span><span class="p">))</span>
+        <span class="n">activity_list_raw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">{</span><span class="s2">&quot;activity&quot;</span><span class="p">:</span> <span class="n">unpack</span><span class="p">(</span><span class="n">activity</span><span class="p">),</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">,</span>
+                                   <span class="s2">&quot;type&quot;</span><span class="p">:</span><span class="n">typ</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">&quot;_path&quot;</span><span class="p">:</span> <span class="n">_path</span><span class="p">}</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">activity_list_raw</span><span class="p">,</span> <span class="n">activity_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create a function to scan the OpenLearn units for various type of activity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_activities_to_db</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;Activity&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add activity type elements to the database.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+        <span class="n">_root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
+        <span class="n">raw_activity_items</span><span class="p">,</span> <span class="n">activity_items</span> <span class="o">=</span> <span class="n">get_activity_items</span><span class="p">(</span><span class="n">_root</span><span class="p">,</span>
+                                                                <span class="n">typ</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span>
+                                                                <span class="n">_id</span><span class="o">=</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="c1"># From the list of activity items,</span>
+        <span class="c1"># create a list of dict items we can add to the database</span>
+        <span class="n">activity_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;heading&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;timing&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                <span class="s2">&quot;interaction&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+                                <span class="s2">&quot;discussion&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="s2">&quot;_path&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span>
+                                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">typ</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+                                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">activity_items</span> <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">]</span>
+
+        <span class="c1"># Add items to the database</span>
+        <span class="n">db</span><span class="p">[</span><span class="n">all_activities_raw</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">raw_activity_items</span><span class="p">)</span>
+        <span class="n">db</span><span class="p">[</span><span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">activity_item_dicts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now parse the documents for <code class="docutils literal notranslate"><span class="pre">Activity</span></code> type elements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_activities_to_db</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;Activity&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How does that look?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM activities LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>activity</td>
+      <td>Activity 1 Looking at different technologies</td>
+      <td>Allow approximately 15 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>&lt;Interaction xmlns:xsi="http://www.w3.org/2001...</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[1]/Activity</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>activity</td>
+      <td>Activity 2 Types of body language</td>
+      <td>Allow approximately 20 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[5]/Activity</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>activity</td>
+      <td>Activity 3 Translating emoji language</td>
+      <td>Allow approximately 15 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[6]/Activity</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And for the raw table?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM activities_raw LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>activity</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[1]/Activity</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[5]/Activity</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[6]/Activity</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="parsing-other-activity-types">
+<h2>Parsing Other Activity Types<a class="headerlink" href="#parsing-other-activity-types" title="Permalink to this headline">#</a></h2>
+<p>An ITQ element can be parsed in the same way as <code class="docutils literal notranslate"><span class="pre">&lt;Activity&gt;</span></code> element, as previously described:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_activities_to_db</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;ITQ&quot;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM activities WHERE type=&#39;itq&#39; LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[2]/ITQ</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[3]/SubSection[1]...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[3]/SubSection[6]...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>How about exercises?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_activities_to_db</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;Exercise&quot;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM activities WHERE type=&#39;exercise&#39; LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Or SAQs?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">add_activities_to_db</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;SAQ&quot;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT * FROM activities WHERE type=&#39;saq&#39; LIMIT 3&quot;</span><span class="p">,</span> <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[2]/Section/SAQ</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[1]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[2]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We should also be able to run full-text search questions over all the activity types:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">fts</span>
+
+<span class="n">fts</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="s2">&quot;activities&quot;</span><span class="p">,</span> <span class="s2">&quot;chemical equation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>heading</th>
+      <th>question</th>
+      <th>interaction</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Part 1</td>
+      <td>&lt;Question&gt;\n                                &lt;P...</td>
+      <td>&lt;Interaction&gt;\n                               ...</td>
+      <td>&lt;Answer&gt;\n                                &lt;Equ...</td>
+      <td>None</td>
+      <td>904a100e4d41cf1a696b547eec1b2f625fc5bd78</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Question 9</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>f36ae6f445e1c39925fa84d3e188af9ed7c15fdc</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SAQ 5</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>a82aa8fe5c90c02095eefb3e7d998efbbc1949c8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We really need a better way to render these results…</p>
+<p>Parsing the activity into markdown would be one way…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TO DO</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -386,10 +1165,10 @@ title="Print to PDF"
             <p class="prev-next-title">Working With Glossary Items</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="saq.html" title="next page">
+    <a class='right-next' id="next-link" href="media_items.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Working With SAQ Items</p>
+        <p class="prev-next-title">Working With Figures and Media Items</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

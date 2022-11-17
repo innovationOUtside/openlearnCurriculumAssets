@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Working With Glossary Items" href="glossary.html" />
-    <link rel="prev" title="Working With OU-XML" href="working-with-ouxml.html" />
+    <link rel="prev" title="Querying the Database With datasette" href="datasette-ui.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -130,6 +130,16 @@ const thebe_selector_output = ".output, .cell_output"
    Working With OU-XML
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="datasette-ui.html">
+   Querying the Database With
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -149,17 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="activity.html">
-   Working With Activity Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="saq.html">
-   Working With SAQ Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="itq.html">
-   Working With ITQs
+   Working With Activities, Exercises, ITQs and SAQs
   </a>
  </li>
  <li class="toctree-l1">
@@ -442,7 +442,7 @@ title="Print to PDF"
 </section>
 <section id="extracting-learning-outcomes">
 <h2>Extracting Learning Outcomes<a class="headerlink" href="#extracting-learning-outcomes" title="Permalink to this headline">#</a></h2>
-<p>Individual learning outcomes are defined as simple text <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcome&gt;</span></code> elements in a <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcomes&gt;</span></code> block wrapper:</p>
+<p>Individual learning outcomes are defined as simple text <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcome&gt;</span></code> elements [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=6.3">docs</a>] in a <code class="docutils literal notranslate"><span class="pre">&lt;LearningOutcomes&gt;</span></code> block wrapper:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;LearningOutcomes</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;Paragraph&gt;</span>After studying this course, you should be able to:<span class="nt">&lt;/Paragraph&gt;</span>
     <span class="nt">&lt;LearningOutcome&gt;</span>understand what interaction design is, the importance of user-centred design and methods of user information gathering<span class="nt">&lt;/LearningOutcome&gt;</span>
@@ -652,11 +652,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="working-with-ouxml.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="datasette-ui.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Working With OU-XML</p>
+            <p class="prev-next-title">Querying the Database With <code class="docutils literal notranslate"><span class="pre">datasette</span></code></p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="glossary.html" title="next page">
