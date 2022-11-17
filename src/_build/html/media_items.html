@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Unit Mapping" href="index_maps.html" />
-    <link rel="prev" title="Working With ITQs" href="itq.html" />
+    <link rel="prev" title="Working With Activities, Exercises, ITQs and SAQs" href="activity.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -130,6 +130,16 @@ const thebe_selector_output = ".output, .cell_output"
    Working With OU-XML
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="datasette-ui.html">
+   Querying the Database With
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -149,17 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="activity.html">
-   Working With Activity Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="saq.html">
-   Working With SAQ Items
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="itq.html">
-   Working With ITQs
+   Working With Activities, Exercises, ITQs and SAQs
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -460,7 +460,7 @@ title="Print to PDF"
 <h1>Working With Figures and Media Items<a class="headerlink" href="#working-with-figures-and-media-items" title="Permalink to this headline">#</a></h1>
 <p>The OU-XML document structure supports the description of figures, which is to say, images, as well as various media file types, such as audio and video asset types.</p>
 <p>In this section, we will see how we can support media discovery across the OpenLearn units by means of a simple full-text search over media captions and transcripts.</p>
-<p><em>For now, the actual media assets (images, videos, audio files, etc.), will <em>not</em> be scraped and added to the database. This means that media assets can be searched for, but not directly rendered.</em></p>
+<p><em>For now, the actual media assets (images, videos, audio files, etc.), will <em>not</em> be scraped or added to the database. This means that media assets can be searched for, but not directly rendered.</em></p>
 <section id="preparing-the-ground">
 <h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
 <p>As ever, we need to set up a database connection:</p>
@@ -502,7 +502,7 @@ title="Print to PDF"
 </section>
 <section id="extracting-figure-items">
 <h2>Extracting <code class="docutils literal notranslate"><span class="pre">Figure</span></code> Items<a class="headerlink" href="#extracting-figure-items" title="Permalink to this headline">#</a></h2>
-<p>Image references are provided inside a <code class="docutils literal notranslate"><span class="pre">&lt;Figure&gt;</span></code> element. This structured element type also bundles a caption and a description:</p>
+<p>Image references are provided inside a <code class="docutils literal notranslate"><span class="pre">&lt;Figure&gt;</span></code> element [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.4">docs</a>]. This structured element type also bundles a caption and a description:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Figure&gt;</span>
     <span class="nt">&lt;Image</span> <span class="na">src=</span><span class="s">&quot;https://www.open.edu/openlearn/ocw/pluginfile.php/1407405/mod_oucontent/oucontent/72913/a111_1_openlearn_piano.tif&quot;</span> <span class="na">x_printonly=</span><span class="s">&quot;y&quot;</span> <span class="na">x_folderhash=</span><span class="s">&quot;5c95a855&quot;</span> <span class="na">x_contenthash=</span><span class="s">&quot;d74c57b3&quot;</span> <span class="na">x_imagesrc=</span><span class="s">&quot;a111_1_openlearn_piano.tif.jpg&quot;</span> <span class="na">x_imagewidth=</span><span class="s">&quot;512&quot;</span> <span class="na">x_imageheight=</span><span class="s">&quot;325&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;Caption&gt;&lt;b&gt;</span>Figure<span class="nt">&lt;/b&gt;</span> 10 Playing the blues<span class="nt">&lt;/Caption&gt;</span>
@@ -1213,7 +1213,6 @@ title="Print to PDF"
     <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s2">&quot;PATH&quot;</span><span class="p">:</span> <span class="nb">str</span> <span class="c1"># get the path to the element; used in testing</span>
 <span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
 <span class="c1"># Note: we might also want to include a way of referencing</span>
 <span class="c1"># any associated cover art, or at least flag the existence</span>
@@ -1228,7 +1227,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table media (type, caption, transcript, description, xpath, code, name, url, id, _id, PATH)&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table media (type, caption, transcript, description, xpath, code, name, url, id, _id)&gt;
 </pre></div>
 </div>
 </div>
@@ -1420,11 +1419,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="itq.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="activity.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Working With ITQs</p>
+            <p class="prev-next-title">Working With Activities, Exercises, ITQs and SAQs</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="index_maps.html" title="next page">
