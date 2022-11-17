@@ -53,7 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Working With Media Items" href="media_items.html" />
+    <link rel="next" title="OU-XML Health Checks and Quality Audits" href="ouxml-quality-audit.html" />
+    <link rel="prev" title="Working With Figures and Media Items" href="media_items.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -163,7 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="media_items.html">
-   Working With Media Items
+   Working With Figures and Media Items
   </a>
  </li>
 </ul>
@@ -176,6 +177,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Unit Mapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ouxml-quality-audit.html">
+   OU-XML Health Checks and Quality Audits
   </a>
  </li>
 </ul>
@@ -317,12 +323,36 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-tables-of-contents-derived-from-sections-in-different-units">
+   Generating Tables of Contents Derived From Sections in Different Units
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -334,6 +364,19 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-tables-of-contents-derived-from-sections-in-different-units">
+   Generating Tables of Contents Derived From Sections in Different Units
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -453,7 +496,12 @@ title="Print to PDF"
 </div>
 <p><em>The <code class="docutils literal notranslate"><span class="pre">tree</span></code> widget doesn’t appear to render when I flow this document as part of a Jupyer Book, so I need to find an alternative tree display for this demo. In the meantime, here’s a screehshot to get a flavour of what you’re missing…</em></p>
 <p><img alt="Screenshot of ipytree tree widget output showing the expnaded table of contents for one section of an OpenLearn Unit and a collapsed view of another." src="_images/index_map_tree.png" /></p>
-<p>It would be easy enough to generate a table contain session and section headings across all units and then use that as a way of providing a heading level search to retrive items at that level of granularity.</p>
+<p>It would be easy enough to generate a table contain session and section headings across all units and then use that as a way of providing a heading level search to retrieve items at that level of granularity.</p>
+<section id="generating-tables-of-contents-derived-from-sections-in-different-units">
+<h2>Generating Tables of Contents Derived From Sections in Different Units<a class="headerlink" href="#generating-tables-of-contents-derived-from-sections-in-different-units" title="Permalink to this headline">#</a></h2>
+<p>As well as generating tree listings of session and section headings related to a single unit, we can also generate table of content views over sections retrieved from multiple units.</p>
+<p>For example, TO DO  - search around a term to retrieve items from multiple units and generate a “customised” uniti on a topic, eg ordered by level, etc</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -487,8 +535,15 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Working With Media Items</p>
+            <p class="prev-next-title">Working With Figures and Media Items</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="ouxml-quality-audit.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">OU-XML Health Checks and Quality Audits</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

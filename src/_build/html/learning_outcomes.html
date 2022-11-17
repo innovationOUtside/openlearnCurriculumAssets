@@ -164,7 +164,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="media_items.html">
-   Working With Media Items
+   Working With Figures and Media Items
   </a>
  </li>
 </ul>
@@ -177,6 +177,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="index_maps.html">
    Unit Mapping
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ouxml-quality-audit.html">
+   OU-XML Health Checks and Quality Audits
   </a>
  </li>
 </ul>
@@ -485,17 +490,21 @@ title="Print to PDF"
 <span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
     <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">})</span>
+<span class="c1"># Note that in this case the _id is not unique</span>
+<span class="c1"># because the same id may apply to multiple los</span>
+<span class="c1"># The _id is a reference for joining tables only</span>
 
 <span class="c1"># Prepare the full-text search table</span>
 <span class="n">db</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_fts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">db</span><span class="p">[</span><span class="s2">&quot;lo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;lo&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db</span><span class="p">[</span><span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;lo&quot;</span><span class="p">,</span> <span class="s2">&quot;_id&quot;</span><span class="p">],</span> <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table lo (code, name, lo)&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table lo (code, name, lo, _id)&gt;
 </pre></div>
 </div>
 </div>
@@ -503,7 +512,9 @@ title="Print to PDF"
 <p>We can now iterate throughall the OU-XML documents in out databases and create a comprehensive OpenElarn learning outcome database:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">create_id</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
     <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
     <span class="n">lo_items</span> <span class="o">=</span> <span class="n">get_lo_items</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
     <span class="c1"># From the list of learning outcome items,</span>
@@ -511,8 +522,11 @@ title="Print to PDF"
     <span class="n">lo_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="n">lo</span><span class="p">,</span>
                          <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">lo</span> <span class="ow">in</span> <span class="n">lo_items</span> <span class="k">if</span> <span class="n">lo</span> <span class="p">]</span>
     
+    <span class="c1"># Add a reference id for each record</span>
+    <span class="n">create_id</span><span class="p">(</span><span class="n">lo_item_dicts</span><span class="p">,</span> <span class="n">id_field</span><span class="o">=</span><span class="s2">&quot;_id&quot;</span><span class="p">)</span>
+    
     <span class="c1"># Add items to the database</span>
-    <span class="n">db</span><span class="p">[</span><span class="s2">&quot;lo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">lo_item_dicts</span><span class="p">)</span>
+    <span class="n">db</span><span class="p">[</span><span class="n">all_lo_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">lo_item_dicts</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -546,6 +560,7 @@ title="Print to PDF"
       <th>code</th>
       <th>name</th>
       <th>lo</th>
+      <th>_id</th>
     </tr>
   </thead>
   <tbody>
@@ -554,18 +569,21 @@ title="Print to PDF"
       <td>L101</td>
       <td>A brief history of communication: hieroglyphic...</td>
       <td>understand how different writing systems have ...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
     </tr>
     <tr>
       <th>1</th>
       <td>L101</td>
       <td>A brief history of communication: hieroglyphic...</td>
       <td>understand how technology influences what we c...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
     </tr>
     <tr>
       <th>2</th>
       <td>H807</td>
       <td>Accessibility of eLearning</td>
       <td>discuss the main challenges facing disabled st...</td>
+      <td>78aec27976cb7d1ce356bf0eda6e8fb66ea532e9</td>
     </tr>
   </tbody>
 </table>
@@ -593,20 +611,13 @@ title="Print to PDF"
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;lo&#39;: &#39;describe some of the characteristics of a range of mental health problems&#39;,
-  &#39;code&#39;: &#39;&#39;,
-  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
+  &#39;_id&#39;: &#39;2b053be7f2aaf259e6a32eec6648f4077fea20e0&#39;},
  {&#39;lo&#39;: &#39;describe how a support network can benefit a young person experiencing mental health problems&#39;,
-  &#39;code&#39;: &#39;&#39;,
-  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
+  &#39;_id&#39;: &#39;2b053be7f2aaf259e6a32eec6648f4077fea20e0&#39;},
  {&#39;lo&#39;: &#39;describe the referral processes for a young person experiencing mental health problems to access professional support&#39;,
-  &#39;code&#39;: &#39;&#39;,
-  &#39;name&#39;: &#39;Introduction to adolescent mental health&#39;},
- {&#39;lo&#39;: &#39;describe key theories and concepts that have informed debates about mental health diagnosis&#39;,
-  &#39;code&#39;: &#39;K314&#39;,
-  &#39;name&#39;: &#39;Making sense of mental health problems&#39;},
+  &#39;_id&#39;: &#39;2b053be7f2aaf259e6a32eec6648f4077fea20e0&#39;},
  {&#39;lo&#39;: &#39;describe the particular problems in digesting plant material&#39;,
-  &#39;code&#39;: &#39;S182&#39;,
-  &#39;name&#39;: &#39;Studying mammals: Plant predators&#39;}]
+  &#39;_id&#39;: &#39;1a8a51c8df910e3bf45558c76cad33fb5f7f5b18&#39;}]
 </pre></div>
 </div>
 </div>

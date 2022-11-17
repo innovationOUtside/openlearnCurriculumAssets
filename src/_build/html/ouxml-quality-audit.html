@@ -1,0 +1,894 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>OU-XML Health Checks and Quality Audits &#8212; Working With OpenLearn Curriculum Assets</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Unit Mapping" href="index_maps.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Working With OpenLearn Curriculum Assets</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="scraping_openlearn.html">
+   Scraping OpenLearn
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ouxml-intro.html">
+   A Quick Overview of OU-XML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="working-with-ouxml.html">
+   Working With OU-XML
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Towards An OU-XML Curriculum Asset Bank
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="learning_outcomes.html">
+   Working With Learning Outcomes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="glossary.html">
+   Working With Glossary Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="activity.html">
+   Working With Activity Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="saq.html">
+   Working With SAQ Items
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="itq.html">
+   Working With ITQs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="media_items.html">
+   Working With Figures and Media Items
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Unit Mapping
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="index_maps.html">
+   Unit Mapping
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   OU-XML Health Checks and Quality Audits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/ouxml-quality-audit.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#database-setup">
+   Database Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ou-xml-media-item-quality-checks">
+   OU-XML Media Item Quality Checks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-figure-asset-definitions">
+     Checking Figure Asset Definitions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-audio-asset-definitions">
+     Checking Audio Asset Definitions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-video-asset-definitions">
+     Checking Video Asset Definitions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#link-checking">
+   Link Checking
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-innovationoutside-ouxml-link-checker">
+     The
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       innovationOUtside/ouxml-link-checker
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>OU-XML Health Checks and Quality Audits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#database-setup">
+   Database Setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ou-xml-media-item-quality-checks">
+   OU-XML Media Item Quality Checks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-figure-asset-definitions">
+     Checking Figure Asset Definitions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-audio-asset-definitions">
+     Checking Audio Asset Definitions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checking-video-asset-definitions">
+     Checking Video Asset Definitions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#link-checking">
+   Link Checking
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-innovationoutside-ouxml-link-checker">
+     The
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       innovationOUtside/ouxml-link-checker
+      </span>
+     </code>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="ou-xml-health-checks-and-quality-audits">
+<h1>OU-XML Health Checks and Quality Audits<a class="headerlink" href="#ou-xml-health-checks-and-quality-audits" title="Permalink to this headline">#</a></h1>
+<p>As a structured document, OU-XML contains a wide variety of elements that are <em>countable</em>. As such, it is trivial to generate reports that describe how many elements of a particular kind are contained within a particular document. For example, we might count the number of learning outcomes defined in a particular unit, or the number media assets it includes. These counts can feed into quality checks for the document. For example, we might require that the number of outcomes is non-zero (i.e. at least one learning outcome is described at a particular level within the OU-XML document); or where media items are included, we might flag this unit as one that may have rights clearance considerations, or that may raise accessibility issues.</p>
+<p>Furthermore, several structural elements are defined in such a way that they encourage, if not actually require, the inclusion of metadata or supplementary information. For example, an estimated time requirement in an activity, or a transcript or long description for a media item.</p>
+<p>Finally, the OU-XML document may include references to assets that are themselves “testable”: web links to third party resources that can be link checked, for example.</p>
+<p>In this section, we will review several ways in which we can produce quick summary reports that review the structural content of an OU-XML document and hint at possible health checks and quality audit data we might derive from it.</p>
+<p>As well as running reports on individual OU-XML documents, we can also run reports over a set of OU-XML documents, or assets retrieved from them. This means we could generate reports on the health of the OpenLeaen OU-XML corpus <em>as a whole</em>, for example. Or audit OU-XML documents from different faculties to see whether units from one facultry have a different asset mix to units from another, for example.</p>
+<section id="database-setup">
+<h2>Database Setup<a class="headerlink" href="#database-setup" title="Permalink to this headline">#</a></h2>
+<p>Set up a database connection to our OpenLearn curriculum asset database:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="ou-xml-media-item-quality-checks">
+<h2>OU-XML Media Item Quality Checks<a class="headerlink" href="#ou-xml-media-item-quality-checks" title="Permalink to this headline">#</a></h2>
+<p>Where media items are defined in an OU-XML document, they should include information supplementary to the resource reference such as a long description or transcript.</p>
+<p>It is trivial to check that the corresponding fields are populated, if not check the actual substance of the content of those fields.</p>
+<p>A <em>Source reference</em> attribute is available that may be useful for rights tracking purposes etc.</p>
+<section id="checking-figure-asset-definitions">
+<h3>Checking Figure Asset Definitions<a class="headerlink" href="#checking-figure-asset-definitions" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="checking-audio-asset-definitions">
+<h3>Checking Audio Asset Definitions<a class="headerlink" href="#checking-audio-asset-definitions" title="Permalink to this headline">#</a></h3>
+<p>Ideally, every audio asset should have a transcript. We can generate summary reports from the database to identify audio items that <em>do not</em> have an associated transcript.</p>
+<p>For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT xpath, code, name, type, caption, transcript, description</span>
+<span class="s2">            FROM media WHERE type=&#39;audio&#39; AND transcript IS NULL&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>xpath</th>
+      <th>code</th>
+      <th>name</th>
+      <th>type</th>
+      <th>caption</th>
+      <th>transcript</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L313</td>
+      <td>Advanced German: Language, culture and history</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L313</td>
+      <td>Advanced German: Language, culture and history</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L313</td>
+      <td>Advanced German: Language, culture and history</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L313</td>
+      <td>Advanced German: Language, culture and history</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L313</td>
+      <td>Advanced German: Language, culture and history</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>S110</td>
+      <td>Using numbers and handling data</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>S110</td>
+      <td>Using numbers and handling data</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>S110</td>
+      <td>Using numbers and handling data</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>S110</td>
+      <td>Using numbers and handling data</td>
+      <td>audio</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>/MediaContent</td>
+      <td>S111</td>
+      <td>What are waves?</td>
+      <td>audio</td>
+      <td>Audio 1  The song of a humpback whale. (1:09 min)</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>117 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>Lots of those appear to be audio files related to activities in language units, so perhaps the provision of a transcript would defeat the purpose of the activity?</p>
+<p>The “whale song” item is interesting in its lack of a transcript or description: there is no transcript as such, but the sound presumably still be described?</p>
+</section>
+<section id="checking-video-asset-definitions">
+<h3>Checking Video Asset Definitions<a class="headerlink" href="#checking-video-asset-definitions" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT xpath, code, name, type, caption, transcript, description</span>
+<span class="s2">            FROM media WHERE type=&#39;video&#39; AND transcript IS NULL&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>xpath</th>
+      <th>code</th>
+      <th>name</th>
+      <th>type</th>
+      <th>caption</th>
+      <th>transcript</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>L310</td>
+      <td>Advanced French: At the science museum in Paris</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/MediaContent</td>
+      <td></td>
+      <td>An introduction to geology</td>
+      <td>video</td>
+      <td>Video 1.5 Magnetic reversal stripes</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/MediaContent</td>
+      <td>S182</td>
+      <td>Aquatic mammals</td>
+      <td>video</td>
+      <td>Video 2 Humpback whale feeding</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>S182</td>
+      <td>Aquatic mammals</td>
+      <td>video</td>
+      <td>Video 3 Hunting behaviour of dolphins</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/MediaContent</td>
+      <td></td>
+      <td>Being an OU student</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>U214</td>
+      <td>Англійська у світі сьогодні</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>U214</td>
+      <td>Англійська у світі сьогодні</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>U214</td>
+      <td>Англійська у світі сьогодні</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>U214</td>
+      <td>Англійська у світі сьогодні</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>/Activity/Question/MediaContent</td>
+      <td>U214</td>
+      <td>Англійська у світі сьогодні</td>
+      <td>video</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>102 rows × 7 columns</p>
+</div></div></div>
+</div>
+</section>
+</section>
+<section id="link-checking">
+<h2>Link Checking<a class="headerlink" href="#link-checking" title="Permalink to this headline">#</a></h2>
+<p>Web links in an OU-XML document may be relative links to content that is referenced relative to the location of the document itself, or absolute ones.</p>
+<p>De-referencing the relative links may require knowledge of the local context, in which <em>in situ</em> testing of materials derived from the source document may be more appropriate.</p>
+<p>Testing of absolute links can be performed at any time, and can be tested to check not just that the referenced location can be resolved correctly and returns some sort of resource (for example, the page <em>does not</em> return <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">404</span> <span class="pre">not</span> <span class="pre">found</span></code> or <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">451</span> <span class="pre">Unavailable</span> <span class="pre">for</span> <span class="pre">Legal</span> <span class="pre">Reasons</span></code> error; <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">403</span> <span class="pre">Forbidden</span></code> errors might also be worth detecting in the context that they identify an authentication context or requirement associated with retrieving the  referenced resource). If requests return an <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">301</span> <span class="pre">Moved</span> <span class="pre">Permanently</span></code> response, there might be a case for updating the URL. Similarly, other ways of detecting redirects might be used to flag up concerns regarding the current status of link and whether it should be update to point to a resource more directly.</p>
+<p>As well as simply testing that links resolve, the presence of links in an OU-XML document also raises concerns regarding whether or not the returned resource is the intended resource. Web pages are not ncessarily static and may be update at any time by their owners. Or if a resource disappears and an alternative needs to be found, it may not be clear from the context of the OU-XML document linking to the resource what the resource contained or what was particulalry notable about that resource; this in turn can lead to difficulties when it comets to identifying what an appropriate replacement resource might be.</p>
+<section id="the-innovationoutside-ouxml-link-checker">
+<h3>The <code class="docutils literal notranslate"><span class="pre">innovationOUtside/ouxml-link-checker</span></code><a class="headerlink" href="#the-innovationoutside-ouxml-link-checker" title="Permalink to this headline">#</a></h3>
+<p>The <a class="reference external" href="https://github.com/innovationOUtside/ouxml-link-checker"><code class="docutils literal notranslate"><span class="pre">innovationOUtside/ouxml-link-checker</span></code></a> addresses several issues associated with link quality checking, in particular:</p>
+<ul class="simple">
+<li><p><em>checking link resolution</em>:</p>
+<ul>
+<li><p>broken links (404);</p></li>
+<li><p>temporary and permanent redirects;</p></li>
+<li><p>links using OU authentication (e.g. <em>libezproxy</em> linked domains suffixed by <code class="docutils literal notranslate"><span class="pre">.libezproxy.open.ac.uk</span></code> will have the <em>libezproxy</em> component stripped);</p></li>
+<li><p>links using liblinks (of the form <code class="docutils literal notranslate"><span class="pre">https://www.open.ac.uk/libraryservices/resource/website:ID&amp;f=FID;</span></code> the <code class="docutils literal notranslate"><span class="pre">f=FID</span></code> seems redundant - what does it do?)</p></li>
+</ul>
+</li>
+<li><p><em>link archiving</em>: for each link to an public web resource, submit the link to the Intenet Archive for archiving purposes. Ideally, OU-XML links to public web resources should have a reference to an archived copy of the referenced resource that can be “swapped in” in the case of the original resource disappearing. (This approprach is used for maintaining link stability and integrity in Wikipedia, for example.)</p></li>
+<li><p><em>capturing linked page screenshots</em>: in many cases, simply being able to see a screenshot of a complete web page will provide enough information regarding the content of the page to be able to identify enough context to support the discovery of a replacement resource. A simple gallery of screenshots of pages referenced from an OU-XML document can also be used to support a quick review of linked to content in an off-line way, as well as automated testing to identify whether the content of a page or a partciular area of the page has changed either at all, or in a significant way. (This may be important for accessibility testing, for example, where the accessibility of linked to resources needs to be checked.)</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="index_maps.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Unit Mapping</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Tony Hirst<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
