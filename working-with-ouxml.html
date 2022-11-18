@@ -167,6 +167,11 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Figures and Media Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="equations.html">
+   Working With Equations
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -410,10 +415,207 @@ title="Print to PDF"
 <p>OU Internal readers might also find the <a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747"><em>Structured Content Tag Guide</em></a> a useful, and more comprehensive, guide to the OU-XML document structure.</p>
 <section id="treating-ou-xml-documents-as-databases">
 <h2>Treating OU-XML Documents As Databases<a class="headerlink" href="#treating-ou-xml-documents-as-databases" title="Permalink to this headline">#</a></h2>
-<p><em>TO DO</em></p>
-<ul class="simple">
-<li><p>include simple examples of xpath searching, extracting elements</p></li>
-</ul>
+<p>In production terms, OU-XML documents are used are gold-master documents for representing academic content in a strcutured way. The structure adds semantics (which is to say, “meaning”) to content elements and these semantics are then interpreted using visual cues when the document is rendered as a final output text. For example, in the OU VLE, <code class="docutils literal notranslate"><span class="pre">&lt;Acitivity&gt;</span></code> elements are typically rendered as a box element with a blut background that distinguishes the activity from the rest of the content.</p>
+<p>From a scrape of OpenLearn, we can create a database of OU-XML documents that we can use as a basis for strcutured search over the whole OpenLearn free-learning corpus.</p>
+<p>As well as supporting the rendering of a document for presentation purposes in a meanigful way, the structure of an XML document provides a way of discovering content elements with particular semantics, which is to say: we can treat an XML document as a simple database by running queries directly over it and returning results extracted from it. We can also mine XML documents to extract elements of a particular type and place those elements in another database (either a “traditional” database, or another XML document) and use that second database to search over the extracted elements.</p>
+<p>In this section, we will briefly review how we can treat an individual XML document as a database that can be both queried and mined.</p>
+<p>Start by creating a connection to our database of scraped OU-XML documents scraped from OpenLearn:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
+
+<span class="c1"># Open database connection</span>
+<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can grab a single OU-XML document for a particular unit by name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Unit title</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;An introduction to computers and computer systems&quot;</span>
+
+<span class="c1"># Grab an OU-XML file that is known to contain glossary items</span>
+<span class="n">xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT xml FROM xml WHERE name=&#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can parse this document into an XML object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parse the XML into an xml object</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">xml_raw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The XML document is a hierarchical, tree based tag strcutured document format.</p>
+<p><em>If you haveever seen raw HTML, HTML is a particular flavour of XML.</em></p>
+<p>The nested tag elements provide a way of indexing (that is, <em>addressing</em> or <em>referring to</em>) to a particular element.</p>
+<p>For example, in the following fragment of XML:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Glossary&gt;</span>
+    <span class="nt">&lt;GlossaryItem&gt;</span>
+        <span class="nt">&lt;Term&gt;</span>Computer<span class="nt">&lt;/Term&gt;</span>
+        <span class="nt">&lt;Definition&gt;</span>
+            A machine that manipulates data following a list of instructions that have been programmed into it.
+        <span class="nt">&lt;/Definition&gt;</span>
+    <span class="nt">&lt;/GlossaryItem&gt;</span>
+    <span class="nt">&lt;GlossaryItem&gt;</span>
+        <span class="nt">&lt;Term&gt;</span>Computer program<span class="nt">&lt;/Term&gt;</span>
+        <span class="nt">&lt;Definition&gt;</span>
+            The list of instructions the computer follows to process input and produce output.
+        <span class="nt">&lt;/Definition&gt;</span>
+    <span class="nt">&lt;/GlossaryItem&gt;</span>
+<span class="nt">&lt;/Glossary&gt;</span>
+</pre></div>
+</div>
+<p>we can “address” the <em>Computer</em> <strong>term</strong> as <code class="docutils literal notranslate"><span class="pre">Glossary/GlossaryItem[0]/Term</span></code> and the <strong>definition</strong> of the <em>Computer program</em> term as <code class="docutils literal notranslate"><span class="pre">Glossary/GlossaryItem[1]/Definition</span></code>. These <em>path</em> elements tell us how to “walk the tree”. The numbers in brackets tell you which of several items with the same “tag path” you are interested in (the values are zero-indexed, which is to say the first one has index value <code class="docutils literal notranslate"><span class="pre">0</span></code>, the second one has index value <code class="docutils literal notranslate"><span class="pre">1</span></code>, and so on).</p>
+<p>We can query our XML dcoument see if it has a <code class="docutils literal notranslate"><span class="pre">Glossary</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//Glossary&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Glossary at 0x7f987d2df840&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Yes it does: there is a single <code class="docutils literal notranslate"><span class="pre">Glossary</span></code> tag in the document.</p>
+<p>We can preview it as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">tidy</span>
+
+<span class="c1"># The result of out query was a list with a single item</span>
+<span class="c1"># We can address that item as the first (zero indexed) item</span>
+<span class="c1"># in the list, and then &quot;tidy&quot; it to grab the XML it </span>
+<span class="c1"># refers to, printing the result to get a formatted output</span>
+<span class="c1"># Only display the first 750 characters of the result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tidy</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//Glossary&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[:</span><span class="mi">750</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Glossary xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+            &lt;GlossaryItem&gt;
+                &lt;Term&gt;Computer&lt;/Term&gt;
+                &lt;Definition&gt;A machine that manipulates data following a list of instructions that have been programmed into it.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+            &lt;GlossaryItem&gt;
+                &lt;Term&gt;Computer program&lt;/Term&gt;
+                &lt;Definition&gt;The list of instructions the computer follows to process input and produce output.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+            &lt;GlossaryItem&gt;
+                &lt;Term&gt;Input device&lt;/Term&gt;
+                &lt;Definition&gt;A component that can function both as an input and as an output device.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+            &lt;Glo
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also run a query to get just the glossary terms:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The search returns a list of items</span>
+<span class="n">terms</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//Glossary/GlossaryItem/Term&quot;</span><span class="p">)</span>
+
+<span class="c1"># Preview the first five only</span>
+<span class="n">terms</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Term at 0x7f987d2f5480&gt;,
+ &lt;Element Term at 0x7f987d2ff7c0&gt;,
+ &lt;Element Term at 0x7f987d2ff900&gt;,
+ &lt;Element Term at 0x7f987d2ff980&gt;,
+ &lt;Element Term at 0x7f987d2ff940&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see those terms:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computer
+Computer program
+Input device
+Internet
+Output device
+</pre></div>
+</div>
+</div>
+</div>
+<p>The syntax gets a little fiddly, but we can also search within elemnt text to find terms containing a particular word:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">computer_terms</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//Glossary/GlossaryItem/Term[contains(text(), &#39;Computer&#39;)]&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">computer_terms</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">term</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computer
+Computer program
+Computer bus
+Computer system
+</pre></div>
+</div>
+</div>
+</div>
+<p>From these result elements, we can get the “parent” <code class="docutils literal notranslate"><span class="pre">&lt;GlossaryItem&gt;</span></code> element and display the related terms and definitions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">getparent</span><span class="p">()</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">computer_terms</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tidy</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;GlossaryItem xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                &lt;Term&gt;Computer&lt;/Term&gt;
+                &lt;Definition&gt;A machine that manipulates data following a list of instructions that have been programmed into it.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+&lt;GlossaryItem xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                &lt;Term&gt;Computer program&lt;/Term&gt;
+                &lt;Definition&gt;The list of instructions the computer follows to process input and produce output.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+&lt;GlossaryItem xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                &lt;Term&gt;Computer bus&lt;/Term&gt;
+                &lt;Definition&gt;The internal data connections across the input and output subsystems and the secondary memory subsystem to the computer&amp;#8217;s processor and main memory.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+&lt;GlossaryItem xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+                &lt;Term&gt;Computer system&lt;/Term&gt;
+                &lt;Definition&gt;Formally a processor and its associated devices to make a usable &amp;#8216;system&amp;#8217;, but often the complete system, is referred to as a &amp;#8216;computer&amp;#8217;.&lt;/Definition&gt;
+            &lt;/GlossaryItem&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>We could equally have run a query to find all the <code class="docutils literal notranslate"><span class="pre">&lt;GlossaryItem&gt;</span></code> elements where the <code class="docutils literal notranslate"><span class="pre">&lt;Term&gt;</span></code> included out search term. In code, for any particular task, there is generally more thn one way to do it…</em></p>
+<p>What this shows is that we can run queries into different structured parts of the OU-XML document rather than just searching the whole document for a particular term.</p>
+<p>We can also use this approach to extract (or <em>mine</em>) particualr sorts of element from the document and place those into another collection of just those sorts of thing. For example, by mining the <code class="docutils literal notranslate"><span class="pre">Glossary</span></code> elements from all our OpenLearn OU-XML documents, we could easily generate a <em>OpenLearn Glossary</em> that combines all glossed items into a single OpenLearn-wide glossary.</p>
 </section>
 <section id="viewing-and-rendering-xml-elements-using-xslt">
 <h2>Viewing and Rendering XML Elements Using XSLT<a class="headerlink" href="#viewing-and-rendering-xml-elements-using-xslt" title="Permalink to this headline">#</a></h2>
@@ -508,6 +710,52 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <div class="system-message">
 <p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/working-with-ouxml.ipynb</span>, line 4)</p>
 <p>Non-consecutive header level increase; 0 to 4 [myst.header]</p>
+</div>
+</div>
+</div>
+<p>For convenience, we could wrap those steps up in a single function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">xml_transform</span><span class="p">(</span><span class="n">xml</span><span class="p">,</span> <span class="n">xslt</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transform an XML document via XSLT.&quot;&quot;&quot;</span>
+    <span class="n">xslt_transformer</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XSLT</span><span class="p">(</span><span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">xslt</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()))</span>
+    
+    <span class="c1"># Apply the XSLT stylesheet</span>
+    <span class="n">transformed_xml</span> <span class="o">=</span> <span class="n">xslt_transformer</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">transformed_xml</span>
+    
+<span class="k">def</span> <span class="nf">ouxml2md</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="n">xslt</span><span class="o">=</span><span class="s2">&quot;xslt/ouxml2md.xslt&quot;</span><span class="p">,</span> <span class="n">shim</span><span class="o">=</span><span class="s2">&quot;DummyRoot&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert OU-XML fragment to markdown.&quot;&quot;&quot;</span>
+    
+    <span class="c1"># Convert bytes to parsed XML doc if required</span>
+    <span class="n">ouxml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">ouxml</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">ouxml</span>
+    
+    <span class="c1"># Create the shim so we can apply the templat at fragment level</span>
+    <span class="n">wrapped_xml</span><span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">shim</span><span class="si">}</span><span class="s2">&gt;&lt;/</span><span class="si">{</span><span class="n">shim</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">)</span>
+    <span class="n">wrapped_xml</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ouxml</span><span class="p">)</span>
+    
+    <span class="n">transformed_xml</span> <span class="o">=</span> <span class="n">xml_transform</span><span class="p">(</span><span class="n">wrapped_xml</span><span class="p">,</span> <span class="n">xslt</span><span class="p">)</span>
+    
+    <span class="c1"># Surely there&#39;s a better way to get the tag content?</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">transformed_xml</span><span class="o">.</span><span class="n">getroot</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;/md&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">md</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s try it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ouxml2md</span><span class="p">(</span><span class="n">test_xml</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\n&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;\n\n#### Question\n\nLisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, [__Paul Fort&amp;#160;: po&amp;#232;me__](https://wheatoncollege.edu/vive-voix/par-auteur/fort/)__.__\n\n&lt;!-- #endregion --&gt;\n&#39;
+</pre></div>
 </div>
 </div>
 </div>
