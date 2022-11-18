@@ -730,15 +730,16 @@ title="Print to PDF"
 <p>That’s not so easy to interpret, as is, so how about if we render the activities in our results list?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_activity_xml</span> <span class="ow">in</span> <span class="n">example_fts_search</span><span class="p">[</span><span class="s2">&quot;activity&quot;</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">md_out</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_activity_xml</span> <span class="ow">in</span> <span class="n">example_fts_search</span><span class="p">[</span><span class="s2">&quot;activity&quot;</span><span class="p">]:</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">ouxml2md</span><span class="p">(</span> <span class="n">_activity_xml</span> <span class="p">)</span>
     
     <span class="c1"># Hack because Sphinx renders errors</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="s2">&quot;SUBHEADER: &quot;</span><span class="p">)</span>
+    <span class="n">md_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_md</span><span class="p">)</span>
 
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="n">_md</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">))</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&lt;hr/&gt;&quot;</span><span class="p">))</span>
+<span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;&lt;hr/&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">md_out</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -770,9 +771,9 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 <p>HEADER: # Answer</p>
 <p>Adding more CO<sub>2</sub> will increase the production of H<sup>+</sup> and HCO<sub>3</sub><sup>−</sup>. Increased H<sup>+</sup> will make the tissue more acidic, meaning that the pH will decrease.</p>
 <!-- #endregion -->
-</div><hr/><div style='background:lightblue'>
+<hr/>
 <!-- #region tags=["style-activity"] -->
-<p>HEADER:  Question 9</p>
+HEADER:  Question 9
 <p>HEADER: # Question</p>
 <p>How much energy could be obtained from 1 kg of hydrogen (a) if it were to undergo nuclear fusion in the interior of a star, (b) if it were to spiral into a black hole? Would you expect to get more energy if it were to chemically burn in an oxygen atmosphere?</p>
 <p>HEADER: # Answer</p>
@@ -783,7 +784,7 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 <p>0.1<em>mc</em><sup>2</sup> = 0.1 × 1 × (3 × 10<sup>8</sup>ms<sup>−1</sup>)<sup>2</sup> J = 9 × 10<sup>15</sup> J.</p>
 <p>You would expect much <em>less</em> energy from the chemical reaction.</p>
 <!-- #endregion -->
-</div><hr/></div>
+</div></div>
 </div>
 <section id="adding-other-activity-types-to-the-database">
 <h3>Adding Other Activity Types to the Database<a class="headerlink" href="#adding-other-activity-types-to-the-database" title="Permalink to this headline">#</a></h3>
@@ -804,17 +805,40 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 <span class="s2">                                AND activity LIKE &#39;%molecule</span><span class="si">%c</span><span class="s2">ompound%&#39;&quot;</span><span class="p">,</span>
                            <span class="n">con</span><span class="o">=</span><span class="n">activity_db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
 
+<span class="n">md_out</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">_itq_xml</span> <span class="ow">in</span> <span class="n">example_itqs</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]:</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">ouxml2md</span><span class="p">(</span> <span class="n">_itq_xml</span> <span class="p">)</span>
     <span class="c1"># Hack because Sphinx renders errors</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="n">_md</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">))</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&lt;hr/&gt;&quot;</span><span class="p">))</span>
+    <span class="n">md_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_md</span><span class="p">)</span>
+
+<span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;&lt;hr/&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">md_out</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div style='background:lightblue'>
+<!--ITQ-->
+<p>HEADER:  Question</p>
+<p>Are the following compounds molecular or non-molecular? Chlorine (Cl<sub>2</sub>) and sodium chloride (NaCl).</p>
+<p>HEADER:  Answer</p>
+<ul class="simple">
+<li></li>
+</ul>
+<p>Chlorine (Cl<sub>2</sub>) is a molecular compound – it is made up of discrete Cl<sub>2</sub> molecules.</p>
+<ul class="simple">
+<li></li>
+</ul>
+<p>Sodium chloride (NaCl) a non-molecular compound, is made up of Na<sup>+</sup> and Cl<sup>- </sup>ions.</p>
+<!--ENDITQ--><hr/><!--ITQ-->
+<p>HEADER:  Question</p>
+<p>Is Pt2+ a hard or soft acid? What types of molecule or ion in the bloodstream might react with cisplatin before it gets a chance to cross the cell membrane?</p>
+<p>HEADER:  Answer</p>
+<p>There are many species present in blood, including sugars, salt, proteins, oxygen and, of course, water. Pt2+ is a soft acid, so soft bases pose the greatest threat, also those species that are in the greatest concentration. Thus sulfur-containing compounds, such as cysteine, might react with cisplatin, as might water.</p>
+<!--ENDITQ-->
+</div></div>
 </div>
-<p><em>It might be worh having the raw <code class="docutils literal notranslate"><span class="pre">Activity</span></code>, <code class="docutils literal notranslate"><span class="pre">Exercise</span></code>, <code class="docutils literal notranslate"><span class="pre">ITQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SAQ</span></code> items in their own databases so that we can then run a full-text search over the raw XML for just those activity types. (I donlt think we can run facetted queries within the SQLite full-text search?</em></p>
+<p><em>It might be worth having the raw <code class="docutils literal notranslate"><span class="pre">Activity</span></code>, <code class="docutils literal notranslate"><span class="pre">Exercise</span></code>, <code class="docutils literal notranslate"><span class="pre">ITQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SAQ</span></code> items in their own databases so that we can then run a full-text search over the raw XML for just those activity types. (I donlt think we can run facetted queries within the SQLite full-text search?</em></p>
 </section>
 </section>
 <section id="decomposing-activities-into-component-parts">
@@ -899,6 +923,19 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Activity 1&#39;,
+  None,
+  &#39;&lt;Question xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;NumberedList&gt;&lt;ListItem&gt;Identify some eLearning materials you are familiar with. You may have written them, taught them, or even studied them (you can think about this course if you have no examples of your own).&lt;/ListItem&gt;&lt;ListItem&gt;Identify the different elements of the materials &amp;#8211; there will almost certainly be text, but are there images, videos, forms or boxes to enter text, drag-and-drop exercises, quizzes etc.? List all of the different types of element.&lt;/ListItem&gt;&lt;ListItem&gt;For each item on the list try to identify where students with particular disabilities might experience difficulties, and try to suggest possible ways (if you can think of any) that these barriers may be removed. It does not matter if your list is incomplete, or if you cannot think of solutions to some of your identified issues. We will revisit this task later, after you have worked through more of the course materials.&lt;/ListItem&gt;&lt;/NumberedList&gt;&lt;Paragraph&gt;Use the box below to record your thoughts.&lt;/Paragraph&gt;&lt;/Question&gt;&#39;,
+  &#39;&lt;Interaction xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;FreeResponse size=&quot;paragraph&quot; id=&quot;fr_3&quot;/&gt;&lt;/Interaction&gt;&#39;,
+  None,
+  None,
+  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;,
+  False,
+  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;)]
+</pre></div>
+</div>
+</div>
 </div>
 <p><em>TO DO</em> - the <code class="docutils literal notranslate"><span class="pre">&lt;Interaction&gt;</span></code> element takes several forms: <code class="docutils literal notranslate"><span class="pre">&lt;SingleChoice&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Matching&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;FreeResponse&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;VoiceRecorder&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MultipleChoice&gt;</span></code>.</p>
 <p>As such, it makes sense to record interaction components in a table of their own, referenced to the parent activity element etc. TO DO</p>
@@ -928,6 +965,11 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 <span class="n">activity_db</span><span class="p">[</span><span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;heading&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">,</span> <span class="s2">&quot;interaction&quot;</span><span class="p">,</span>
                                                  <span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="s2">&quot;discussion&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">],</span>
                                                 <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table activities (type, heading, timing, question, answer, discussion, interaction, multipart, id, _path)&gt;
 </pre></div>
 </div>
 </div>
@@ -996,6 +1038,80 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>activity</td>
+      <td>Activity 1 Looking at different technologies</td>
+      <td>Allow approximately 15 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>&lt;Interaction xmlns:xsi="http://www.w3.org/2001...</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[1]/Activity</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>activity</td>
+      <td>Activity 2 Types of body language</td>
+      <td>Allow approximately 20 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[5]/Activity</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>activity</td>
+      <td>Activity 3 Translating emoji language</td>
+      <td>Allow approximately 15 minutes</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[6]/Activity</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>And for the raw table?</p>
 <div class="cell docutils container">
@@ -1004,6 +1120,56 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>activity</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[1]/Activity</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[5]/Activity</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>activity</td>
+      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
+      <td>/Item/Unit/Session[6]/Activity</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 <section id="parsing-other-activity-types">
@@ -1017,6 +1183,80 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[2]/ITQ</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[3]/SubSection[1]...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>itq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6bff78840be5165329dda278418bbbd54c909047</td>
+      <td>/Item/Unit/Session[1]/Section[3]/SubSection[6]...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>How about exercises?</p>
 <div class="cell docutils container">
@@ -1027,6 +1267,41 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Or SAQs?</p>
 <div class="cell docutils container">
@@ -1037,6 +1312,80 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>heading</th>
+      <th>timing</th>
+      <th>question</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>interaction</th>
+      <th>multipart</th>
+      <th>id</th>
+      <th>_path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[2]/Section/SAQ</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[1]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>saq</td>
+      <td>None</td>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
+      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[2]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We should also be able to run full-text search questions over all the activity types:</p>
 <div class="cell docutils container">
@@ -1045,6 +1394,109 @@ $$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>heading</th>
+      <th>question</th>
+      <th>interaction</th>
+      <th>answer</th>
+      <th>discussion</th>
+      <th>id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Part 1</td>
+      <td>&lt;Question&gt;\n                                &lt;P...</td>
+      <td>&lt;Interaction&gt;\n                               ...</td>
+      <td>&lt;Answer&gt;\n                                &lt;Equ...</td>
+      <td>None</td>
+      <td>904a100e4d41cf1a696b547eec1b2f625fc5bd78</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Question 9</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>f36ae6f445e1c39925fa84d3e188af9ed7c15fdc</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>None</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SAQ 5</td>
+      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
+      <td>None</td>
+      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
+      <td>None</td>
+      <td>a82aa8fe5c90c02095eefb3e7d998efbbc1949c8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>We really need a better way to render these results…</p>
 <p>Parsing the activity into markdown would be one way…</p>
