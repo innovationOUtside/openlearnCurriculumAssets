@@ -513,6 +513,8 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span>
 
+<span class="c1"># Hack because Sphinx gets upset rendering mismatched headers</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
 <span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="n">md</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -520,11 +522,11 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div style='background:lightblue'>
 <!-- #region tags=["style-activity"] -->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/activity.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 3 [myst.header]</p>
-</div>
-</div>
+<p>HEADER:  Activity 2</p>
+<p>HEADER: # Question</p>
+<p>In Activity 1 you created a list of types of interaction that might be found in a set of your eLearning materials. Now it is time to <a class="reference external" href="#act1">revisit that list</a>. Did the materials in this course prompt you to think of other interactions you had missed? What about the ways in which disabled students might access your materials – add to your list any that you may have initially not thought about. Finally, consider ways in which those issues might be removed or avoided, now that you know a little more about how to create accessible eLearning.</p>
+<!-- #endregion -->
+</div></div>
 </div>
 <p>To keep the size(s) of the databases we are working with relatively small, (&lt;100MB and we can store them in a GitHub repository and serve them from GitHub Pages), we can create a new fatbase for our activities table.</p>
 <p>The database table itself can be quite simple, athough note that as well as including the raw XML for the activity, we include a reference to the activity based on its <em>path</em> within the unit.</p>
@@ -730,6 +732,11 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">_activity_xml</span> <span class="ow">in</span> <span class="n">example_fts_search</span><span class="p">[</span><span class="s2">&quot;activity&quot;</span><span class="p">]:</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">ouxml2md</span><span class="p">(</span> <span class="n">_activity_xml</span> <span class="p">)</span>
+    
+    <span class="c1"># Hack because Sphinx renders errors</span>
+    <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
+    <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="s2">&quot;SUBHEADER: &quot;</span><span class="p">)</span>
+
     <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="n">_md</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">))</span>
     <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&lt;hr/&gt;&quot;</span><span class="p">))</span>
 </pre></div>
@@ -738,17 +745,45 @@ title="Print to PDF"
 <div class="cell_output docutils container">
 <div style='background:lightblue'>
 <!-- #region tags=["style-activity"] -->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/activity.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 3 [myst.header]</p>
-</div>
-<hr/><div style='background:lightblue'>
+<p>HEADER:  Activity 11 Reaction components
+<strong>Timing: Allow about 10 minutes</strong></p>
+<!--
+            Heading:
+            Part 1-->
+<p>HEADER: # Question</p>
+<p>Enter the components represented by x and y that complete the formula below.
+$$x + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons y + HCO_3 \ ^-$$
+There are superscript and subscript buttons in the formatting bar. Make sure to use these to enter the correct chemical formula, including the associated positive and negative charges:</p>
+<p>x =</p>
+<p>y =</p>
+<p>HEADER: # Answer
+$$x = H_2O$$$$y = H^+$$
+giving:
+$$H_2O + CO_2 \rightleftharpoons H_2CO_3 \rightleftharpoons H^+ + HCO_3 \ ^-$$<!--
+            Heading:
+            Part 2--></p>
+<p>HEADER: # Question</p>
+<p>Using the completed formula above, what will happen to levels of H<sup>+</sup> in the brain as CO<sub>2</sub>-rich blood reaches the medulla?</p>
+<p>levels of H<sup>+</sup> will increase</p>
+<p>levels of H<sup>+</sup> will decrease</p>
+<p>levels of H<sup>+</sup> will stay the same</p>
+<p>HEADER: # Answer</p>
+<p>Adding more CO<sub>2</sub> will increase the production of H<sup>+</sup> and HCO<sub>3</sub><sup>−</sup>. Increased H<sup>+</sup> will make the tissue more acidic, meaning that the pH will decrease.</p>
+<!-- #endregion -->
+</div><hr/><div style='background:lightblue'>
 <!-- #region tags=["style-activity"] -->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/activity.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 3 [myst.header]</p>
-</div>
-<hr/></div>
+<p>HEADER:  Question 9</p>
+<p>HEADER: # Question</p>
+<p>How much energy could be obtained from 1 kg of hydrogen (a) if it were to undergo nuclear fusion in the interior of a star, (b) if it were to spiral into a black hole? Would you expect to get more energy if it were to chemically burn in an oxygen atmosphere?</p>
+<p>HEADER: # Answer</p>
+<p>A mass <em>m</em> has a rest energy of <em>mc</em><sup>2</sup>.</p>
+<p>(a) If 1 kg of hydrogen were to undergo nuclear fusion to produce helium, the energy liberated would be 0.007 (i.e. 0.7%) of its rest energy:</p>
+<p><img alt="figurehttps://www.open.edu/openlearn/ocw/pluginfile.php/66727/mod_oucontent/oucontent/469/s282_2_ue015i.gif" src="https://www.open.edu/openlearn/ocw/pluginfile.php/66727/mod_oucontent/oucontent/469/s282_2_ue015i.gif" /></p>
+<p>(b) If 1 kg of hydrogen were to fall into a black hole, the energy liberated would be approximately</p>
+<p>0.1<em>mc</em><sup>2</sup> = 0.1 × 1 × (3 × 10<sup>8</sup>ms<sup>−1</sup>)<sup>2</sup> J = 9 × 10<sup>15</sup> J.</p>
+<p>You would expect much <em>less</em> energy from the chemical reaction.</p>
+<!-- #endregion -->
+</div><hr/></div>
 </div>
 <section id="adding-other-activity-types-to-the-database">
 <h3>Adding Other Activity Types to the Database<a class="headerlink" href="#adding-other-activity-types-to-the-database" title="Permalink to this headline">#</a></h3>
@@ -771,25 +806,13 @@ title="Print to PDF"
 
 <span class="k">for</span> <span class="n">_itq_xml</span> <span class="ow">in</span> <span class="n">example_itqs</span><span class="p">[</span><span class="s1">&#39;activity&#39;</span><span class="p">]:</span>
     <span class="n">_md</span> <span class="o">=</span> <span class="n">ouxml2md</span><span class="p">(</span> <span class="n">_itq_xml</span> <span class="p">)</span>
+    <span class="c1"># Hack because Sphinx renders errors</span>
+    <span class="n">_md</span> <span class="o">=</span> <span class="n">_md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;####&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;div style=&#39;background:lightblue&#39;&gt;</span><span class="se">\n</span><span class="si">{</span><span class="n">_md</span><span class="si">}</span><span class="se">\n</span><span class="s2">&lt;/div&gt;&quot;</span><span class="p">))</span>
     <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;&lt;hr/&gt;&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div style='background:lightblue'>
-<!--ITQ-->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/activity.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 4 [myst.header]</p>
-</div>
-<hr/><div style='background:lightblue'>
-<!--ITQ-->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/activity.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 4 [myst.header]</p>
-</div>
-<hr/></div>
 </div>
 <p><em>It might be worh having the raw <code class="docutils literal notranslate"><span class="pre">Activity</span></code>, <code class="docutils literal notranslate"><span class="pre">Exercise</span></code>, <code class="docutils literal notranslate"><span class="pre">ITQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SAQ</span></code> items in their own databases so that we can then run a full-text search over the raw XML for just those activity types. (I donlt think we can run facetted queries within the SQLite full-text search?</em></p>
 </section>
@@ -876,19 +899,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;Activity 1&#39;,
-  None,
-  &#39;&lt;Question xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;NumberedList&gt;&lt;ListItem&gt;Identify some eLearning materials you are familiar with. You may have written them, taught them, or even studied them (you can think about this course if you have no examples of your own).&lt;/ListItem&gt;&lt;ListItem&gt;Identify the different elements of the materials &amp;#8211; there will almost certainly be text, but are there images, videos, forms or boxes to enter text, drag-and-drop exercises, quizzes etc.? List all of the different types of element.&lt;/ListItem&gt;&lt;ListItem&gt;For each item on the list try to identify where students with particular disabilities might experience difficulties, and try to suggest possible ways (if you can think of any) that these barriers may be removed. It does not matter if your list is incomplete, or if you cannot think of solutions to some of your identified issues. We will revisit this task later, after you have worked through more of the course materials.&lt;/ListItem&gt;&lt;/NumberedList&gt;&lt;Paragraph&gt;Use the box below to record your thoughts.&lt;/Paragraph&gt;&lt;/Question&gt;&#39;,
-  &#39;&lt;Interaction xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;FreeResponse size=&quot;paragraph&quot; id=&quot;fr_3&quot;/&gt;&lt;/Interaction&gt;&#39;,
-  None,
-  None,
-  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;,
-  False,
-  &#39;/Item/Unit/Session[1]/Section[6]/Activity&#39;)]
-</pre></div>
-</div>
-</div>
 </div>
 <p><em>TO DO</em> - the <code class="docutils literal notranslate"><span class="pre">&lt;Interaction&gt;</span></code> element takes several forms: <code class="docutils literal notranslate"><span class="pre">&lt;SingleChoice&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Matching&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;FreeResponse&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;VoiceRecorder&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MultipleChoice&gt;</span></code>.</p>
 <p>As such, it makes sense to record interaction components in a table of their own, referenced to the parent activity element etc. TO DO</p>
@@ -918,11 +928,6 @@ title="Print to PDF"
 <span class="n">activity_db</span><span class="p">[</span><span class="n">all_activities_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">enable_fts</span><span class="p">([</span><span class="s2">&quot;heading&quot;</span><span class="p">,</span> <span class="s2">&quot;question&quot;</span><span class="p">,</span> <span class="s2">&quot;interaction&quot;</span><span class="p">,</span>
                                                  <span class="s2">&quot;answer&quot;</span><span class="p">,</span> <span class="s2">&quot;discussion&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">],</span>
                                                 <span class="n">create_triggers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table activities (type, heading, timing, question, answer, discussion, interaction, multipart, id, _path)&gt;
 </pre></div>
 </div>
 </div>
@@ -991,80 +996,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>type</th>
-      <th>heading</th>
-      <th>timing</th>
-      <th>question</th>
-      <th>answer</th>
-      <th>discussion</th>
-      <th>interaction</th>
-      <th>multipart</th>
-      <th>id</th>
-      <th>_path</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>activity</td>
-      <td>Activity 1 Looking at different technologies</td>
-      <td>Allow approximately 15 minutes</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>&lt;Interaction xmlns:xsi="http://www.w3.org/2001...</td>
-      <td>None</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[1]/Activity</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>activity</td>
-      <td>Activity 2 Types of body language</td>
-      <td>Allow approximately 20 minutes</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[5]/Activity</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>activity</td>
-      <td>Activity 3 Translating emoji language</td>
-      <td>Allow approximately 15 minutes</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[6]/Activity</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>And for the raw table?</p>
 <div class="cell docutils container">
@@ -1073,56 +1004,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>type</th>
-      <th>activity</th>
-      <th>id</th>
-      <th>_path</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>activity</td>
-      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[1]/Activity</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>activity</td>
-      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[5]/Activity</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>activity</td>
-      <td>b'&lt;Activity xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>1f194525072f4358f7639c471ee5289665d50a3f</td>
-      <td>/Item/Unit/Session[6]/Activity</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 </section>
 <section id="parsing-other-activity-types">
@@ -1136,80 +1017,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>type</th>
-      <th>heading</th>
-      <th>timing</th>
-      <th>question</th>
-      <th>answer</th>
-      <th>discussion</th>
-      <th>interaction</th>
-      <th>multipart</th>
-      <th>id</th>
-      <th>_path</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>itq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6bff78840be5165329dda278418bbbd54c909047</td>
-      <td>/Item/Unit/Session[1]/Section[2]/ITQ</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>itq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6bff78840be5165329dda278418bbbd54c909047</td>
-      <td>/Item/Unit/Session[1]/Section[3]/SubSection[1]...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>itq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6bff78840be5165329dda278418bbbd54c909047</td>
-      <td>/Item/Unit/Session[1]/Section[3]/SubSection[6]...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>How about exercises?</p>
 <div class="cell docutils container">
@@ -1220,41 +1027,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>type</th>
-      <th>heading</th>
-      <th>timing</th>
-      <th>question</th>
-      <th>answer</th>
-      <th>discussion</th>
-      <th>interaction</th>
-      <th>multipart</th>
-      <th>id</th>
-      <th>_path</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>Or SAQs?</p>
 <div class="cell docutils container">
@@ -1265,80 +1037,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>type</th>
-      <th>heading</th>
-      <th>timing</th>
-      <th>question</th>
-      <th>answer</th>
-      <th>discussion</th>
-      <th>interaction</th>
-      <th>multipart</th>
-      <th>id</th>
-      <th>_path</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>saq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
-      <td>/Item/Unit[2]/Session[2]/Section/SAQ</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>saq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Discussion xmlns:xsi="http://www.w3.org/2001/...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
-      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[1]</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>saq</td>
-      <td>None</td>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>6c5ba9c60fa29f546a71ba94565a6f62f1eae0db</td>
-      <td>/Item/Unit[2]/Session[3]/Section[2]/SAQ[2]</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>We should also be able to run full-text search questions over all the activity types:</p>
 <div class="cell docutils container">
@@ -1347,109 +1045,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>heading</th>
-      <th>question</th>
-      <th>interaction</th>
-      <th>answer</th>
-      <th>discussion</th>
-      <th>id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Part 1</td>
-      <td>&lt;Question&gt;\n                                &lt;P...</td>
-      <td>&lt;Interaction&gt;\n                               ...</td>
-      <td>&lt;Answer&gt;\n                                &lt;Equ...</td>
-      <td>None</td>
-      <td>904a100e4d41cf1a696b547eec1b2f625fc5bd78</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Question 9</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>f36ae6f445e1c39925fa84d3e188af9ed7c15fdc</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>None</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>SAQ 5</td>
-      <td>&lt;Question xmlns:xsi="http://www.w3.org/2001/XM...</td>
-      <td>None</td>
-      <td>&lt;Answer xmlns:xsi="http://www.w3.org/2001/XMLS...</td>
-      <td>None</td>
-      <td>a82aa8fe5c90c02095eefb3e7d998efbbc1949c8</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <p>We really need a better way to render these results…</p>
 <p>Parsing the activity into markdown would be one way…</p>
