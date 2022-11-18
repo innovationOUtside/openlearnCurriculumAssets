@@ -36,6 +36,9 @@ def create_id(records, id_field="id", fields=["code", "name"]):
 def unpack(x):
     return etree.tostring(x)
 
+def tidy(x):
+    return unpack(x).decode().strip() if len(x) else None
+    
 # via http://stackoverflow.com/questions/5757201/help-or-advice-me-get-started-with-lxml/5899005#5899005
 def flatten(el):
     """Utility function for flattening XML tags."""
@@ -48,6 +51,33 @@ def flatten(el):
             result.append(sel.tail or "")
         return unicodedata.normalize("NFKD", "".join(result)) or " "
     return _flatten(el).strip()
+
+def xml_transform(xml, xslt):
+    """Transform an XML document via XSLT."""
+    xslt_transformer = etree.XSLT(etree.fromstring(open(xslt).read()))
+    
+    # Apply the XSLT stylesheet
+    transformed_xml = xslt_transformer(xml)
+    
+    return transformed_xml
+    
+def ouxml2md(ouxml, xslt="xslt/ouxml2md.xslt", shim="DummyRoot"):
+    """Convert OU-XML fragment to markdown."""
+    
+    # Convert bytes to parsed XML doc if required
+    ouxml = etree.fromstring(ouxml) if isinstance(ouxml, bytes) else ouxml
+    
+    # Create the shim so we can apply the templat at fragment level
+    wrapped_xml= etree.XML(f"<{shim}></{shim}>")
+    wrapped_xml.append(ouxml)
+    
+    transformed_xml = xml_transform(wrapped_xml, xslt)
+    
+    # Surely there's a better way to get the tag content?
+    md = unpack(transformed_xml.getroot()).decode()
+    md = md.replace('<md xmlns:str="http://exslt.org/strings">', '').replace("</md>", "")
+
+    return md
 
 def fts(db, base_tbl, q):
     """Run a simple full-text search query 
