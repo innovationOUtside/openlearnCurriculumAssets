@@ -167,6 +167,11 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Figures and Media Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="equations.html">
+   Working With Equations
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -406,6 +411,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="working-with-glossary-items">
 <h1>Working With Glossary Items<a class="headerlink" href="#working-with-glossary-items" title="Permalink to this headline">#</a></h1>
+<p>A large number of units in OpenLearn include explictly identified glassary items. By mining OpenLearn OU-XML documents, we can trivially create a “meta-glossary” of terms across the whole of OpenLearn.</p>
+<p><em>You can try such a search <a class="reference external" href="githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fall_openlean_xml.db%3Fraw%3Dtrue#/all_openlean_xml/glossary?_search=%22computer+program%22&amp;_filter_column=&amp;">here</a>. <strong>WARNING: 100MB+ download:</strong> this database application runs purely in your browser and may take a minute or two to load.</em></p>
 <p>One of the fiddly but necessary tasks associated with course production is the creation of glossary items. Glossary items are explicitly defined in OU-XML materials, which means we can trivially extract them and easily build up meta-glossaries with varying scopes: for example, a meta-glossary of all <code class="docutils literal notranslate"><span class="pre">MXXX</span></code> units, or a meta-glossary from all beginner level science courses. At an individual student level, we could construct a met-aglossary of all the glossed terms that have appeared in units the student has studied to dat (along with a reference to which unit they appeared in). And so on.</p>
 <p>In this section, I will demonstrate how we can scrape glossary items from acoss the OpenLearn unit OU-XML files in order to create a simple full-text search tool that allows us to search over just glossary terms and definitions.</p>
 <section id="preparing-the-ground">
