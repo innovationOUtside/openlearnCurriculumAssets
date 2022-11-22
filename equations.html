@@ -914,7 +914,7 @@ title="Print to PDF"
                                      <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">,</span>
                                      <span class="c1"># It might be better to flatten than unpack</span>
                                       <span class="c1"># For now, unpack lets us render the XML</span>
-                                    <span class="s2">&quot;search_context&quot;</span><span class="p">:</span> <span class="n">unpack</span><span class="p">(</span> <span class="n">_root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span> <span class="p">),})</span>
+                                    <span class="s2">&quot;search_context&quot;</span><span class="p">:</span> <span class="n">unpack</span><span class="p">(</span> <span class="n">_root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(),})</span>
     
     <span class="c1"># Add items to the database</span>
     <span class="n">db</span><span class="p">[</span><span class="n">all_eqn_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">eq_item_dicts</span><span class="p">)</span>
@@ -963,7 +963,7 @@ title="Print to PDF"
   <tbody>
     <tr>
       <th>0</th>
-      <td>b'&lt;ITQ xmlns:xsi="http://www.w3.org/2001/XMLSc...</td>
+      <td>&lt;ITQ xmlns:xsi="http://www.w3.org/2001/XMLSche...</td>
       <td>/Item/Unit[9]/Session[3]/ITQ[2]</td>
       <td>884164a46f4066c6b26894c812484c74ab2e8531</td>
     </tr>

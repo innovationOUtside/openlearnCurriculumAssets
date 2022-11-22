@@ -377,8 +377,23 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
-   Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)
+  <a class="reference internal nav-link" href="#searching-for-figures">
+   Searching for Figures
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-media-objects-audio-files-video-files-etc">
+   Searching for Media Objects (Audio Files, VIdeo Files, etc.)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-activities">
+   Searching for Activities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-equations">
+   Searching for Equations
   </a>
  </li>
 </ul>
@@ -427,8 +442,23 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
-   Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)
+  <a class="reference internal nav-link" href="#searching-for-figures">
+   Searching for Figures
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-media-objects-audio-files-video-files-etc">
+   Searching for Media Objects (Audio Files, VIdeo Files, etc.)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-activities">
+   Searching for Activities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-equations">
+   Searching for Equations
   </a>
  </li>
 </ul>
@@ -469,7 +499,7 @@ title="Print to PDF"
 <p>Many, but not all, OpenLearn units define learning outcomes at the unit level. Once again, these can be discovered from the full-text search box associated with the appropraite table, in this case, the <code class="docutils literal notranslate"><span class="pre">lo</span></code> table:</p>
 <p><img alt="datasette lo table showing a full text search term and code facet selected" src="_images/datasette_lo_facet.png" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> facet is also selected showing the range of unique values available within that facet (i.e. within the <code class="docutils literal notranslate"><span class="pre">code</span></code> column). Selecting a particular facet value with filter the search to results with that facet value.</p>
-<p>In this case, we note that the code values do no appear to have been normalised to upper case alphabetic values. In addition, there appear to be some results where a code has not been provided. Rapid prototyping displays such as this can be play a useful role in interating over data models and data cleaning steps where the actual content of the database or the state of the data contained within it is not known at the start of the database modelling and ingest process.</p>
+<p>In this case, we note that the code values do not appear to have been normalised to upper case alphabetic values. In addition, there appear to be some results where a code has not been provided. Rapid prototyping displays such as this can be play a useful role in interating over data models and data cleaning steps where the actual content of the database or the state of the data contained within it is not known at the start of the database modelling and ingest process.</p>
 <p>We also note that the <code class="docutils literal notranslate"><span class="pre">code</span></code> refers to the parent module code, and we are perhaps lacking additional metadata (at least for now) regarding the “sort order” of OpenLearn units extracted from the same parent module.</p>
 <p>The data returned from a query can bew previewed and downloaded in a varoety of data formats:</p>
 <p><img alt="datasette download data format options - various flavours of JSON and CSV" src="_images/datasette_export.png" /></p>
@@ -479,9 +509,35 @@ title="Print to PDF"
 <p>To support discovery of units based on particular aspects of a unit we can search across tables. For example, what learning outcomes are associated with units where the learning outcome includes the word <em>understand</em> and a glossary defition contains the word <em>personal</em>? [<a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets?sql=SELECT+lo%2C+term%2C+definition%2C+lo.code%2C+lo.name+FROM+lo%2C+glossary+WHERE+lo._id%3Dglossary._id+AND+glossary.definition+LIKE+%27%25personal%25%27+AND+lo+LIKE+%27%25understand%25%27">view it here</a>]</p>
 <p><img alt="" src="_images/datasette_custom_query.png" /></p>
 </section>
-<section id="searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
-<h2>Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)<a class="headerlink" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files" title="Permalink to this headline">#</a></h2>
+<section id="searching-for-figures">
+<h2>Searching for Figures<a class="headerlink" href="#searching-for-figures" title="Permalink to this headline">#</a></h2>
+<p>At the moment, the images themselves are not stored within the database, but their captions and descriptions are indexed. Ideally, previews of figures should be made available with the search results, but this makes for a much larger database if those items are stored inside the database itself. It may be possible to store a link to an OpenLearn web URL from which a resource may be retrieved over the network, but that has not been explored at this stage: for now, we are limited to just retrieving a description and a potentially unresolvable reference.</p>
+<p><img alt="" src="_images/datasette_figure_search.png" /></p>
+</section>
+<section id="searching-for-media-objects-audio-files-video-files-etc">
+<h2>Searching for Media Objects (Audio Files, VIdeo Files, etc.)<a class="headerlink" href="#searching-for-media-objects-audio-files-video-files-etc" title="Permalink to this headline">#</a></h2>
 <p>At the moment, the media objects themselves are not stored within the database, but their captions and trasncripts are indexed. Ideally, previews of the media assets should be made available with the search results, but this makes for a much larger database if those items are stored inside the database itself. It may be possible to store a link to an OpenLearn web URL from which a resource may be retrieved over the network, but that has not been explored at this stage: for now, we are limited to just retrieving a description and a potentially unresolvable reference.</p>
+<p>Currently, we can run full text searches over captions, descriptions,  etc, as well as in those fields directly:</p>
+<p><img alt="" src="_images/datasette_media_search.png" /></p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">xpath</span></code> column provides some context for where the media object is being used. For example, the <code class="docutils literal notranslate"><span class="pre">xpath</span></code> might revel to us that the asset is being used in the context of an activity. As with the <code class="docutils literal notranslate"><span class="pre">Figures</span></code> table, this means that we can search for items within a particular context (e.g. we might search for an <code class="docutils literal notranslate"><span class="pre">xpath</span></code> that contains <code class="docutils literal notranslate"><span class="pre">Activity</span></code> or <code class="docutils literal notranslate"><span class="pre">ITQ</span></code> as part of the context.</p>
+<p>We also note that there is a wide range of media types available, and these can also be used as search limits.</p>
+<p>This might help maitenance among other things. For example, it would be trivial to search for deprecated <code class="docutils literal notranslate"><span class="pre">flash</span></code> media object types.</p>
+</section>
+<section id="searching-for-activities">
+<h2>Searching for Activities<a class="headerlink" href="#searching-for-activities" title="Permalink to this headline">#</a></h2>
+<p>Various actvity types can be extracted from OU-XML materials, including <em>activities</em>, <em>exercises</em>, <em>ITQs</em> and <em>SAQs</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">activities</span></code> table breaks out the various components of an activity type so that we can search within just that part of an activity. For example, we can search just the question part for references to <em>compare and contrast</em>.</p>
+<p><img alt="Using datsette UI to search for a particular column that contains a particular value." src="_images/datasette_activity_compare_contrast.png" /></p>
+<p>A full-text search is available that will search over all the text components.</p>
+<p>The faceted search utility provided by <code class="docutils literal notranslate"><span class="pre">datasette</span></code> makes it easy to run a search over all activity types and then filter down to a particular activity type where multiple activity types are returned as part of a query.</p>
+</section>
+<section id="searching-for-equations">
+<h2>Searching for Equations<a class="headerlink" href="#searching-for-equations" title="Permalink to this headline">#</a></h2>
+<p>Searching for equations directly is complicated by the fact that the equation itself may be represented using MathML or even provided in the form of an image. To support discovery of equations, we create a simple index based on the <em>context</em> of the equation, indexing the text in the block element around the equation and using that as the basis of our search text.</p>
+<p>For example, we can search for context containing specified full-test search terms:</p>
+<p><img alt="" src="_images/datasette_equation_context.png" /></p>
+<p>We can also join searches on the <code class="docutils literal notranslate"><span class="pre">equations_context</span></code> table with equations in the context that are listed in the <code class="docutils literal notranslate"><span class="pre">equations</span></code> table:</p>
+<p><img alt="" src="_images/datasette_equation_and_context.png" /></p>
 </section>
 </section>
 
