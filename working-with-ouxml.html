@@ -485,7 +485,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Glossary at 0x7f987d2df840&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Glossary at 0x7fc6aeae2800&gt;]
 </pre></div>
 </div>
 </div>
@@ -536,11 +536,11 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Term at 0x7f987d2f5480&gt;,
- &lt;Element Term at 0x7f987d2ff7c0&gt;,
- &lt;Element Term at 0x7f987d2ff900&gt;,
- &lt;Element Term at 0x7f987d2ff980&gt;,
- &lt;Element Term at 0x7f987d2ff940&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;Element Term at 0x7fc6aeaf8800&gt;,
+ &lt;Element Term at 0x7fc6aeaf8b40&gt;,
+ &lt;Element Term at 0x7fc6aeaf8ac0&gt;,
+ &lt;Element Term at 0x7fc6aeaf8d00&gt;,
+ &lt;Element Term at 0x7fc6aeaf8cc0&gt;]
 </pre></div>
 </div>
 </div>
@@ -675,20 +675,23 @@ Computer system
 <span class="c1"># Convert the genereated XML object to text</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span><span class="n">transformed_xml</span><span class="o">.</span><span class="n">getroot</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
 
+<span class="c1"># Strip the &lt;md&gt; tags from the text string</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;/md&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="c1"># HACK: Sphinx/Jupyterbook gets upset by header in cell output</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;
-&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;
 
-#### Question
+HEADER: # Question
 
 Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, [__Paul Fort&amp;#160;: po&amp;#232;me__](https://wheatoncollege.edu/vive-voix/par-auteur/fort/)__.__
 
 &lt;!-- #endregion --&gt;
-&lt;/md&gt;
 </pre></div>
 </div>
 </div>
@@ -698,19 +701,15 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span>
 
-<span class="c1"># Strip the &lt;md&gt; tags from the text string</span>
-<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;md xmlns:str=&quot;http://exslt.org/strings&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&lt;/md&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-
 <span class="n">Markdown</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <!-- #region tags=["style-activity"] -->
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">/Users/tonyhirst/Documents/GitHub/openlearnCurriculumAssets/src/working-with-ouxml.ipynb</span>, line 4)</p>
-<p>Non-consecutive header level increase; 0 to 4 [myst.header]</p>
-</div>
+<p>HEADER: # Question</p>
+<p>Lisez maintenant le poème à haute voix et allez ensuite écouter l’auteur lire son poème sur Internet, <a class="reference external" href="https://wheatoncollege.edu/vive-voix/par-auteur/fort/"><strong>Paul Fort : poème</strong></a><strong>.</strong></p>
+<!-- #endregion -->
 </div>
 </div>
 <p>For convenience, we could wrap those steps up in a single function:</p>
@@ -764,6 +763,9 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">markdown</span> <span class="kn">import</span> <span class="n">markdown</span>
 
+<span class="c1"># HACK: Sphinx/Jupyterbook gets upset by header in cell output</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;###&quot;</span><span class="p">,</span> <span class="s2">&quot;HEADER: &quot;</span><span class="p">)</span>
+
 <span class="c1"># Convert the markdown to HTML</span>
 <span class="n">html</span> <span class="o">=</span> <span class="n">markdown</span><span class="p">(</span><span class="n">md</span><span class="p">)</span>
 
@@ -774,7 +776,7 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;!-- #region tags=[&quot;style-activity&quot;] --&gt;
 
-&lt;h4&gt;Question&lt;/h4&gt;
+&lt;p&gt;HEADER: # Question&lt;/p&gt;
 &lt;p&gt;Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#233;couter l&amp;#8217;auteur lire son po&amp;#232;me sur Internet, &lt;a href=&quot;https://wheatoncollege.edu/vive-voix/par-auteur/fort/&quot;&gt;&lt;strong&gt;Paul Fort&amp;#160;: po&amp;#232;me&lt;/strong&gt;&lt;/a&gt;&lt;strong&gt;.&lt;/strong&gt;&lt;/p&gt;
 &lt;!-- #endregion --&gt;
 </pre></div>
@@ -794,7 +796,7 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <div class="cell_output docutils container">
 <div class="output text_html"><!-- #region tags=["style-activity"] -->
 
-<h4>Question</h4>
+<p>HEADER: # Question</p>
 <p>Lisez maintenant le po&#232;me &#224; haute voix et allez ensuite &#233;couter l&#8217;auteur lire son po&#232;me sur Internet, <a href="https://wheatoncollege.edu/vive-voix/par-auteur/fort/"><strong>Paul Fort&#160;: po&#232;me</strong></a><strong>.</strong></p>
 <!-- #endregion --></div></div>
 </div>
