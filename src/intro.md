@@ -9,6 +9,14 @@ The asset bank separates out different sorts of asset on the basis that when you
 
 
 A `datasette` in-browser client can be used to query the database. You can acces it [here](https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets). Currently, the demo database includes tables containing the unit listing, the raw OU-XML for each unit, extracted figures and media items, learning outcomes and glossary items. See the section on `Querying the Database With Datasette` for more information.
+
+Note that there is nothing "AI" or "future-technology" looking in this document, although I will probably add a simple doc2vec "semantic search" demo at some point that would perhaps have been classed as AI 5 years ago. Some of the asset extraction components might provide useful data inputs for machine learning systems, but that is out of scope for this document.
+
+The document is historical looking in sense that there is nothing contained in here (except the Doc2Vec bits, if I get round to them, and some named entity extraction bits, if I add them) that could not have been done 15 years ago.
+
+However, the document is current and future looking in the sense that it demonstrates some very simple functionality that is not currently available, that may be useful, and that could be provided today to support production and maintenance.
+
+Furthermore, whilst the demo is limited to a consideration of OU-XML source material for openly licensed, public OpenLearn units, the recipes could equally be applied to the OU-XML source material for OU modules produced over the last 15 years.
 <!-- #endregion -->
 
 ## A Note on Granularity
