@@ -452,12 +452,12 @@ title="Print to PDF"
 <p>The results are provided in the form of a table of results. Queries can be shared by sharing URLs. It is possible to select which columns are displayed by tweaking URL parameters.</p>
 <p><em><strong>WARNING: 100MB+ download:</strong> the database application runs purely in your browser and may take a minute or two to load.</em></p>
 <p><img alt="datasette home page showing links to individual tables" src="_images/datasette_home.png" /></p>
-<p>Use the breadcrumb navigation trail links to return to the <code class="docutils literal notranslate"><span class="pre">datasette</span></code> homepage. This avoids haveing to reload the database into your browser.</p>
+<p>Use the breadcrumb navigation trail links to return to the <code class="docutils literal notranslate"><span class="pre">datasette</span></code> homepage. This avoids having to reload the database into your browser.</p>
 <p><img alt="Breadcrumb avigation in datasette" src="_images/datasette-table-breadcrumb_nav.png" /></p>
 </section>
 <section id="querying-glossary-items">
 <h2>Querying Glossary Items<a class="headerlink" href="#querying-glossary-items" title="Permalink to this headline">#</a></h2>
-<p>A search over glossary items can be tried <a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fall_openlean_xml.db%3Fraw%3Dtrue#/all_openlean_xml/glossary?_search=%22computer+program%22&amp;_filter_column=&amp;_filter_op=exact&amp;_filter_value=&amp;_sort=rowid">HERE</a>.</p>
+<p>A search over glossary items can be tried <a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets/glossary">HERE</a>.</p>
 <p>This search helps authors disover glossary terms and definitions from across <em>all</em> the OpenLearn materials.</p>
 <p><img alt="Screenshot of default datasette OpenLearn scrape glossary database table" src="_images/datasette_glossary_fts.png" /></p>
 <p>In addition, searches can be performed on the <em>glossary</em> database table directly. For example, searching within the <code class="docutils literal notranslate"><span class="pre">term</span></code> column will search for search terms (exact match) that appear in the glossary term text, and searching the <code class="docutils literal notranslate"><span class="pre">definitions</span></code> column will turn up items where the query matches the glossary item definition.</p>
@@ -476,7 +476,7 @@ title="Print to PDF"
 </section>
 <section id="searching-across-tables">
 <h2>Searching Across Tables<a class="headerlink" href="#searching-across-tables" title="Permalink to this headline">#</a></h2>
-<p>To support discovery of units based on particular aspects of a unit we can search across tables. For example, what learning outcomes are associated with units where the learning outcome includes the word <em>understand</em> and a glossary defition contains the word <em>personal</em>? [<a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fall_openlean_xml.db%3Fraw%3Dtrue#/all_openlean_xml?sql=SELECT+lo%2C+term%2C+definition%2C+lo.code%2C+lo.name+FROM+lo%2C+glossary+WHERE+lo._id%3Dglossary._id+AND+glossary.definition+LIKE+%27%25personal%25%27+AND+lo+LIKE+%27%25understand%25%27">view it here</a>]</p>
+<p>To support discovery of units based on particular aspects of a unit we can search across tables. For example, what learning outcomes are associated with units where the learning outcome includes the word <em>understand</em> and a glossary defition contains the word <em>personal</em>? [<a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets?sql=SELECT+lo%2C+term%2C+definition%2C+lo.code%2C+lo.name+FROM+lo%2C+glossary+WHERE+lo._id%3Dglossary._id+AND+glossary.definition+LIKE+%27%25personal%25%27+AND+lo+LIKE+%27%25understand%25%27">view it here</a>]</p>
 <p><img alt="" src="_images/datasette_custom_query.png" /></p>
 </section>
 <section id="searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
