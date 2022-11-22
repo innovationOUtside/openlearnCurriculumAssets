@@ -65,7 +65,11 @@ def ouxml2md(ouxml, xslt="xslt/ouxml2md.xslt", shim="DummyRoot"):
     """Convert OU-XML fragment to markdown."""
     
     # Convert bytes to parsed XML doc if required
-    ouxml = etree.fromstring(ouxml) if isinstance(ouxml, bytes) else ouxml
+    if isinstance(ouxml, bytes):
+        ouxml = etree.fromstring(ouxml)
+    elif isinstance(ouxml, str):
+        ouxml = etree.fromstring(ouxml.encode("UTF8"))
+
     
     # Create the shim so we can apply the template at fragment level
     wrapped_xml= etree.XML(f"<{shim}></{shim}>")
