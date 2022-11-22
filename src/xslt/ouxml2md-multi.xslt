@@ -173,11 +173,34 @@
         <md><xsl:apply-templates /></md>
     </xsl:template>
     
-    <!-- See the mutli styleheet for the multiple md docs outpur -->
-    <!-- Really, these two syle sheets shoudl import common core and just differ
-         in the Session element -->
+    <xsl:template match="DummySession">
+        <md><xsl:apply-templates /></md>
+    </xsl:template>
+    
+    <!-- The md output actually starts here with document partitioning -->
     <xsl:template match="Session">
+        <!-- Create a new output document for each session -->
+        <!-- This requires the directory path to be set, so for new directories
+             create directory path stub at the start of the filename and postprocess? -->
+        <!-- or to generate a filename (needs tweaking) on _UNIT_SESSION_ -->
+        <!-- test_{count(../preceding-sibling::node())}_{position()}.md -->
+        <!-- <exsl:document method="html" href="{$filestub}_{count(../preceding-sibling::node())}_{position()}.md"> -->
+        <exsl:document method="html" href="{$filestub}_{format-number(count(../preceding-sibling::Unit),'00')}_{format-number(count(preceding-sibling::Session)+1,'00')}.md">
+<xsl:text>---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.11.4
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---&#xa;&#xa;</xsl:text>
             <xsl:apply-templates />
+        </exsl:document>
     </xsl:template>
 
     <xsl:template match="Section">
