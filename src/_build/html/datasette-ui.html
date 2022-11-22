@@ -167,6 +167,11 @@ const thebe_selector_output = ".output, .cell_output"
    Working With Figures and Media Items
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="equations.html">
+   Working With Equations
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
@@ -323,12 +328,62 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-datasette-user-interface">
+   The
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+   User Interface
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#querying-glossary-items">
+   Querying Glossary Items
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#querying-learning-outcomes-viewing-facets-and-downloading-data">
+   Querying Learning Outcomes, Viewing Facets and Downloading Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-across-tables">
+   Searching Across Tables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
+   Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -340,6 +395,45 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-datasette-user-interface">
+   The
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     datasette
+    </span>
+   </code>
+   User Interface
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#querying-glossary-items">
+   Querying Glossary Items
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#querying-learning-outcomes-viewing-facets-and-downloading-data">
+   Querying Learning Outcomes, Viewing Facets and Downloading Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-across-tables">
+   Searching Across Tables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
+   Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -349,7 +443,46 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="querying-the-database-with-datasette">
 <h1>Querying the Database With <code class="docutils literal notranslate"><span class="pre">datasette</span></code><a class="headerlink" href="#querying-the-database-with-datasette" title="Permalink to this headline">#</a></h1>
-<p><em>TO DO</em></p>
+<p>The primary intention of this set of notes was to explore the disaggregation of OpenLearn OU-XML elements into component parts that can then be searched at an appropriate level of granularity. The intention was <em>not</em> to create an end user tool, such as a simple search interface with a single, simple search box and a set of faceted views over the results.</p>
+<p>However, a demonstration of how the search tables can be searched is provided in the form of an in-browser <code class="docutils literal notranslate"><span class="pre">datasette</span></code> user interface that supports simple full-text search over full-text search indexed tables, as well as finer grained SQL queries.</p>
+<p>No apology is given for providing such a “technical” search interface. User-interface design is a completely separate issue. The database as it stands is <strong>usable today</strong> by anyone who cares to learn how to use it. It can be used to help identify the sorts of search that a user is likely to want to run, the level of granularity of results that are useful, and the form in which the discovered content should be returned. In contrast, a concept design for a user interface that may never get built, and with no database or search engine behind it, has zero utility for search and discovery, no matter how pretty it is.</p>
+<section id="the-datasette-user-interface">
+<h2>The <code class="docutils literal notranslate"><span class="pre">datasette</span></code> User Interface<a class="headerlink" href="#the-datasette-user-interface" title="Permalink to this headline">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Datasette</span></code> provides a relatively simple, browser based graphical user interface for querying one or more file based SQLite databases. <code class="docutils literal notranslate"><span class="pre">Datasette</span></code> can run purely in the browser, with no requirements for external hosting or serving of the database. The <code class="docutils literal notranslate"><span class="pre">datasette</span></code> user interface supports the querying of a SQLite database via SQL commands; thise commands may be graphically constructed from ueser interface elements. In addition, if <code class="docutils literal notranslate"><span class="pre">datasette</span></code> identifies the presence of a full-text search table associated with a selected database table, it will present a full text search query box for quering over that table.</p>
+<p>The results are provided in the form of a table of results. Queries can be shared by sharing URLs. It is possible to select which columns are displayed by tweaking URL parameters.</p>
+<p><em><strong>WARNING: 100MB+ download:</strong> the database application runs purely in your browser and may take a minute or two to load.</em></p>
+<p><img alt="datasette home page showing links to individual tables" src="_images/datasette_home.png" /></p>
+<p>Use the breadcrumb navigation trail links to return to the <code class="docutils literal notranslate"><span class="pre">datasette</span></code> homepage. This avoids haveing to reload the database into your browser.</p>
+<p><img alt="Breadcrumb avigation in datasette" src="_images/datasette-table-breadcrumb_nav.png" /></p>
+</section>
+<section id="querying-glossary-items">
+<h2>Querying Glossary Items<a class="headerlink" href="#querying-glossary-items" title="Permalink to this headline">#</a></h2>
+<p>A search over glossary items can be tried <a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fall_openlean_xml.db%3Fraw%3Dtrue#/all_openlean_xml/glossary?_search=%22computer+program%22&amp;_filter_column=&amp;_filter_op=exact&amp;_filter_value=&amp;_sort=rowid">HERE</a>.</p>
+<p>This search helps authors disover glossary terms and definitions from across <em>all</em> the OpenLearn materials.</p>
+<p><img alt="Screenshot of default datasette OpenLearn scrape glossary database table" src="_images/datasette_glossary_fts.png" /></p>
+<p>In addition, searches can be performed on the <em>glossary</em> database table directly. For example, searching within the <code class="docutils literal notranslate"><span class="pre">term</span></code> column will search for search terms (exact match) that appear in the glossary term text, and searching the <code class="docutils literal notranslate"><span class="pre">definitions</span></code> column will turn up items where the query matches the glossary item definition.</p>
+<p><img alt="Screenshot of datasette column search and facet recommendation" src="_images/datasette_glossary_facet.png" /></p>
+<p>Facetted filtering of results can be enabled by clicking to select a suggested facet column. Unique values found with the facetting column can then be clicked to display just results with that facet value.</p>
+</section>
+<section id="querying-learning-outcomes-viewing-facets-and-downloading-data">
+<h2>Querying Learning Outcomes, Viewing Facets and Downloading Data<a class="headerlink" href="#querying-learning-outcomes-viewing-facets-and-downloading-data" title="Permalink to this headline">#</a></h2>
+<p>Many, but not all, OpenLearn units define learning outcomes at the unit level. Once again, these can be discovered from the full-text search box associated with the appropraite table, in this case, the <code class="docutils literal notranslate"><span class="pre">lo</span></code> table:</p>
+<p><img alt="datasette lo table showing a full text search term and code facet selected" src="_images/datasette_lo_facet.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">class</span></code> facet is also selected showing the range of unique values available within that facet (i.e. within the <code class="docutils literal notranslate"><span class="pre">code</span></code> column). Selecting a particular facet value with filter the search to results with that facet value.</p>
+<p>In this case, we note that the code values do no appear to have been normalised to upper case alphabetic values. In addition, there appear to be some results where a code has not been provided. Rapid prototyping displays such as this can be play a useful role in interating over data models and data cleaning steps where the actual content of the database or the state of the data contained within it is not known at the start of the database modelling and ingest process.</p>
+<p>We also note that the <code class="docutils literal notranslate"><span class="pre">code</span></code> refers to the parent module code, and we are perhaps lacking additional metadata (at least for now) regarding the “sort order” of OpenLearn units extracted from the same parent module.</p>
+<p>The data returned from a query can bew previewed and downloaded in a varoety of data formats:</p>
+<p><img alt="datasette download data format options - various flavours of JSON and CSV" src="_images/datasette_export.png" /></p>
+</section>
+<section id="searching-across-tables">
+<h2>Searching Across Tables<a class="headerlink" href="#searching-across-tables" title="Permalink to this headline">#</a></h2>
+<p>To support discovery of units based on particular aspects of a unit we can search across tables. For example, what learning outcomes are associated with units where the learning outcome includes the word <em>understand</em> and a glossary defition contains the word <em>personal</em>? [<a class="reference external" href="https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fall_openlean_xml.db%3Fraw%3Dtrue#/all_openlean_xml?sql=SELECT+lo%2C+term%2C+definition%2C+lo.code%2C+lo.name+FROM+lo%2C+glossary+WHERE+lo._id%3Dglossary._id+AND+glossary.definition+LIKE+%27%25personal%25%27+AND+lo+LIKE+%27%25understand%25%27">view it here</a>]</p>
+<p><img alt="" src="_images/datasette_custom_query.png" /></p>
+</section>
+<section id="searching-for-media-objects-figures-and-diagrams-audio-files-video-files">
+<h2>Searching for Media Objects (Figures and Diagrams, Audio Files, VIdeo Files)<a class="headerlink" href="#searching-for-media-objects-figures-and-diagrams-audio-files-video-files" title="Permalink to this headline">#</a></h2>
+<p>At the moment, the media objects themselves are not stored within the database, but their captions and trasncripts are indexed. Ideally, previews of the media assets should be made available with the search results, but this makes for a much larger database if those items are stored inside the database itself. It may be possible to store a link to an OpenLearn web URL from which a resource may be retrieved over the network, but that has not been explored at this stage: for now, we are limited to just retrieving a description and a potentially unresolvable reference.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

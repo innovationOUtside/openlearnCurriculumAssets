@@ -474,14 +474,17 @@ title="Print to PDF"
 <p><em>For now, the actual media assets (images, videos, audio files, etc.), will <em>not</em> be scraped or added to the database. This means that media assets can be searched for, but not directly rendered.</em></p>
 <section id="preparing-the-ground">
 <h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
-<p>As ever, we need to set up a database connection:</p>
+<p>As ever, we need to set up a database connection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlite_utils</span> <span class="kn">import</span> <span class="n">Database</span>
 
 <span class="c1"># Open database connection</span>
-<span class="n">dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
-<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">dbname</span><span class="p">)</span>
+<span class="n">xml_dbname</span> <span class="o">=</span> <span class="s2">&quot;all_openlean_xml.db&quot;</span>
+<span class="n">xml_db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">xml_dbname</span><span class="p">)</span>
+
+<span class="n">media_dbname</span> <span class="o">=</span> <span class="s2">&quot;openlean_assets.db&quot;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">(</span><span class="n">media_dbname</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -494,7 +497,7 @@ title="Print to PDF"
 
 <span class="c1"># Grab an OU-XML file that is known to contain glossary items</span>
 <span class="n">a210_xml_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;SELECT xml FROM xml WHERE code=&#39;A111&#39;&quot;</span><span class="p">,</span>
-                           <span class="n">con</span><span class="o">=</span><span class="n">db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
+                           <span class="n">con</span><span class="o">=</span><span class="n">xml_db</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">]</span>
 
 <span class="c1"># Parse the XML into an xml object</span>
 <span class="n">root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">a210_xml_raw</span><span class="p">)</span>
@@ -613,7 +616,13 @@ title="Print to PDF"
         <span class="c1"># Get the path the the figure element</span>
         <span class="n">f_xpath</span> <span class="o">=</span> <span class="n">context_path</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">getpath</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
         
-        <span class="n">figure_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">f_type</span><span class="p">,</span> <span class="n">f_url</span><span class="p">,</span> <span class="n">f_caption</span><span class="p">,</span> <span class="n">f_alt</span><span class="p">,</span> <span class="n">f_desc</span><span class="p">,</span> <span class="n">f_xpath</span><span class="p">)</span> <span class="p">)</span>
+        <span class="c1"># These attributes appear to be access control elements</span>
+        <span class="n">x_folderhash</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x_folderhash&quot;</span><span class="p">)</span>
+        <span class="n">x_contenthash</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x_contenthash&quot;</span><span class="p">)</span>
+        <span class="n">x_imagesrc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Image&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;x_imagesrc&quot;</span><span class="p">)</span>
+        
+        <span class="n">figure_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">(</span><span class="n">f_type</span><span class="p">,</span> <span class="n">f_url</span><span class="p">,</span> <span class="n">f_caption</span><span class="p">,</span> <span class="n">f_alt</span><span class="p">,</span> <span class="n">f_desc</span><span class="p">,</span> <span class="n">f_xpath</span><span class="p">,</span>
+                              <span class="n">x_folderhash</span><span class="p">,</span> <span class="n">x_contenthash</span><span class="p">,</span> <span class="n">x_imagesrc</span><span class="p">)</span> <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">figure_items</span>
 </pre></div>
@@ -632,13 +641,19 @@ title="Print to PDF"
   &#39;Figure 1 B. B. King performing c.1968. Photo Michael Ochs Archives/Getty Images (via Britannica Image Quest)&#39;,
   None,
   &#39;This is a photograph of B. B. King playing the guitar on stage.&#39;,
-  &#39;/Figure&#39;),
+  &#39;/Figure&#39;,
+  &#39;5c95a855&#39;,
+  &#39;b434d4cc&#39;,
+  &#39;a111_1_f01.tif.jpg&#39;),
  (&#39;tif&#39;,
   &#39;https://www.open.edu/openlearn/ocw/pluginfile.php/1407405/mod_oucontent/oucontent/72913/a111_1_openlearn_beatles.tif&#39;,
   &#39;Figure 2 The music of the Beatles&#39;,
   None,
   &#39;This is an image showing a number of records by the Beatles.&#39;,
-  &#39;/Figure&#39;)]
+  &#39;/Figure&#39;,
+  &#39;5c95a855&#39;,
+  &#39;4300681e&#39;,
+  &#39;a111_1_openlearn_beatles.tif.jpg&#39;)]
 </pre></div>
 </div>
 </div>
@@ -658,11 +673,14 @@ title="Print to PDF"
     <span class="s2">&quot;alt&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;x_folderhash&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;x_contenthash&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;x_imagesrc&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">str</span> <span class="c1">#derived from code and name</span>
 <span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
 
 <span class="c1"># Enable full text search</span>
@@ -674,7 +692,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table figures (type, caption, alt, description, xpath, code, name, url, id, _id)&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Table figures (type, caption, alt, description, xpath, x_folderhash, x_contenthash, x_imagesrc, code, name, url, id, _id)&gt;
 </pre></div>
 </div>
 </div>
@@ -684,7 +702,7 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">create_id</span>
 
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xml_db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
     <span class="n">_root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
     <span class="n">figure_items</span> <span class="o">=</span> <span class="n">get_figure_items</span><span class="p">(</span><span class="n">_root</span><span class="p">)</span>
     <span class="c1"># From the list of media items,</span>
@@ -692,6 +710,7 @@ title="Print to PDF"
     <span class="n">figure_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                          <span class="s2">&quot;caption&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;alt&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
                           <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+                          <span class="s2">&quot;x_folderhash&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="s2">&quot;x_contenthash&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="s2">&quot;x_imagesrc&quot;</span><span class="p">:</span> <span class="n">f</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span>
                          <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]}</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">figure_items</span> <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
 
     <span class="c1"># Add a unique id for each record</span>
@@ -701,6 +720,13 @@ title="Print to PDF"
         
     <span class="c1"># Add items to the database</span>
     <span class="n">db</span><span class="p">[</span><span class="n">all_figures_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">figure_item_dicts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">vacuum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1115,7 +1141,7 @@ title="Print to PDF"
 </section>
 <section id="extracting-mediacontent-items">
 <h2>Extracting <code class="docutils literal notranslate"><span class="pre">MediaContent</span></code> Items<a class="headerlink" href="#extracting-mediacontent-items" title="Permalink to this headline">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">MediaContent</span></code> element [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.7">docs</a>] provides a strcutured way of describing audio and video media assets as well as other asset types.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">MediaContent</span></code> element [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.7">docs</a>] provides a structured way of describing audio and video media assets as well as other asset types.</p>
 <p>For example, a minimal decription of audio asset might be provided as follows:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;MediaContent</span> <span class="na">src=</span><span class="s">&quot;https://www.open.edu/openlearn/ocw/pluginfile.php/1407405/mod_oucontent/oucontent/72913/a111_2019j_aug123_00.00-00.37.mp3&quot;</span> <span class="na">type=</span><span class="s">&quot;audio&quot;</span> <span class="na">x_manifest=</span><span class="s">&quot;a111_2019j_aug123_00.00-00.37_1_server_manifest.xml&quot;</span> <span class="na">x_filefolderhash=</span><span class="s">&quot;ae00f4bb&quot;</span> <span class="na">x_folderhash=</span><span class="s">&quot;ae00f4bb&quot;</span> <span class="na">x_contenthash=</span><span class="s">&quot;fbeac38a&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;Caption&gt;</span>Audio 1 Robert Petway<span class="nt">&lt;/Caption&gt;</span>
@@ -1243,10 +1269,17 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">vacuum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>Now we can iterate over all the OU-XML documents, extract any media items contained therein, and add them to our database table:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">xml_db</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;SELECT * FROM xml;&quot;&quot;&quot;</span><span class="p">):</span>
     <span class="n">_root</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;xml&quot;</span><span class="p">])</span>
     <span class="n">media_items</span> <span class="o">=</span> <span class="n">get_media_items</span><span class="p">(</span><span class="n">_root</span><span class="p">)</span>
     <span class="c1"># From the list of media items,</span>
