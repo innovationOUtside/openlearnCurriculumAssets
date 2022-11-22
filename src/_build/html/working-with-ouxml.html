@@ -723,12 +723,17 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
     <span class="n">transformed_xml</span> <span class="o">=</span> <span class="n">xslt_transformer</span><span class="p">(</span><span class="n">xml</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">transformed_xml</span>
-    
+
+
 <span class="k">def</span> <span class="nf">ouxml2md</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="n">xslt</span><span class="o">=</span><span class="s2">&quot;xslt/ouxml2md.xslt&quot;</span><span class="p">,</span> <span class="n">shim</span><span class="o">=</span><span class="s2">&quot;DummyRoot&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert OU-XML fragment to markdown.&quot;&quot;&quot;</span>
     
     <span class="c1"># Convert bytes to parsed XML doc if required</span>
-    <span class="n">ouxml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">ouxml</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">ouxml</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="n">ouxml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">ouxml</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ouxml</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">ouxml</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">ouxml</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;UTF8&quot;</span><span class="p">))</span>
+
     
     <span class="c1"># Create the shim so we can apply the templat at fragment level</span>
     <span class="n">wrapped_xml</span><span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">XML</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">shim</span><span class="si">}</span><span class="s2">&gt;&lt;/</span><span class="si">{</span><span class="n">shim</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">)</span>
