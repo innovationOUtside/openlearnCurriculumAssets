@@ -67,7 +67,7 @@ def ouxml2md(ouxml, xslt="xslt/ouxml2md.xslt", shim="DummyRoot"):
     # Convert bytes to parsed XML doc if required
     ouxml = etree.fromstring(ouxml) if isinstance(ouxml, bytes) else ouxml
     
-    # Create the shim so we can apply the templat at fragment level
+    # Create the shim so we can apply the template at fragment level
     wrapped_xml= etree.XML(f"<{shim}></{shim}>")
     wrapped_xml.append(ouxml)
     
