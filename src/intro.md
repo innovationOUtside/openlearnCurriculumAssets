@@ -10,7 +10,7 @@ The asset bank separates out different sorts of asset on the basis that when you
 
 A `datasette` in-browser client can be used to query the database. You can acces it [here](https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets). Currently, the demo database includes tables containing the unit listing, the raw OU-XML for each unit, extracted figures and media items, learning outcomes and glossary items. See the section on `Querying the Database With Datasette` for more information.
 
-```{admonition}
+```{admonition} Example Database
 :class: seealso
 
 [OpenLearn Curriculum assets example db](https://lite.datasette.io/?url=https%3A%2F%2Fraw.githubusercontent.com%2FinnovationOUtside%2FopenlearnCurriculumAssets%2Fmain%2Fsrc%2Fopenlean_assets.db%3Fraw%3Dtrue#/openlean_assets)
