@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scraping OpenLearn &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -457,10 +456,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="scraping-openlearn">
+  <div class="tex2jax_ignore mathjax_ignore section" id="scraping-openlearn">
 <h1>Scraping OpenLearn<a class="headerlink" href="#scraping-openlearn" title="Permalink to this headline">#</a></h1>
 <p>This section describes how we can obtain a list of free OpenLearn units and construct a database that provides a full-text search over the unit names and originating course codes for those units. It also demonstrates how we can populate the database with copies of the OU-XML documents associated with those units and trivially query those documents as parsed XML documents using XPATH expressions. Examples are also given of how we can download and inspect zipped HTML bundles associated with free OpenLearn units, extract “contentful” image files into a database, and then retrieve and preview those images.</p>
-<section id="getting-a-list-of-openlearn-units">
+<div class="section" id="getting-a-list-of-openlearn-units">
 <h2>Getting a List of OpenLearn Units<a class="headerlink" href="#getting-a-list-of-openlearn-units" title="Permalink to this headline">#</a></h2>
 <p>In previous years, OpenLearn used to publish an OPML feed that list all the units available on OpenLearn. The feed included the unit name, the module code for the original OU module from which the OpenLearn unit was derived, and a link to unit homepage on OpenLearn.</p>
 <p>That feed is no longer available, but a single HTML page listing all the free units is still available at <a class="reference external" href="https://www.open.edu/openlearn/free-courses/full-catalogue">https://www.open.edu/openlearn/free-courses/full-catalogue</a></p>
@@ -493,8 +492,8 @@ title="Print to PDF"
 </div>
 <!--
 ![Raw HTML for a single unit listing on OpenLearn full catalogue](images/openlearn_unit_html.png)
---></section>
-<section id="scraping-the-list-of-free-openlearn-units">
+--></div>
+<div class="section" id="scraping-the-list-of-free-openlearn-units">
 <h2>Scraping the List of Free OpenLearn Units<a class="headerlink" href="#scraping-the-list-of-free-openlearn-units" title="Permalink to this headline">#</a></h2>
 <p>From the HTML table that lists all the free units available on OpenLearn, we can grab a list of the unit names, duration, level, original OU module and the OpenLearn unit URL.</p>
 <p>We can also generate candidate URLs for the OU-XML and HTML zip downloads. These URLs are conventionally defined, but the resources are not necessarily published there. Having generated the URL, we can make a simple HTTP/HEAD request to see whether a resource is actually available at the URL (if the resource is available, we get a 200/OK message; if the resource is not available, we get a 404/Page not found).</p>
@@ -589,9 +588,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "33136eefe9bf4de68ff556796c7f1256", "version_major": 2, "version_minor": 0}
-</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "33136eefe9bf4de68ff556796c7f1256", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>Preview the results of the scrape:</p>
 <div class="cell docutils container">
@@ -875,8 +872,8 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-</section>
-<section id="building-a-database-of-ou-xml-documents">
+</div>
+<div class="section" id="building-a-database-of-ou-xml-documents">
 <h2>Building a Database of OU-XML Documents<a class="headerlink" href="#building-a-database-of-ou-xml-documents" title="Permalink to this headline">#</a></h2>
 <p>From the list of free units on OpenLearn, we constructed the URL for the OU-XML download associated with the unit and polled the OpenLearn website to check whether the resource exisited. Only OU-XML URLs that refer to an actually downloadable resource were then added to our units list, and to the database.</p>
 <p>We can now create a further table into which we will insert the OU-XML document (where available) associated with each OpenLearn unit.</p>
@@ -928,9 +925,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dd562f158dbf4efd98ed93f78ff47074", "version_major": 2, "version_minor": 0}
-</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "dd562f158dbf4efd98ed93f78ff47074", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1171,7 +1166,7 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-<section id="retrieving-and-working-with-ou-xml-stored-in-the-database">
+<div class="section" id="retrieving-and-working-with-ou-xml-stored-in-the-database">
 <h3>Retrieving and Working With OU-XML Stored in the Database<a class="headerlink" href="#retrieving-and-working-with-ou-xml-stored-in-the-database" title="Permalink to this headline">#</a></h3>
 <p>We can now grab an OU-XML document from our database, parse it into an XML object:</p>
 <div class="cell docutils container">
@@ -1251,9 +1246,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="scraping-and-storing-html-media-assets">
+</div>
+</div>
+<div class="section" id="scraping-and-storing-html-media-assets">
 <h2>Scraping and Storing HTML Media Assets<a class="headerlink" href="#scraping-and-storing-html-media-assets" title="Permalink to this headline">#</a></h2>
 <p>The easiest way to grab the media assets associated with each unit is probably to download the HTML bundle.</p>
 <p>To be most useful, this means we need to be able to reconcile the downloaded assets with the media assets referenced in the corresponding OU-XML document.</p>
@@ -1468,7 +1463,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_61_0.jpg" src="_images/scraping_openlearn_61_0.jpg" />
+<img alt="_images/7630bd934750c41d65d731642674509a7fae140a0a9c1ae80d21a9e7fae09ed7.jpg" src="_images/7630bd934750c41d65d731642674509a7fae140a0a9c1ae80d21a9e7fae09ed7.jpg" />
 </div>
 </div>
 <p>We can also preview the image using packages such as <code class="docutils literal notranslate"><span class="pre">Pillow</span></code>:</p>
@@ -1489,10 +1484,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_63_0.png" src="_images/scraping_openlearn_63_0.png" />
+<img alt="_images/719b7ab66b37406b36b13fdb8ecad42cc417318d93af3622c9f6f33a709e4f5e.png" src="_images/719b7ab66b37406b36b13fdb8ecad42cc417318d93af3622c9f6f33a709e4f5e.png" />
 </div>
 </div>
-<section id="adding-images-to-a-database">
+<div class="section" id="adding-images-to-a-database">
 <h3>Adding Images to a Database<a class="headerlink" href="#adding-images-to-a-database" title="Permalink to this headline">#</a></h3>
 <p>As a proof of concept, let’s see how we might add some images to out database, and then retrieve them again.</p>
 <div class="cell docutils container">
@@ -1589,18 +1584,18 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/scraping_openlearn_71_0.jpg" src="_images/scraping_openlearn_71_0.jpg" />
+<img alt="_images/7630bd934750c41d65d731642674509a7fae140a0a9c1ae80d21a9e7fae09ed7.jpg" src="_images/7630bd934750c41d65d731642674509a7fae140a0a9c1ae80d21a9e7fae09ed7.jpg" />
 </div>
 </div>
-</section>
-</section>
-<section id="summary">
+</div>
+</div>
+<div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h2>
 <p>In this section, we have seen how we can scrape a list of free OpenLearn units from a catalogue web page on the OpenLearn website and add this data to a simple, file-based database that supported full-text search over the OpenLearn unit name and OU module code.</p>
 <p>We also saw how we could generate conventional URL paths that allowed us to download the OU-XML files associated with free OpenLearn units and add those to a database table. The XML can then be retrieved from the database and represented as an XML object that can be queried using XPATH expressions.</p>
 <p>Finally, we demonstrated how we can download an HTML bundle associated with an OpenLearn unit as a zip archive file and programmatically inspect its contents. From the assumed “contentful” HTML files in the archive we could identify assumed “contentful” images, extract them from the archive file, preview them, store them in a simple file based database, retrieve them from the database and preview them again.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

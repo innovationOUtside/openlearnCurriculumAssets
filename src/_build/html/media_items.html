@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working With Figures and Media Items &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -461,7 +460,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="working-with-figures-and-media-items">
+  <div class="tex2jax_ignore mathjax_ignore section" id="working-with-figures-and-media-items">
 <h1>Working With Figures and Media Items<a class="headerlink" href="#working-with-figures-and-media-items" title="Permalink to this headline">#</a></h1>
 <p>When working with images in course production, there are several approaches we may take:</p>
 <ul class="simple">
@@ -472,7 +471,7 @@ title="Print to PDF"
 </ul>
 <p>The OU-XML document structure supports the description of figures, which is to say, images, as well as various media file types, such as audio and video asset types. In this section, we will see how we can support media discovery across the OpenLearn units by means of a simple full-text search over media captions and transcripts. THe availability of figure descriptions also provides us with a corpus of text descriptions that it might to interesting to run through image-from-text generation tools to see what sorts of things they come up with, and how text prompts need to be phrased to generate something resembling the intended effect.</p>
 <p><em>For now, the actual media assets (images, videos, audio files, etc.), will <em>not</em> be scraped or added to the database. This means that media assets can be searched for, but not directly rendered.</em></p>
-<section id="preparing-the-ground">
+<div class="section" id="preparing-the-ground">
 <h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
 <p>As ever, we need to set up a database connection.</p>
 <div class="cell docutils container">
@@ -513,8 +512,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="extracting-figure-items">
+</div>
+<div class="section" id="extracting-figure-items">
 <h2>Extracting <code class="docutils literal notranslate"><span class="pre">Figure</span></code> Items<a class="headerlink" href="#extracting-figure-items" title="Permalink to this headline">#</a></h2>
 <p>Image references are provided inside a <code class="docutils literal notranslate"><span class="pre">&lt;Figure&gt;</span></code> element [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.4">docs</a>]. This structured element type also bundles a caption and a description:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Figure&gt;</span>
@@ -658,7 +657,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<section id="adding-figure-items-to-the-database">
+<div class="section" id="adding-figure-items-to-the-database">
 <h3>Adding Figure Items to the Database<a class="headerlink" href="#adding-figure-items-to-the-database" title="Permalink to this headline">#</a></h3>
 <p>To support discovery, we can add figure item captions, descriptions and alternative text to a simple database table and then provide full-test search over them.</p>
 <p><em>For now, we will omit scraping the figure assets into the database. An example of how to add a mdia item to the database, as well as retrieve and render a media item, is provided in the <code class="docutils literal notranslate"><span class="pre">Scraping</span> <span class="pre">OpenLearn</span></code> section.</em></p>
@@ -1137,9 +1136,9 @@ title="Print to PDF"
 </div></div></div>
 </div>
 <p>If we grabbed the image assets themselves into the database, or if we can resolve the URLs to the images, we could provide a gallery view over the images, or return visual images as part of our search results.</p>
-</section>
-</section>
-<section id="extracting-mediacontent-items">
+</div>
+</div>
+<div class="section" id="extracting-mediacontent-items">
 <h2>Extracting <code class="docutils literal notranslate"><span class="pre">MediaContent</span></code> Items<a class="headerlink" href="#extracting-mediacontent-items" title="Permalink to this headline">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">MediaContent</span></code> element [<a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.7">docs</a>] provides a structured way of describing audio and video media assets as well as other asset types.</p>
 <p>For example, a minimal decription of audio asset might be provided as follows:</p>
@@ -1230,7 +1229,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<section id="adding-media-item-metadata-to-the-database">
+<div class="section" id="adding-media-item-metadata-to-the-database">
 <h3>Adding Media Item Metadata to the Database<a class="headerlink" href="#adding-media-item-metadata-to-the-database" title="Permalink to this headline">#</a></h3>
 <p>To support discovery, we can add media item captions and transcripts to a simple database table and then provide full-test search over them.</p>
 <p><em>For now, we will omit scraping the media assets into the database. An example of how to add a mdia item to the database, as well as retrieve and render a media item, is provided in the <code class="docutils literal notranslate"><span class="pre">Scraping</span> <span class="pre">OpenLearn</span></code> section.</em></p>
@@ -1432,9 +1431,9 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

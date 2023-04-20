@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OU-XML Health Checks and Quality Audits &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -377,6 +376,11 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equation-quality-checks">
+   Equation Quality Checks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#link-checking">
    Link Checking
   </a>
@@ -440,6 +444,11 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equation-quality-checks">
+   Equation Quality Checks
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#link-checking">
    Link Checking
   </a>
@@ -466,14 +475,14 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="ou-xml-health-checks-and-quality-audits">
+  <div class="tex2jax_ignore mathjax_ignore section" id="ou-xml-health-checks-and-quality-audits">
 <h1>OU-XML Health Checks and Quality Audits<a class="headerlink" href="#ou-xml-health-checks-and-quality-audits" title="Permalink to this headline">#</a></h1>
 <p>As a structured document, OU-XML contains a wide variety of elements that are <em>countable</em>. As such, it is trivial to generate reports that describe how many elements of a particular kind are contained within a particular document. For example, we might count the number of learning outcomes defined in a particular unit, or the number media assets it includes. These counts can feed into quality checks for the document. For example, we might require that the number of outcomes is non-zero (i.e. at least one learning outcome is described at a particular level within the OU-XML document); or where media items are included, we might flag this unit as one that may have rights clearance considerations, or that may raise accessibility issues.</p>
 <p>Furthermore, several structural elements are defined in such a way that they encourage, if not actually require, the inclusion of metadata or supplementary information. For example, an estimated time requirement in an activity, or a transcript or long description for a media item.</p>
 <p>Finally, the OU-XML document may include references to assets that are themselves “testable”: web links to third party resources that can be link checked, for example.</p>
 <p>In this section, we will review several ways in which we can produce quick summary reports that review the structural content of an OU-XML document and hint at possible health checks and quality audit data we might derive from it.</p>
 <p>As well as running reports on individual OU-XML documents, we can also run reports over a set of OU-XML documents, or assets retrieved from them. This means we could generate reports on the health of the OpenLeaen OU-XML corpus <em>as a whole</em>, for example. Or audit OU-XML documents from different faculties to see whether units from one facultry have a different asset mix to units from another, for example.</p>
-<section id="database-setup">
+<div class="section" id="database-setup">
 <h2>Database Setup<a class="headerlink" href="#database-setup" title="Permalink to this headline">#</a></h2>
 <p>Set up a database connection to our OpenLearn curriculum asset database:</p>
 <div class="cell docutils container">
@@ -488,13 +497,13 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="ou-xml-media-item-quality-checks">
+</div>
+<div class="section" id="ou-xml-media-item-quality-checks">
 <h2>OU-XML Media Item Quality Checks<a class="headerlink" href="#ou-xml-media-item-quality-checks" title="Permalink to this headline">#</a></h2>
 <p>Where media items are defined in an OU-XML document, they should include information supplementary to the resource reference such as a long description or transcript.</p>
 <p>It is trivial to check that the corresponding fields are populated, if not check the actual substance of the content of those fields.</p>
 <p>A <em>Source reference</em> attribute is available that may be useful for rights tracking purposes etc.</p>
-<section id="checking-figure-asset-definitions">
+<div class="section" id="checking-figure-asset-definitions">
 <h3>Checking Figure Asset Definitions<a class="headerlink" href="#checking-figure-asset-definitions" title="Permalink to this headline">#</a></h3>
 <p>When image assets are used, there is often a requirement to provide a written description of it that can be used by a screen-reader to provide an alternative way of experiencing the asset to visually impaired readers.</p>
 <p>By scraping individual figure items into a database table, we can trivially generate reports on the extent to which alternative descriptions are provided, and identify units where they may be missing.</p>
@@ -652,8 +661,8 @@ title="Print to PDF"
 <p>2010 rows × 7 columns</p>
 </div></div></div>
 </div>
-</section>
-<section id="checking-audio-asset-definitions">
+</div>
+<div class="section" id="checking-audio-asset-definitions">
 <h3>Checking Audio Asset Definitions<a class="headerlink" href="#checking-audio-asset-definitions" title="Permalink to this headline">#</a></h3>
 <p>Ideally, every audio asset should have a transcript. We can generate summary reports from the database to identify audio items that <em>do not</em> have an associated transcript.</p>
 <p>For example:</p>
@@ -811,8 +820,8 @@ title="Print to PDF"
 </div>
 <p>Lots of those appear to be audio files related to activities in language units, so perhaps the provision of a transcript would defeat the purpose of the activity?</p>
 <p>The “whale song” item is interesting in its lack of a transcript or description: there is no transcript as such, but the sound presumably still be described?</p>
-</section>
-<section id="checking-video-asset-definitions">
+</div>
+<div class="section" id="checking-video-asset-definitions">
 <h3>Checking Video Asset Definitions<a class="headerlink" href="#checking-video-asset-definitions" title="Permalink to this headline">#</a></h3>
 <p>In the same way that we checked audio asset descriptions for the presence of transcripts, etc., we can also check for the presence of video transcripts.</p>
 <p>Once again, reporting the <code class="docutils literal notranslate"><span class="pre">xpath</span></code> context reference for the asset might provide a clue as to why a transcript is missing in any particular case.</p>
@@ -968,15 +977,19 @@ title="Print to PDF"
 <p>102 rows × 7 columns</p>
 </div></div></div>
 </div>
-</section>
-</section>
-<section id="link-checking">
+</div>
+</div>
+<div class="section" id="equation-quality-checks">
+<h2>Equation Quality Checks<a class="headerlink" href="#equation-quality-checks" title="Permalink to this headline">#</a></h2>
+<p>The equation object definition supports captions, alternative descriptions etc. and as such, completion of these tags is checkable.</p>
+</div>
+<div class="section" id="link-checking">
 <h2>Link Checking<a class="headerlink" href="#link-checking" title="Permalink to this headline">#</a></h2>
 <p>Web links in an OU-XML document may be relative links to content that is referenced relative to the location of the document itself, or absolute ones.</p>
 <p>De-referencing the relative links may require knowledge of the local context, in which <em>in situ</em> testing of materials derived from the source document may be more appropriate.</p>
 <p>Testing of absolute links can be performed at any time, and can be tested to check not just that the referenced location can be resolved correctly and returns some sort of resource (for example, the page <em>does not</em> return <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">404</span> <span class="pre">not</span> <span class="pre">found</span></code> or <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">451</span> <span class="pre">Unavailable</span> <span class="pre">for</span> <span class="pre">Legal</span> <span class="pre">Reasons</span></code> error; <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">403</span> <span class="pre">Forbidden</span></code> errors might also be worth detecting in the context that they identify an authentication context or requirement associated with retrieving the  referenced resource). If requests return an <code class="docutils literal notranslate"><span class="pre">HTTP</span> <span class="pre">301</span> <span class="pre">Moved</span> <span class="pre">Permanently</span></code> response, there might be a case for updating the URL. Similarly, other ways of detecting redirects might be used to flag up concerns regarding the current status of link and whether it should be update to point to a resource more directly.</p>
 <p>As well as simply testing that links resolve, the presence of links in an OU-XML document also raises concerns regarding whether or not the returned resource is the intended resource. Web pages are not ncessarily static and may be update at any time by their owners. Or if a resource disappears and an alternative needs to be found, it may not be clear from the context of the OU-XML document linking to the resource what the resource contained or what was particulalry notable about that resource; this in turn can lead to difficulties when it comets to identifying what an appropriate replacement resource might be.</p>
-<section id="the-innovationoutside-ouxml-link-checker">
+<div class="section" id="the-innovationoutside-ouxml-link-checker">
 <h3>The <code class="docutils literal notranslate"><span class="pre">innovationOUtside/ouxml-link-checker</span></code><a class="headerlink" href="#the-innovationoutside-ouxml-link-checker" title="Permalink to this headline">#</a></h3>
 <p>The <a class="reference external" href="https://github.com/innovationOUtside/ouxml-link-checker"><code class="docutils literal notranslate"><span class="pre">innovationOUtside/ouxml-link-checker</span></code></a> addresses several issues associated with link quality checking, in particular:</p>
 <ul class="simple">
@@ -991,9 +1004,9 @@ title="Print to PDF"
 <li><p><em>link archiving</em>: for each link to an public web resource, submit the link to the Intenet Archive for archiving purposes. Ideally, OU-XML links to public web resources should have a reference to an archived copy of the referenced resource that can be “swapped in” in the case of the original resource disappearing. (This approprach is used for maintaining link stability and integrity in Wikipedia, for example.)</p></li>
 <li><p><em>capturing linked page screenshots</em>: in many cases, simply being able to see a screenshot of a complete web page will provide enough information regarding the content of the page to be able to identify enough context to support the discovery of a replacement resource. A simple gallery of screenshots of pages referenced from an OU-XML document can also be used to support a quick review of linked to content in an off-line way, as well as automated testing to identify whether the content of a page or a partciular area of the page has changed either at all, or in a significant way. (This may be important for accessibility testing, for example, where the accessibility of linked to resources needs to be checked.)</p></li>
 </ul>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

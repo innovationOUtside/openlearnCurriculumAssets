@@ -8,47 +8,23 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "open issue"
-msgstr "número obert"
+msgid "next page"
+msgstr "pàgina següent"
 
-msgid "Download this page"
-msgstr "Descarregueu aquesta pàgina"
-
-msgid "Download source file"
-msgstr "Baixeu el fitxer font"
-
-msgid "Launch"
-msgstr "Llançament"
-
-msgid "Edit this page"
-msgstr "Editeu aquesta pàgina"
-
-msgid "Toggle navigation"
-msgstr "Commuta la navegació"
-
-msgid "Theme by the"
-msgstr "Tema del"
-
-msgid "Source repository"
-msgstr "Dipòsit de fonts"
+msgid "previous page"
+msgstr "Pàgina anterior"
 
 msgid "Last updated on"
 msgstr "Darrera actualització el"
 
-msgid "By the"
-msgstr "Per la"
-
 msgid "Sphinx Book Theme"
 msgstr "Tema del llibre Esfinx"
 
-msgid "Open an issue"
-msgstr "Obriu un número"
+msgid "Edit this page"
+msgstr "Editeu aquesta pàgina"
 
-msgid "next page"
-msgstr "pàgina següent"
-
-msgid "Copyright"
-msgstr "Copyright"
+msgid "By the"
+msgstr "Per la"
 
 msgid "Search this book..."
 msgstr "Cerca en aquest llibre ..."
@@ -56,14 +32,98 @@ msgstr "Cerca en aquest llibre ..."
 msgid "Print to PDF"
 msgstr "Imprimeix a PDF"
 
+msgid "Download this page"
+msgstr "Descarregueu aquesta pàgina"
+
+msgid "Download source file"
+msgstr "Baixeu el fitxer font"
+
+msgid "Toggle navigation"
+msgstr "Commuta la navegació"
+
+msgid "Open an issue"
+msgstr "Obriu un número"
+
+msgid "Source repository"
+msgstr "Dipòsit de fonts"
+
+msgid "Theme by the"
+msgstr "Tema del"
+
+msgid "Download notebook file"
+msgstr "Descarregar fitxer de quadern"
+
+msgid "Launch"
+msgstr "Llançament"
+
+msgid "Copyright"
+msgstr "Copyright"
+
 msgid "By"
 msgstr "Per"
+
+msgid "open issue"
+msgstr "número obert"
+
+msgid "suggest edit"
+msgstr "suggerir edició"
+
+msgid "next page"
+msgstr "pàgina següent"
 
 msgid "previous page"
 msgstr "Pàgina anterior"
 
+msgid "Last updated on"
+msgstr "Darrera actualització el"
+
+msgid "Sphinx Book Theme"
+msgstr "Tema del llibre Esfinx"
+
+msgid "Edit this page"
+msgstr "Editeu aquesta pàgina"
+
+msgid "By the"
+msgstr "Per la"
+
+msgid "Search this book..."
+msgstr "Cerca en aquest llibre ..."
+
+msgid "Print to PDF"
+msgstr "Imprimeix a PDF"
+
+msgid "Download this page"
+msgstr "Descarregueu aquesta pàgina"
+
+msgid "Download source file"
+msgstr "Baixeu el fitxer font"
+
+msgid "Toggle navigation"
+msgstr "Commuta la navegació"
+
+msgid "Open an issue"
+msgstr "Obriu un número"
+
+msgid "Source repository"
+msgstr "Dipòsit de fonts"
+
+msgid "Theme by the"
+msgstr "Tema del"
+
 msgid "Download notebook file"
 msgstr "Descarregar fitxer de quadern"
+
+msgid "Launch"
+msgstr "Llançament"
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "By"
+msgstr "Per"
+
+msgid "open issue"
+msgstr "número obert"
 
 msgid "suggest edit"
 msgstr "suggerir edició"
