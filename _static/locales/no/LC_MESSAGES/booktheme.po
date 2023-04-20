@@ -8,56 +8,26 @@ msgstr ""
 "Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "repository"
-msgstr "oppbevaringssted"
+msgid "next page"
+msgstr "neste side"
 
-msgid "open issue"
-msgstr "åpent nummer"
+msgid "Search the docs ..."
+msgstr "Søk i dokumentene ..."
 
-msgid "Contents"
-msgstr "Innhold"
-
-msgid "Fullscreen mode"
-msgstr "Fullskjerm-modus"
-
-msgid "Download this page"
-msgstr "Last ned denne siden"
-
-msgid "Download source file"
-msgstr "Last ned kildefilen"
-
-msgid "Launch"
-msgstr "Start"
-
-msgid "Edit this page"
-msgstr "Rediger denne siden"
-
-msgid "Toggle navigation"
-msgstr "Bytt navigasjon"
-
-msgid "Theme by the"
-msgstr "Tema av"
-
-msgid "Source repository"
-msgstr "Kildedepot"
+msgid "previous page"
+msgstr "forrige side"
 
 msgid "Last updated on"
 msgstr "Sist oppdatert den"
 
-msgid "By the"
-msgstr "Ved"
-
 msgid "Sphinx Book Theme"
 msgstr "Sphinx boktema"
 
-msgid "Open an issue"
-msgstr "Åpne et problem"
+msgid "Edit this page"
+msgstr "Rediger denne siden"
 
-msgid "next page"
-msgstr "neste side"
-
-msgid "Copyright"
-msgstr "opphavsrett"
+msgid "By the"
+msgstr "Ved"
 
 msgid "Search this book..."
 msgstr "Søk i denne boken ..."
@@ -65,17 +35,119 @@ msgstr "Søk i denne boken ..."
 msgid "Print to PDF"
 msgstr "Skriv ut til PDF"
 
+msgid "repository"
+msgstr "oppbevaringssted"
+
+msgid "Download this page"
+msgstr "Last ned denne siden"
+
+msgid "Download source file"
+msgstr "Last ned kildefilen"
+
+msgid "Toggle navigation"
+msgstr "Bytt navigasjon"
+
+msgid "Open an issue"
+msgstr "Åpne et problem"
+
+msgid "Source repository"
+msgstr "Kildedepot"
+
+msgid "Contents"
+msgstr "Innhold"
+
+msgid "Theme by the"
+msgstr "Tema av"
+
+msgid "Fullscreen mode"
+msgstr "Fullskjerm-modus"
+
+msgid "Download notebook file"
+msgstr "Last ned notatbokfilen"
+
+msgid "Launch"
+msgstr "Start"
+
+msgid "Copyright"
+msgstr "opphavsrett"
+
 msgid "By"
 msgstr "Av"
 
-msgid "previous page"
-msgstr "forrige side"
+msgid "open issue"
+msgstr "åpent nummer"
+
+msgid "suggest edit"
+msgstr "foreslå redigering"
+
+msgid "next page"
+msgstr "neste side"
 
 msgid "Search the docs ..."
 msgstr "Søk i dokumentene ..."
 
+msgid "previous page"
+msgstr "forrige side"
+
+msgid "Last updated on"
+msgstr "Sist oppdatert den"
+
+msgid "Sphinx Book Theme"
+msgstr "Sphinx boktema"
+
+msgid "Edit this page"
+msgstr "Rediger denne siden"
+
+msgid "By the"
+msgstr "Ved"
+
+msgid "Search this book..."
+msgstr "Søk i denne boken ..."
+
+msgid "Print to PDF"
+msgstr "Skriv ut til PDF"
+
+msgid "repository"
+msgstr "oppbevaringssted"
+
+msgid "Download this page"
+msgstr "Last ned denne siden"
+
+msgid "Download source file"
+msgstr "Last ned kildefilen"
+
+msgid "Toggle navigation"
+msgstr "Bytt navigasjon"
+
+msgid "Open an issue"
+msgstr "Åpne et problem"
+
+msgid "Source repository"
+msgstr "Kildedepot"
+
+msgid "Contents"
+msgstr "Innhold"
+
+msgid "Theme by the"
+msgstr "Tema av"
+
+msgid "Fullscreen mode"
+msgstr "Fullskjerm-modus"
+
 msgid "Download notebook file"
 msgstr "Last ned notatbokfilen"
+
+msgid "Launch"
+msgstr "Start"
+
+msgid "Copyright"
+msgstr "opphavsrett"
+
+msgid "By"
+msgstr "Av"
+
+msgid "open issue"
+msgstr "åpent nummer"
 
 msgid "suggest edit"
 msgstr "foreslå redigering"

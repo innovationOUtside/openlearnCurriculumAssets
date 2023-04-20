@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working With Activities, Exercises, ITQs and SAQs &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -433,7 +432,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="working-with-activities-exercises-itqs-and-saqs">
+  <div class="tex2jax_ignore mathjax_ignore section" id="working-with-activities-exercises-itqs-and-saqs">
 <h1>Working With Activities, Exercises, ITQs and SAQs<a class="headerlink" href="#working-with-activities-exercises-itqs-and-saqs" title="Permalink to this headline">#</a></h1>
 <p>When creating active teaching and learning materials, an important learning design approach for prompting engagement is the inclusion of activities, where a call to action is provided and a learner is encouraged to perform a particular task or check their understanding in a particular way.</p>
 <p>A large number of potentially reusable activities are defined in a structured way in OU-XML documents. If we are to reuse such activities, whether directly, with modification, or simply as a source of inspiration, we need to be able to browse or discover them in some way.</p>
@@ -453,7 +452,7 @@ title="Print to PDF"
 </div>
 <p>ITQs may also be defined as multipart questions.</p>
 <p><em>Work in Progress</em>; the <MediaElement> enclosure within an activity element is not currently handled, although <em>all</em> media elements are extracted, irrespective of their context, in the generic section on extracting media items from OU-XML. <em>In the <code class="docutils literal notranslate"><span class="pre">Activity</span></code> context, it would probably make sense to use a foreign key relationship to provide a reference into the <code class="docutils literal notranslate"><span class="pre">media</span></code> table from an <code class="docutils literal notranslate"><span class="pre">activities</span></code> table.</em></p>
-<section id="preparing-the-ground">
+<div class="section" id="preparing-the-ground">
 <h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
 <p>As ever, we need to set up a database connection:</p>
 <div class="cell docutils container">
@@ -488,8 +487,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="mining-ou-xml-documents-for-activity-related-items">
+</div>
+<div class="section" id="mining-ou-xml-documents-for-activity-related-items">
 <h2>Mining OU-XML Documents for Activity Related Items<a class="headerlink" href="#mining-ou-xml-documents-for-activity-related-items" title="Permalink to this headline">#</a></h2>
 <p>To begin with, let’s have a table that just has the complete activity records.</p>
 <p>We can preview a rendered version of an activity by applying an OU-XML to markdown XLST trasnformation to a shimmed version of the activity XML (the shim provides a way of allowing the transformation rules to be applied to arbitrary OU-XML elements that are not defined on the OU-XML root element).</p>
@@ -529,7 +528,8 @@ title="Print to PDF"
 <p>HEADER: # Question</p>
 <p>In Activity 1 you created a list of types of interaction that might be found in a set of your eLearning materials. Now it is time to <a class="reference external" href="#act1">revisit that list</a>. Did the materials in this course prompt you to think of other interactions you had missed? What about the ways in which disabled students might access your materials – add to your list any that you may have initially not thought about. Finally, consider ways in which those issues might be removed or avoided, now that you know a little more about how to create accessible eLearning.</p>
 <!-- #endregion -->
-</div></div>
+</div>
+</div>
 </div>
 <p>To keep the size(s) of the databases we are working with relatively small, (&lt;100MB and we can store them in a GitHub repository and serve them from GitHub Pages), we can create a new fatbase for our activities table.</p>
 <p>The database table itself can be quite simple, athough note that as well as including the raw XML for the activity, we include a reference to the activity based on its <em>path</em> within the unit.</p>
@@ -783,9 +783,10 @@ HEADER:  Question 9
 <p>0.1<em>mc</em><sup>2</sup> = 0.1 × 1 × (3 × 10<sup>8</sup>ms<sup>−1</sup>)<sup>2</sup> J = 9 × 10<sup>15</sup> J.</p>
 <p>You would expect much <em>less</em> energy from the chemical reaction.</p>
 <!-- #endregion -->
-</div></div>
 </div>
-<section id="adding-other-activity-types-to-the-database">
+</div>
+</div>
+<div class="section" id="adding-other-activity-types-to-the-database">
 <h3>Adding Other Activity Types to the Database<a class="headerlink" href="#adding-other-activity-types-to-the-database" title="Permalink to this headline">#</a></h3>
 <p>We can also add other activity types (<code class="docutils literal notranslate"><span class="pre">&lt;ITQ&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;SAQ&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;Exercise&gt;</span></code>) to the raw activity database:</p>
 <div class="cell docutils container">
@@ -835,12 +836,13 @@ HEADER:  Question 9
 <p>HEADER:  Answer</p>
 <p>There are many species present in blood, including sugars, salt, proteins, oxygen and, of course, water. Pt2+ is a soft acid, so soft bases pose the greatest threat, also those species that are in the greatest concentration. Thus sulfur-containing compounds, such as cysteine, might react with cisplatin, as might water.</p>
 <!--ENDITQ-->
-</div></div>
+</div>
+</div>
 </div>
 <p><em>It might be worth having the raw <code class="docutils literal notranslate"><span class="pre">Activity</span></code>, <code class="docutils literal notranslate"><span class="pre">Exercise</span></code>, <code class="docutils literal notranslate"><span class="pre">ITQ</span></code> and <code class="docutils literal notranslate"><span class="pre">SAQ</span></code> items in their own databases so that we can then run a full-text search over the raw XML for just those activity types. (I donlt think we can run facetted queries within the SQLite full-text search?</em></p>
-</section>
-</section>
-<section id="decomposing-activities-into-component-parts">
+</div>
+</div>
+<div class="section" id="decomposing-activities-into-component-parts">
 <h2>Decomposing Activities Into Component Parts<a class="headerlink" href="#decomposing-activities-into-component-parts" title="Permalink to this headline">#</a></h2>
 <p>Activity-like objects are made up of several “simple” and more structurd componenents. All activity types must define a <code class="docutils literal notranslate"><span class="pre">&lt;Question&gt;</span></code> component, but there is some freedom in the choice of “response” element. In addition, multipart responses may be defined.</p>
 <p>The strategy followed below is to split out the “simple” <code class="docutils literal notranslate"><span class="pre">&lt;Answer&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;Discussion&gt;</span></code> elements ito their own columns. For <code class="docutils literal notranslate"><span class="pre">&lt;Multipart&gt;</span></code> responses, each <code class="docutils literal notranslate"><span class="pre">&lt;Part&gt;</span></code> has its own entry in the <code class="docutils literal notranslate"><span class="pre">activities</span></code> table, with a <code class="docutils literal notranslate"><span class="pre">multipart</span></code> flag set.</p>
@@ -1170,8 +1172,8 @@ HEADER:  Question 9
 </table>
 </div></div></div>
 </div>
-</section>
-<section id="parsing-other-activity-types">
+</div>
+<div class="section" id="parsing-other-activity-types">
 <h2>Parsing Other Activity Types<a class="headerlink" href="#parsing-other-activity-types" title="Permalink to this headline">#</a></h2>
 <p>An ITQ element can be parsed in the same way as <code class="docutils literal notranslate"><span class="pre">&lt;Activity&gt;</span></code> element, as previously described:</p>
 <div class="cell docutils container">
@@ -1499,8 +1501,8 @@ HEADER:  Question 9
 </div>
 <p>We really need a better way to render these results…</p>
 <p>Parsing the activity into markdown would be one way…</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

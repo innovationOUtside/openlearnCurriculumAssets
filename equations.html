@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working With Equations &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -419,14 +418,15 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="working-with-equations">
+  <div class="tex2jax_ignore mathjax_ignore section" id="working-with-equations">
 <h1>Working With Equations<a class="headerlink" href="#working-with-equations" title="Permalink to this headline">#</a></h1>
-<p>One of the asset types that is represented within OU-XML is an <code class="docutils literal notranslate"><span class="pre">&lt;Equation&gt;</span></code> type. This element can be used to represent mathematical and chemical equations.</p>
+<p>One of the asset types that is represented within OU-XML is an <code class="docutils literal notranslate"><span class="pre">&lt;Equation&gt;</span></code> type. This element can be used to represent mathematical and chemical equations. Internal OU readers can refer to the corresponding OU-XML docs <a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747%C2%A7ion=8.4.11">here</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Equation</span></code> element tag accepts the following child tags: <code class="docutils literal notranslate"><span class="pre">&lt;Alternative&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Caption&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Description&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Image&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Label&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MathML&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;SourceReference&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;TeX&gt;</span></code>. There is also an <code class="docutils literal notranslate"><span class="pre">&lt;InlineEquation&gt;</span></code> tag that accepts <code class="docutils literal notranslate"><span class="pre">&lt;Image&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;Alternative&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MathML&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;TeX&gt;</span></code> tags. The <code class="docutils literal notranslate"><span class="pre">&lt;Image&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MathML&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;TeX&gt;</span></code> tags define the “expression” of the equation.</p>
 <p>Equation items may be described using either a MathML expression or an Image. The MathML elements are rendered in the VLE using Mathjax and via LaTex for PDF print publications. Browsers such as Firefox are also capable of rendering MathML directly.</p>
 <p>One of the problems with MathML as a structure is that it is not the sort of thing you would write by hand, and as such, it may be difficult to discover via simple search. (A simpler way of writing equations is to use LaTeX, for example.)</p>
 <p>One way of supporting discover might be to index the text in the subsection that an equation is contained in. We can find a local context from the the path to each equation element, so for now, let’s just grab the path; we can  then think about how we can generate a search context around that path in another section.</p>
 <p><em>Foer now, only handle equations that are described using MathML; ignore eqautions that are rendered as images.</em></p>
-<section id="preparing-the-ground">
+<div class="section" id="preparing-the-ground">
 <h2>Preparing the Ground<a class="headerlink" href="#preparing-the-ground" title="Permalink to this headline">#</a></h2>
 <p>As ever, we need to set up a database connection:</p>
 <div class="cell docutils container">
@@ -618,8 +618,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="grabbing-the-path">
+</div>
+<div class="section" id="grabbing-the-path">
 <h2>Grabbing the Path<a class="headerlink" href="#grabbing-the-path" title="Permalink to this headline">#</a></h2>
 <p>By walking up the path that leads to an equation element, we can identify its context within an OU-XML document, and from that we should be able to generate a “local search context” we can index and search within in order to support discovery of an equation from terms included in its surrounding text, for example.</p>
 <div class="cell docutils container">
@@ -748,20 +748,20 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="extracting-equation-items">
+</div>
+<div class="section" id="extracting-equation-items">
 <h2>Extracting Equation Items<a class="headerlink" href="#extracting-equation-items" title="Permalink to this headline">#</a></h2>
 <p>We can trivially extract equation items from a single OU-XML XML document object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">xml_utils</span> <span class="kn">import</span> <span class="n">unpack</span>
 
-<span class="k">def</span> <span class="nf">get_equation_items</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_equation_items</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="s1">&#39;//Equation&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Extract equations from an OU-XML XML object.&quot;&quot;&quot;</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
     
     <span class="c1"># Return the mathml and the path</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">tree</span><span class="o">.</span><span class="n">getpath</span><span class="p">(</span><span class="n">eq</span><span class="p">),</span> <span class="n">unpack</span><span class="p">(</span><span class="n">eq</span><span class="p">))</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//Equation&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">tree</span><span class="o">.</span><span class="n">getpath</span><span class="p">(</span><span class="n">eq</span><span class="p">),</span> <span class="n">unpack</span><span class="p">(</span><span class="n">eq</span><span class="p">))</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">typ</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -843,17 +843,26 @@ title="Print to PDF"
 <li><p><a class="reference external" href="https://www.geeksforgeeks.org/html5-mathml-display-attribute/">https://www.geeksforgeeks.org/html5-mathml-display-attribute/</a> ?</p></li>
 <li><p>other MathML parsers?</p></li>
 </ul>
-</section>
-<section id="adding-equations-to-the-database">
+</div>
+<div class="section" id="adding-equations-to-the-database">
 <h2>Adding Equations to the Database<a class="headerlink" href="#adding-equations-to-the-database" title="Permalink to this headline">#</a></h2>
 <p>We can create a simple database table to index the equations and either add a “context text column” to that table, or reference it in a separate table. For now, let’s just munge it all together.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_eqn_tbl</span> <span class="o">=</span> <span class="n">db</span><span class="p">[</span><span class="s2">&quot;equations&quot;</span><span class="p">]</span>
 <span class="n">all_eqn_tbl</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
 <span class="n">all_eqn_tbl</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
-    <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="c1">#&quot;Alternative&quot;: str,</span>
+    <span class="c1">#&quot;Description&quot;: str,</span>
+    <span class="c1">#&quot;Label&quot;: str,</span>
+    <span class="c1">#&quot;SourceReference&quot;: str,</span>
+    <span class="c1">#&quot;Image&quot;: str,</span>
+    <span class="c1">#&quot;MathML&quot;:str,</span>
+    <span class="c1">#&quot;TeX&quot;: str,</span>
+    <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="c1"># This is the raw XML for the object</span>
     <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;search_context_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">},</span> <span class="n">pk</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;_id&quot;</span><span class="p">,</span> <span class="s2">&quot;xpath&quot;</span><span class="p">))</span>
@@ -893,29 +902,36 @@ title="Print to PDF"
     <span class="c1"># Get the tree structure</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">_root</span><span class="p">)</span>
 
-    <span class="n">eq_items</span> <span class="o">=</span> <span class="n">get_equation_items</span><span class="p">(</span><span class="n">_root</span><span class="p">)</span>
+    <span class="n">eq_items</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s2">&quot;Equation&quot;</span><span class="p">,</span> <span class="n">eq</span><span class="p">)</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">get_equation_items</span><span class="p">(</span><span class="n">_root</span><span class="p">,</span> <span class="s2">&quot;//Equation&quot;</span><span class="p">)]</span>
+    <span class="n">eq_items</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span> <span class="p">(</span><span class="s2">&quot;InlineEquation&quot;</span><span class="p">,</span> <span class="n">eq</span><span class="p">)</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">get_equation_items</span><span class="p">(</span><span class="n">_root</span><span class="p">,</span> <span class="s2">&quot;//InlineEquation&quot;</span><span class="p">)])</span>
     
     <span class="n">_id</span> <span class="o">=</span> <span class="n">create_id</span><span class="p">(</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;code&quot;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span> <span class="p">)</span>
     
     <span class="c1"># From the list of equation items,</span>
     <span class="c1"># create a list of dict items we can add to the database</span>
-    <span class="n">eq_item_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">clean_equation</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                          <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> <span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                          <span class="s2">&quot;search_context_path&quot;</span><span class="p">:</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-                          <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">}</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">eq_items</span> <span class="k">if</span> <span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">]</span>
-
+    <span class="n">eq_item_dicts</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">eq_context_dicts</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">_unique_contexts</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">eq_items</span><span class="p">:</span>
-        <span class="n">search_context_path</span> <span class="o">=</span> <span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">search_context_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_unique_contexts</span><span class="p">:</span>
-            <span class="n">_unique_contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search_context_path</span><span class="p">)</span>
-            <span class="n">eq_context_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;search_context_path&quot;</span><span class="p">:</span> <span class="n">search_context_path</span><span class="p">,</span>
-                                     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">,</span>
-                                     <span class="c1"># It might be better to flatten than unpack</span>
-                                      <span class="c1"># For now, unpack lets us render the XML</span>
-                                    <span class="s2">&quot;search_context&quot;</span><span class="p">:</span> <span class="n">unpack</span><span class="p">(</span> <span class="n">_root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(),})</span>
-    
+    <span class="k">for</span> <span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">eq</span><span class="p">)</span> <span class="ow">in</span> <span class="n">eq_items</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="c1"># We can unpack and extract items from the XML</span>
+            <span class="n">eq_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">clean_equation</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                        <span class="s2">&quot;xpath&quot;</span><span class="p">:</span> <span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="n">typ</span><span class="p">,</span>
+                        <span class="s2">&quot;search_context_path&quot;</span><span class="p">:</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                        <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">}</span>
+            <span class="n">eq_item_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq_dict</span><span class="p">)</span>
+            
+            <span class="n">search_context_path</span> <span class="o">=</span> <span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">eq</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">search_context_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_unique_contexts</span><span class="p">:</span>
+                <span class="n">_unique_contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">search_context_path</span><span class="p">)</span>
+                <span class="n">search_context</span> <span class="o">=</span> <span class="n">unpack</span><span class="p">(</span> <span class="n">_root</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">navigational_context</span><span class="p">(</span><span class="n">eq</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span> <span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                <span class="n">eq_context_dicts</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;search_context_path&quot;</span><span class="p">:</span> <span class="n">search_context_path</span><span class="p">,</span>
+                                         <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="n">_id</span><span class="p">,</span>
+                                         <span class="c1"># It might be better to flatten than unpack</span>
+                                          <span class="c1"># For now, unpack lets us render the XML</span>
+                                        <span class="s2">&quot;search_context&quot;</span><span class="p">:</span> <span class="n">search_context</span><span class="p">})</span>
+
     <span class="c1"># Add items to the database</span>
     <span class="n">db</span><span class="p">[</span><span class="n">all_eqn_tbl</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">eq_item_dicts</span><span class="p">)</span>
     <span class="n">db</span><span class="p">[</span><span class="n">all_eqn_context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">insert_all</span><span class="p">(</span><span class="n">eq_context_dicts</span><span class="p">)</span>
@@ -1001,7 +1017,7 @@ title="Print to PDF"
 <p>HEADER: # Question</p>
 <p>The combination of sulfur dioxide with oxygen, and the decomposition of steam into hydrogen and oxygen are both reactions of great potential value. These reactions and their equilibrium constants at 427<sup>o</sup>C (700K) are as follows.
 2SO2(g)+O2(g)=2SO3⁢ (g)K=106⁢ mol−1⁢⁢ litre 2H2O(g)=2H2(g)+O2(g)K=10−33⁢ mol⁢ ⁢ litre−1</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Write expressions for the equilibrium constants of the two reactions.</p></li>
 <li><p>When the two reactions are attempted at 700K, neither seems to occur. Which of the two might be ‘persuaded’ to proceed at this temperature, and what form might your persuasion take?</p></li>
 </ol>
@@ -1012,7 +1028,8 @@ That of the second,
 K2=[H2(g)]2[O2(g)][H2O(g)]2
 The data show that <em>K</em><sub>2</sub> is tiny: at equilibrium, the concentrations of the hydrogen and oxygen in the numerator (the top line of the fraction) are minute in comparison with the concentration of steam in the denominator (the bottom line of the fraction). So in a closed system at 700 K, significant amounts of hydrogen and oxygen will never be formed from steam.</p>
 <p>By contrast, <em>K</em><sub>1</sub> is large, so the equilibrium position at 700 K lies well over to the right of the equation, and conversion of sulfur dioxide and oxygen to sulfur trioxide is favourable. The fact that the reaction does not occur must be due to a slow rate of reaction. We may therefore be able to obtain sulfur trioxide in this way if we can find a suitable catalyst to speed up the reaction. A suitable catalyst is vanadium pentoxide, V<sub>2</sub>O<sub>5</sub>, and at 700 K, this reaction is the key step in the manufacture of sulfuric acid from sulfur, oxygen and water.</p>
-<!--ENDITQ--><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    None
+<!--ENDITQ-->
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    None
 Name: search_context, dtype: object
 </pre></div>
 </div>
@@ -1032,8 +1049,8 @@ Name: search_context, dtype: object
 <div class="cell_output docutils container">
 <div class="output text_html"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" scriptlevel="0" displaystyle="true"><mrow><msub><mrow><mi>K</mi></mrow><mrow><mn>1</mn></mrow></msub><mo>=</mo><mfrac><mrow><msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi></mrow><mrow><mn>3</mn></mrow></msub><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow><mrow><mn>2</mn></mrow></msup></mrow><mrow><msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi></mrow><mrow><mn>2</mn></mrow></msub><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow><mrow><mn>2</mn></mrow></msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">O</mi></mrow><mrow><mn>2</mn></mrow></msub><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow></mrow></mfrac></mrow></math><hr/></div><div class="output text_html"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" scriptlevel="0" displaystyle="true"><mrow><msub><mrow><mi>K</mi></mrow><mrow><mn>2</mn></mrow></msub><mo>=</mo><mfrac><mrow><msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">H</mi></mrow><mrow><mn>2</mn></mrow></msub><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow><mrow><mn>2</mn></mrow></msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">O</mi></mrow><mrow><mn>2</mn></mrow></msub><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow></mrow><mrow><msup><mrow><mo>[</mo><msub><mrow><mi mathvariant="normal">H</mi></mrow><mrow><mn>2</mn></mrow></msub><mi mathvariant="normal">O</mi><mrow><mo>(</mo><mi mathvariant="normal">g</mi><mo>)</mo></mrow><mo>]</mo></mrow><mrow><mn>2</mn></mrow></msup></mrow></mfrac></mrow></math><hr/></div><div class="output text_html"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" scriptlevel="0" displaystyle="true"><mrow><mtable><mtr><mtd><msub><mrow><mtable><mtr><mtd><mn>2</mn><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi></mtd></mtr></mtable></mrow><mrow><mn>2</mn></mrow></msub><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mrow><mi mathvariant="normal">O</mi></mrow><mrow><mn>2</mn></mrow></msub><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mrow><mn>2</mn><mi mathvariant="normal">S</mi><mi mathvariant="normal">O</mi></mrow><mrow><mn>3</mn></mrow></msub><mo>&#8290;</mo><mtext>&#8201;</mtext><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo></mtd><mtd><mi>K</mi><mo>=</mo><msup><mrow><mn>10</mn></mrow><mrow><mn>6</mn></mrow></msup><mo>&#8290;</mo><mtext>&#8201;</mtext><msup><mrow><mi>mol</mi></mrow><mrow><mo>&#8722;</mo><mn>1</mn><mo>&#8290;</mo></mrow></msup><mo>&#8290;</mo><mtext>&#8201;</mtext><mi>litre</mi><mtext>&#8201;</mtext></mtd></mtr><mtr><mtd><mn>2</mn><msub><mrow><mi mathvariant="normal">H</mi></mrow><mrow><mn>2</mn></mrow></msub><mi mathvariant="normal">O</mi><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo><mo>=</mo><mn>2</mn><msub><mrow><mi mathvariant="normal">H</mi></mrow><mrow><mn>2</mn></mrow></msub><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo><mo>+</mo><msub><mrow><mi mathvariant="normal">O</mi></mrow><mrow><mn>2</mn></mrow></msub><mo stretchy="false">(</mo><mi mathvariant="normal">g</mi><mo stretchy="false">)</mo></mtd><mtd><mi>K</mi><mo>=</mo><msup><mrow><mn>10</mn></mrow><mrow><mo>&#8722;</mo><mn>33</mn></mrow></msup><mo>&#8290;</mo><mtext>&#8201;</mtext><mi>mol</mi><mo>&#8290;</mo><mtext>&#8201;</mtext><mo>&#8290;</mo><msup><mrow><mtext>&#8201;</mtext><mi>litre</mi></mrow><mrow><mo>&#8722;</mo><mn>1</mn></mrow></msup></mtd></mtr></mtable></mrow></math><hr/></div></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

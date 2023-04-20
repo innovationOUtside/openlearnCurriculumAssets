@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Working With OU-XML &#8212; Working With OpenLearn Curriculum Assets</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -21,7 +20,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -37,7 +36,7 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -409,11 +408,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="working-with-ou-xml">
+  <div class="tex2jax_ignore mathjax_ignore section" id="working-with-ou-xml">
 <h1>Working With OU-XML<a class="headerlink" href="#working-with-ou-xml" title="Permalink to this headline">#</a></h1>
 <p>In this section we will briefly review different ways of working with an OU-XML document, including treating a document as a simple, structured and searchable database, as well as ways of displaying or rendering the XML content.</p>
 <p>OU Internal readers might also find the <a class="reference external" href="https://learn3.open.ac.uk/mod/oucontent/view.php?id=185747"><em>Structured Content Tag Guide</em></a> a useful, and more comprehensive, guide to the OU-XML document structure.</p>
-<section id="treating-ou-xml-documents-as-databases">
+<div class="section" id="treating-ou-xml-documents-as-databases">
 <h2>Treating OU-XML Documents As Databases<a class="headerlink" href="#treating-ou-xml-documents-as-databases" title="Permalink to this headline">#</a></h2>
 <p>In production terms, OU-XML documents are used are gold-master documents for representing academic content in a strcutured way. The structure adds semantics (which is to say, “meaning”) to content elements and these semantics are then interpreted using visual cues when the document is rendered as a final output text. For example, in the OU VLE, <code class="docutils literal notranslate"><span class="pre">&lt;Acitivity&gt;</span></code> elements are typically rendered as a box element with a blut background that distinguishes the activity from the rest of the content.</p>
 <p>From a scrape of OpenLearn, we can create a database of OU-XML documents that we can use as a basis for strcutured search over the whole OpenLearn free-learning corpus.</p>
@@ -616,8 +615,8 @@ Computer system
 <p><em>We could equally have run a query to find all the <code class="docutils literal notranslate"><span class="pre">&lt;GlossaryItem&gt;</span></code> elements where the <code class="docutils literal notranslate"><span class="pre">&lt;Term&gt;</span></code> included out search term. In code, for any particular task, there is generally more thn one way to do it…</em></p>
 <p>What this shows is that we can run queries into different structured parts of the OU-XML document rather than just searching the whole document for a particular term.</p>
 <p>We can also use this approach to extract (or <em>mine</em>) particualr sorts of element from the document and place those into another collection of just those sorts of thing. For example, by mining the <code class="docutils literal notranslate"><span class="pre">Glossary</span></code> elements from all our OpenLearn OU-XML documents, we could easily generate a <em>OpenLearn Glossary</em> that combines all glossed items into a single OpenLearn-wide glossary.</p>
-</section>
-<section id="viewing-and-rendering-xml-elements-using-xslt">
+</div>
+<div class="section" id="viewing-and-rendering-xml-elements-using-xslt">
 <h2>Viewing and Rendering XML Elements Using XSLT<a class="headerlink" href="#viewing-and-rendering-xml-elements-using-xslt" title="Permalink to this headline">#</a></h2>
 <p>One way of generating rendered views of XML content is to use XSLT, a transfomration process in which an XSLT document describes how to transform each node in an XML document, such as an OU-XML document to another form. For example, I have <a class="reference external" href="https://blog.ouseful.info/2019/11/06/text-publishing-workflows-rooted-on-openlearn-ou-xml-via-github-circleci-and-github-pages/">previously</a> used XSLT to transform an OU-XML document into a set of simple markdown documents that can then be rendered as an interactive HTML textbook using a publishing workflow such as the <a class="reference external" href="https://quarto.org/">Quarto</a> or <a class="reference external" href="https://jupyterbook.org/en/stable/intro.html">Jupyter Book</a> publisng workflows.</p>
 <p>Whilst the XSLT stylesheet I have previously used expects to find a <code class="docutils literal notranslate"><span class="pre">&lt;Session&gt;</span></code> element as the root element, we can also co-opt the stysleheet to render any collection of elements by definging a dummy root element and then applying stylesheets within that context:</p>
@@ -806,15 +805,15 @@ Lisez maintenant le po&amp;#232;me &amp;#224; haute voix et allez ensuite &amp;#
 <!-- #endregion --></div></div>
 </div>
 <p>What this means is that we can search for and extract elements from our OU-XML documents and then preview those elements as HTML, assuming the stylesheet has appropriate rules defined for the corresponding OU-XML elements.</p>
-</section>
-<section id="generating-fully-rendered-output-documents-from-ou-xml-documents">
+</div>
+<div class="section" id="generating-fully-rendered-output-documents-from-ou-xml-documents">
 <h2>Generating Fully Rendered Output Documents from OU-XML Documents<a class="headerlink" href="#generating-fully-rendered-output-documents-from-ou-xml-documents" title="Permalink to this headline">#</a></h2>
 <p><em>TO DO</em></p>
 <ul class="simple">
 <li><p>prior examples include: <a class="reference external" href="https://blog.ouseful.info/2019/11/06/text-publishing-workflows-rooted-on-openlearn-ou-xml-via-github-circleci-and-github-pages/"><em>OER Text Publishing Workflows Rooted on OpenLearn OU-XML Via Github, CircleCI and Github Pages Using Jupytext and nbSphinx</em></a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
